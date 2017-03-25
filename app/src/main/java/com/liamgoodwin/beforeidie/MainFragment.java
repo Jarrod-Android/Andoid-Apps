@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,7 @@ public class MainFragment extends Fragment {
 
     //Declare the list view for the CardView usage on the Main page
     ListView list;
-
+    TextView RecommendationsDescriptionTextView;
 
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,25 +37,25 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         list = (ListView) view.findViewById(R.id.recommendationList);
-        final ArrayList<Location> locationslist = new ArrayList<Location>();
-        locationslist.add(new Location("Wheatly Park", "This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=42.088782,-82.444714(Wheatly Park)"));
-        locationslist.add(new Location("Algonquin Park", "This is a large park This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=45.554195,-78.596781(Algonquin Park)"));
-        locationslist.add(new Location("Elora Gorge", "This park has a gorge in it This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=43.672014,-80.444244(Elora Gorge)"));
-        locationslist.add(new Location("Greenway", "This used to be train tracks This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=42.101273,-82.933795(Green Way)"));
-        final CustomAdapter adapter = new CustomAdapter(getContext(), locationslist);
+        final ArrayList<Recommendations> recommendationList = new ArrayList<Recommendations>();
+        recommendationList.add(new Recommendations("Wheatly Park", "This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=42.088782,-82.444714(Wheatly Park)"));
+//        recommendationList.add(new Recommendations("Algonquin Park", "This is a large park This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=45.554195,-78.596781(Algonquin Park)"));
+//        recommendationList.add(new Recommendations("Elora Gorge", "This park has a gorge in it This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=43.672014,-80.444244(Elora Gorge)"));
+//        recommendationList.add(new Recommendations("Greenway", "This used to be train tracks This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=42.101273,-82.933795(Green Way)"));
+        final CustomAdapter adapter = new CustomAdapter(getContext(), recommendationList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                LocationDescriptionTextView =
+                RecommendationsDescriptionTextView =
                         (TextView) view.findViewById(R.id.description);
                 TextView details = (TextView) view.findViewById(R.id.details);
                 ImageView chevron = (ImageView) view.findViewById(R.id.chevron);
-                if(LocationDescriptionTextView.getText() !=
-                        (locationslist.get(position)).getDescription() ){
+                if(RecommendationsDescriptionTextView.getText() !=
+                        (recommendationList.get(position)).getDescription() ){
                     //Update the text of the description
-                    LocationDescriptionTextView.setText(
-                            ((Location) list.getItemAtPosition(position)).getDescription());
+                    RecommendationsDescriptionTextView.setText(
+                            ((Recommendations) list.getItemAtPosition(position)).getDescription());
                     //update the text of the show more
                     details.setText("Click to show less");
                     //update the chevron image
@@ -64,7 +63,7 @@ public class MainFragment extends Fragment {
 
                 }
                 else{
-                    LocationDescriptionTextView.setText("");
+                    RecommendationsDescriptionTextView.setText("");
                     //update the text of the show more
                     details.setText("Click to show more");
                     //update the chevron image
@@ -75,7 +74,7 @@ public class MainFragment extends Fragment {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                locationslist.remove(position);
+                recommendationList.remove(position);
                 adapter.notifyDataSetChanged();
                 return false;
             }
@@ -83,9 +82,9 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    public class CustomAdapter extends ArrayAdapter<Location> {
+    public class CustomAdapter extends ArrayAdapter<Recommendations> {
 
-        public CustomAdapter(Context context, ArrayList<Location> items) {
+        public CustomAdapter(Context context, ArrayList<Recommendations> items) {
             super(context, 0, items);
         }
 
@@ -98,12 +97,12 @@ public class MainFragment extends Fragment {
          * we populate the item_view's name TextView
          */
         public View getView(int position, View convertView, ViewGroup parent){
-            final Location item = getItem(position);
+            final Recommendations item = getItem(position);
 
             if(convertView == null){
                 convertView =
                         LayoutInflater.from(getContext()).inflate(
-                                R.layout.item_view, parent, false);
+                                R.layout.card_view_item, parent, false);
             }
 
             TextView name = (TextView) convertView.findViewById(R.id.name);
@@ -112,7 +111,7 @@ public class MainFragment extends Fragment {
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Uri geoLocation = Uri.parse(item.getLocation());
+                    Uri geoLocation = Uri.parse(item.getRecommendation());
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(geoLocation);
                     if(intent.resolveActivity(
@@ -121,8 +120,6 @@ public class MainFragment extends Fragment {
                     }
                 }
             });
-
-
 
             return  convertView;
         }
