@@ -31,7 +31,12 @@
                 android:id="@+id/recommendationName"
                 android:textAlignment="center"
                 android:textSize="30sp" />
+            <ListView
+                android:id="@+id/recommendationList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+            </ListView>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
