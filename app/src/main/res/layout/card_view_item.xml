@@ -32,7 +32,7 @@
                  <ImageView
                    android:layout_width="40dp"
                    android:layout_height="40dp"
-                   cardView:srcCompat="@drawable/ic_expand_less_black_24dp"
+                   cardView:srcCompat="@drawable/ic_place_black_24dp"
                    android:id="@+id/location"
                    android:layout_weight="1" />
            </LinearLayout>

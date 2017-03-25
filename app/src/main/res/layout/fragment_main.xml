@@ -25,16 +25,19 @@
                 android:layout_height="200dp" />
 
             <TextView
-                android:text="Paris, France"
+                android:text="Recommendations For Your Buckt List"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/recommendationName"
+                android:id="@+id/recommendation"
                 android:textAlignment="center"
-                android:textSize="30sp" />
+                android:textSize="25sp"
+                android:padding="10dp" />
+
             <ListView
                 android:id="@+id/recommendationList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_margin="10dp"
+                android:layout_height="250dp">
 
             </ListView>
         </LinearLayout>

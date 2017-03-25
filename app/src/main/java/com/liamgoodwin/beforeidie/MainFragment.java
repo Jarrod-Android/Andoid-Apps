@@ -38,7 +38,7 @@ public class MainFragment extends Fragment {
 
         list = (ListView) view.findViewById(R.id.recommendationList);
         final ArrayList<Recommendations> recommendationList = new ArrayList<Recommendations>();
-        recommendationList.add(new Recommendations("Wheatly Park", "This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=42.088782,-82.444714(Wheatly Park)"));
+        recommendationList.add(new Recommendations("Paris, France", "Paris, France's capital, is a major European city and a global center for art, fashion, gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.", "geo:0,0?q=48.8566,2.3522(Paris, France)"));
 //        recommendationList.add(new Recommendations("Algonquin Park", "This is a large park This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=45.554195,-78.596781(Algonquin Park)"));
 //        recommendationList.add(new Recommendations("Elora Gorge", "This park has a gorge in it This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=43.672014,-80.444244(Elora Gorge)"));
 //        recommendationList.add(new Recommendations("Greenway", "This used to be train tracks This is a nice park This is a nice park This is a nice park This is a nice park This is a nice park", "geo:0,0?q=42.101273,-82.933795(Green Way)"));
