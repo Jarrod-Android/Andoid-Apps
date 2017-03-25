@@ -1,5 +1,6 @@
 package com.liamgoodwin.beforeidie;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -79,7 +80,23 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         }
 
         public Fragment getItem(int num) {
-            return new MainFragment();
+
+//            return new MainFragment();
+
+            switch(num) {
+                case 0:
+                    return new MyBucketListFragment();
+                case 1:
+                    return new MainFragment();
+                case 2:
+                    return new SettingsFragment();
+                case 3:
+                    return new MyBucketListFragment();
+                case 4:
+                    return new MainFragment();
+                default:
+                    return new MainFragment();
+            }
         }
 
         @Override
@@ -89,7 +106,21 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         @Override
         public CharSequence getPageTitle(int tabposition) {
-            return "Tab " + tabposition;
+
+            switch(tabposition) {
+                case 1:
+                    return "Bucket List";
+                case 2:
+                    return "Home";
+                case 3:
+                    return "Settings";
+                case 4:
+                    return "Bucket List";
+                case 5:
+                    return "Home";
+                default:
+                    return "Home";
+            }
         }
     }
 }
