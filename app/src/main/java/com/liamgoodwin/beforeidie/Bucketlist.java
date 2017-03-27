@@ -8,6 +8,7 @@ import java.math.BigInteger;
 
 public class Bucketlist {
 
+    private int id;
     private String name;
     private String description;
     private int time;
@@ -16,6 +17,17 @@ public class Bucketlist {
         this.name = name;
         this.description = description;
         this.time = time;
+    }
+
+    public Bucketlist(int id, String name, String description, int time){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.time = time;
+    }
+
+    public Bucketlist(){
+
     }
 
     public String getName() {
@@ -40,5 +52,13 @@ public class Bucketlist {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

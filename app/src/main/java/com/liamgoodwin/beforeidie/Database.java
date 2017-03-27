@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
 
 public class Database extends SQLiteOpenHelper {
@@ -40,12 +39,12 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_TIME = "time";
 
     /**
-     *Image Table Column Names
+     * Image Table Column Names
      */
     private static final String COLUMN_RESOURCE = "resource";
 
     /**
-     *Image Location Table Column Names
+     * Image Location Table Column Names
      */
     private static final String COLUMN_PICTURE = "id_picture";
     private static final String COLUMN_LOCATION = "id_location";
@@ -56,14 +55,14 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String CREATE_BUCKET_LIST_TABLE = "CREATE TABLE " + TABLE_BUCKET_LIST + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
-            + COLUMN_TIME + " TEXT," + ")";
+            + COLUMN_TIME + " INTEGER" + ")";
 
     private static final String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_RESOURCE + " TEXT" + ")";
 
     private static final String CREATE_IMAGE_LOCATION_TABLE = "CREATE TABLE " + TABLE_IMAGELOCATION + "("
-            + COLUMN_LOCATION + " INTEGER REFERENCES " + TABLE_BUCKET_LIST + "(" + COLUMN_ID +"),"
-            + COLUMN_PICTURE + " INTEGER REFERENCES " + TABLE_BUCKET_LIST + "(" + COLUMN_ID +")" +")";
+            + COLUMN_LOCATION + " INTEGER REFERENCES " + TABLE_BUCKET_LIST + "(" + COLUMN_ID + "),"
+            + COLUMN_PICTURE + " INTEGER REFERENCES " + TABLE_BUCKET_LIST + "(" + COLUMN_ID + ")" + ")";
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -71,6 +70,7 @@ public class Database extends SQLiteOpenHelper {
 
     /**
      * Create the tables inside of the database
+     *
      * @param db
      */
     @Override
@@ -97,7 +97,6 @@ public class Database extends SQLiteOpenHelper {
 
     /**
      * CREATE new objects for the tables
-     *
      */
     public void addBucketlist(Bucketlist bucketlist) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -108,15 +107,16 @@ public class Database extends SQLiteOpenHelper {
         db.insert(TABLE_BUCKET_LIST, null, values);
         db.close();
     }
+
     //We modified addPicture to return the rowNumber it was added into
-    public int addPicture(Picture picture) {
+    public int addImage(Image image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_RESOURCE, picture.getResource());
-        db.insert(TABLE_PICTURES, null, values);
+        values.put(COLUMN_RESOURCE, image.getResource());
+        db.insert(TABLE_IMAGE, null, values);
         db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             int location = Integer.parseInt(cursor.getString(0));
             System.out.println("Record ID " + location);
             db.close();
@@ -124,8 +124,9 @@ public class Database extends SQLiteOpenHelper {
         }
         return -1;
     }
+
     //Added a method that will add an image location record
-    public void addImageLocation(int image, int location){
+    public void addImageLocation(int image, int location) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_LOCATION, location);
@@ -137,62 +138,62 @@ public class Database extends SQLiteOpenHelper {
     /**
      * READ objects from database
      */
-    public Location getLocation(int id) {
+    public Bucketlist getTime(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_LOCATIONS,
-                new String[] { COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_COORD}, COLUMN_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_BUCKET_LIST,
+                new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_TIME}, COLUMN_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null)
             cursor.moveToFirst();
-        Location location = new Location(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3));
-        return location;
+        Bucketlist bl = new Bucketlist(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2), cursor.getInt(3));
+        return bl;
     }
 
-    public ArrayList<Location> getAllLocations() {
-        ArrayList<Location> locationList = new ArrayList<Location>();
-        String selectQuery = "SELECT  * FROM " + TABLE_LOCATIONS;
+    public ArrayList<Bucketlist> getAllBucketlist() {
+        ArrayList<Bucketlist> locationList = new ArrayList<Location>();
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                Location location = new Location();
+                Bucketlist location = new Bucketlist();
                 location.setId(Integer.parseInt(cursor.getString(0)));
                 location.setName(cursor.getString(1));
                 location.setDescription(cursor.getString(2));
-                location.setLocation(cursor.getString(3));
+                location.setTime(cursor.getInt(3));
                 locationList.add(location);
             } while (cursor.moveToNext());
         }
         return locationList;
     }
 
-    public Picture getPicture(int id) {
+    public Image getImage(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_PICTURES, new String[] {COLUMN_ID, COLUMN_RESOURCE}, COLUMN_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
+        Cursor cursor = db.query(TABLE_IMAGE, new String[]{COLUMN_ID, COLUMN_RESOURCE}, COLUMN_ID + "=?",
+                new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Picture picture = new Picture(Integer.parseInt(cursor.getString(0)),
+        Image image = new Image(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1));
 
-        return picture;
+        return image;
     }
 
-    public ArrayList<Picture> getAllPictures() {
-        ArrayList<Picture> pictureList = new ArrayList<Picture>();
-        String selectQuery = "SELECT  * FROM " + TABLE_PICTURES;
+    public ArrayList<Image> getAllImages() {
+        ArrayList<Image> pictureList = new ArrayList<Image>();
+        String selectQuery = "SELECT  * FROM " + TABLE_IMAGE;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Picture picture = new Picture();
+                Image picture = new Image();
                 picture.setId(Integer.parseInt(cursor.getString(0)));
                 picture.setResource(cursor.getString(1));
                 pictureList.add(picture);
@@ -203,105 +204,64 @@ public class Database extends SQLiteOpenHelper {
 
     /**
      * The second getAllPictures is used to grab all images associated with an location
+     *
      * @param location
      * @return
      */
-    public ArrayList<Picture> getAllPictures(int location) {
-        ArrayList<Picture> pictureList = new ArrayList<Picture>();
+    public ArrayList<Image> getAllImages(int location) {
+        ArrayList<Image> pictureList = new ArrayList<Image>();
         String selectQuery = "SELECT  * FROM " + TABLE_IMAGELOCATION + " WHERE " + COLUMN_LOCATION + " = " + location;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                String innerQuery = "SELECT * FROM " + TABLE_PICTURES + " WHERE " + COLUMN_ID + "=" + cursor.getInt(1);
+                String innerQuery = "SELECT * FROM " + TABLE_IMAGE + " WHERE " + COLUMN_ID + "=" + cursor.getInt(1);
                 Cursor innerCursor = db.rawQuery(innerQuery, null);
                 if (innerCursor.moveToFirst()) {
                     do {
-                        Picture picture = new Picture();
+                        Image picture = new Image();
                         picture.setId(Integer.parseInt(innerCursor.getString(0)));
                         picture.setResource(innerCursor.getString(1));
                         pictureList.add(picture);
                     } while (innerCursor.moveToNext());
                 }
-            }while (cursor.moveToNext());
-        }
-        return pictureList;
-    }
-
-    public Trip getTrip(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_TRIPS, new String[] {COLUMN_ID, COLUMN_DATE, COLUMN_LOCATION}, COLUMN_ID + "=?",
-                new String[] { String.valueOf(id) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        Trip trip = new Trip(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), Integer.parseInt(cursor.getString(2)));
-        return trip;
-    }
-
-    public ArrayList<Trip> getAllTrips() {
-        ArrayList<Trip> tripList = new ArrayList<Trip>();
-        String selectQuery = "SELECT  * FROM " + TABLE_TRIPS;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Trip trip = new Trip();
-                trip.setId(Integer.parseInt(cursor.getString(0)));
-                trip.setDate(cursor.getString(1));
-                trip.setLocation(Integer.parseInt(cursor.getString(2)));
-                tripList.add(trip);
             } while (cursor.moveToNext());
         }
-        return tripList;
+        return pictureList;
     }
 
     /**
      * UPDATE objects in database
      */
-    public int updateLocation(Location location) {
+    public int updateBucketlist(Bucketlist bl) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, location.getName());
-        values.put(COLUMN_DESCRIPTION, location.getDescription());
-        values.put(COLUMN_COORD, location.getLocation());
-        return db.update(TABLE_LOCATIONS, values, COLUMN_ID + " = ?", new String[] { String.valueOf(location.getId()) });
+        values.put(COLUMN_NAME, bl.getName());
+        values.put(COLUMN_DESCRIPTION, bl.getDescription());
+        values.put(COLUMN_TIME, bl.getTime());
+        return db.update(TABLE_BUCKET_LIST, values, COLUMN_ID + " = ?", new String[]{String.valueOf(bl.getId())});
     }
-    public int updatePicture(Picture picture) {
+
+    public int updatePicture(Image image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_RESOURCE, picture.getResource());
-        return db.update(TABLE_PICTURES, values, COLUMN_ID + " = ?", new String[] { String.valueOf(picture.getId()) });
-    }
-    public int updateTrip(Trip trip) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_DATE, trip.getDate());
-        values.put(COLUMN_LOCATION, trip.getLocation());
-        return db.update(TABLE_TRIPS, values, COLUMN_ID + " = ?", new String[] { String.valueOf(trip.getId()) });
+        values.put(COLUMN_RESOURCE, image.getResource());
+        return db.update(TABLE_IMAGE, values, COLUMN_ID + " = ?", new String[]{String.valueOf(image.getId())});
     }
 
     /**
      * DELETE objects from database
      */
-    public void deleteLocation(long location_id) {
+    public void deleteBucketlist(long location_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_LOCATIONS, COLUMN_ID + " = ?",
-                new String[] { String.valueOf(location_id) });
+        db.delete(TABLE_BUCKET_LIST, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(location_id)});
     }
-    public void deletePicture(long picture_id) {
+
+    public void deleteImage(long picture_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PICTURES, COLUMN_ID + " = ?",
-                new String[] { String.valueOf(picture_id) });
-    }
-    public void deleteTrip(long trip_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_TRIPS, COLUMN_ID + " = ?",
-                new String[] { String.valueOf(trip_id) });
+        db.delete(TABLE_IMAGE, COLUMN_ID + " = ?",
+                new String[]{String.valueOf(picture_id)});
     }
 
     /**
@@ -312,4 +272,5 @@ public class Database extends SQLiteOpenHelper {
         if (db != null && db.isOpen())
             db.close();
     }
+}
 
