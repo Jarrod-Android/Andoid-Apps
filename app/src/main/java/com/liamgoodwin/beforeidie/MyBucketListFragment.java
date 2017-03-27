@@ -8,17 +8,24 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MyBucketListFragment extends Fragment {
 
@@ -32,9 +39,11 @@ public class MyBucketListFragment extends Fragment {
 
         fm = getActivity().getSupportFragmentManager();
 
+
+
         list = (ListView) view.findViewById(R.id.bucketlistListView);
         final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 666));
+        bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 6666));
         final CustomAdapter adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -55,6 +64,43 @@ public class MyBucketListFragment extends Fragment {
                 edit.setVisibility(View.INVISIBLE);
                 delete.setImageResource(R.drawable.deleteimage);
                 delete.setVisibility(View.INVISIBLE);
+
+                SimpleDateFormat dateFormat =
+                        new SimpleDateFormat("dd/M/yyyy");
+
+
+                java.util.Date currentDate = null;
+                java.util.Date bldate = null;
+                try {
+
+
+                    DatePicker bucketlistDate = (DatePicker) view.findViewById(R.id.datePicker);
+                    bldate = dateFormat.parse("27/3/2018");
+
+                    Calendar calandar = Calendar.getInstance();
+                    int day = calandar.get(Calendar.DAY_OF_MONTH);
+                    int month = calandar.get(Calendar.MONTH) + 1;
+                    int year = calandar.get(Calendar.YEAR);
+
+                    currentDate = dateFormat.parse(day + "/" + month + "/" + year);
+
+
+
+                    //bldate = dateFormat.parse(bucketlistDate.getDayOfMonth() + "/" + bucketlistDate.getMonth() + "/" + bucketlistDate.getYear());
+
+                    int diffInDays = (int) ((bldate.getTime() - currentDate.getTime())/ (1000 * 60 * 60 * 24));
+
+                    TextView dayCounter = (TextView) view.findViewById(R.id.dayCounter);
+                    dayCounter.setVisibility(View.VISIBLE);
+                    dayCounter.setText(diffInDays + " days");
+
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+
                 if(BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription() ){
                     //Update the text of the description
                     BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
@@ -75,12 +121,15 @@ public class MyBucketListFragment extends Fragment {
                     details.setText("Click to show more");
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
+
                 }
             }
         });
 
         return view;
     }
+
+
 
     public class CustomAdapter extends ArrayAdapter<Bucketlist> {
 
