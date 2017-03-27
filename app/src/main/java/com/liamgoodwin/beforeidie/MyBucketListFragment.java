@@ -43,9 +43,12 @@ public class MyBucketListFragment extends Fragment {
                 BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
                 TextView details = (TextView) view.findViewById(R.id.details);
                 ImageView chevron = (ImageView) view.findViewById(R.id.chevron);
+                ImageView additem = (ImageView) view.findViewById(R.id.additem);
                 ImageView addPhoto = (ImageView) view.findViewById(R.id.addphoto);
                 ImageView edit = (ImageView) view.findViewById(R.id.edit);
                 ImageView delete = (ImageView) view.findViewById(R.id.delete);
+                additem.setImageResource(R.drawable.checkmark);
+                additem.setVisibility(View.INVISIBLE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
                 addPhoto.setVisibility(View.INVISIBLE);
                 edit.setImageResource(R.drawable.editimage);
@@ -60,6 +63,7 @@ public class MyBucketListFragment extends Fragment {
                     details.setText("Click to show less");
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                    additem.setVisibility(View.VISIBLE);
                     addPhoto.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.VISIBLE);
                     delete.setVisibility(View.VISIBLE);
@@ -72,14 +76,6 @@ public class MyBucketListFragment extends Fragment {
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
                 }
-            }
-        });
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                bucketList.remove(position);
-                adapter.notifyDataSetChanged();
-                return false;
             }
         });
 

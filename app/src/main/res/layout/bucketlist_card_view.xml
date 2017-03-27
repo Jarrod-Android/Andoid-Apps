@@ -76,21 +76,27 @@
             android:layout_gravity="center_horizontal">
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:id="@+id/addphoto"
-                android:layout_marginRight="10dp" />
+                android:id="@+id/additem"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp" />
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:id="@+id/edit"
-                android:layout_marginRight="10dp" />
+                android:id="@+id/addphoto"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp" />
+
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:id="@+id/edit"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp" />
+            <ImageView
                 android:id="@+id/delete"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp" />
 
         </LinearLayout>
 
