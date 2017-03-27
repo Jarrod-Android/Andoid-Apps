@@ -1,0 +1,46 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.liamgoodwin.beforeidie.MainFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                app:srcCompat="@drawable/beforeidie"
+                android:id="@+id/imageView"
+                android:layout_height="200dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp" />
+
+            <TextView
+                android:text="Recommendations For Your Bucket List"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recommendation"
+                android:textAlignment="center"
+                android:textSize="25sp"
+                android:padding="10dp" />
+
+            <ListView
+                android:id="@+id/recommendationList"
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="250dp">
+
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
