@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,7 +34,7 @@ public class MyBucketListFragment extends Fragment {
     TextView name;
     TextView description;
     ListView list;
-    Button 
+    Button delete;
     TextView BucketlistDescriptionTextView;
 
     @Override
@@ -43,6 +44,7 @@ public class MyBucketListFragment extends Fragment {
         fm = getActivity().getSupportFragmentManager();
 
         list = (ListView) view.findViewById(R.id.bucketlistListView);
+        delete = (Button) view.findViewById(R.id.delete);
         Database db = new Database(getContext());
         final ArrayList<Bucketlist> bucketList = db.getAllBucketlist();
         db.closeDB();
@@ -125,17 +127,15 @@ public class MyBucketListFragment extends Fragment {
         list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                DatabaseHandler db = new DatabaseHandler(getContext());
-                Location location = locationslist.get(position);
-                db.deleteLocation(location.getId());
+                Database db = new Database(getContext());
+                Bucketlist location = bucketList.get(position);
+                db.deleteBucketlist(location.getId());
                 db.closeDB();
-                locationslist.remove(position);
+                bucketList.remove(position);
                 adapter.notifyDataSetChanged();
                 return false;
             }
         });
-        return view;
-
         return view;
     }
 
