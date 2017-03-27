@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -30,7 +31,10 @@ import java.util.Date;
 public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
+    TextView name;
+    TextView description;
     ListView list;
+    Button delete;
     TextView BucketlistDescriptionTextView;
 
     @Override
@@ -39,11 +43,14 @@ public class MyBucketListFragment extends Fragment {
 
         fm = getActivity().getSupportFragmentManager();
 
-
-
         list = (ListView) view.findViewById(R.id.bucketlistListView);
-        final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 6666));
+        delete = (Button) view.findViewById(R.id.delete);
+        Database db = new Database(getContext());
+        final ArrayList<Bucketlist> bucketList = db.getAllBucketlist();
+        db.closeDB();
+
+//        final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
+//        bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 6666));
         final CustomAdapter adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,11 +75,9 @@ public class MyBucketListFragment extends Fragment {
                 SimpleDateFormat dateFormat =
                         new SimpleDateFormat("dd/M/yyyy");
 
-
                 java.util.Date currentDate = null;
                 java.util.Date bldate = null;
                 try {
-
 
                     DatePicker bucketlistDate = (DatePicker) view.findViewById(R.id.datePicker);
                     bldate = dateFormat.parse("27/3/2018");
@@ -84,8 +89,6 @@ public class MyBucketListFragment extends Fragment {
 
                     currentDate = dateFormat.parse(day + "/" + month + "/" + year);
 
-
-
                     //bldate = dateFormat.parse(bucketlistDate.getDayOfMonth() + "/" + bucketlistDate.getMonth() + "/" + bucketlistDate.getYear());
 
                     int diffInDays = (int) ((bldate.getTime() - currentDate.getTime())/ (1000 * 60 * 60 * 24));
@@ -94,12 +97,9 @@ public class MyBucketListFragment extends Fragment {
                     dayCounter.setVisibility(View.VISIBLE);
                     dayCounter.setText(diffInDays + " days");
 
-
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-
 
                 if(BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription() ){
                     //Update the text of the description
@@ -121,15 +121,23 @@ public class MyBucketListFragment extends Fragment {
                     details.setText("Click to show more");
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
-
                 }
             }
         });
-
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Database db = new Database(getContext());
+                Bucketlist location = bucketList.get(position);
+                db.deleteBucketlist(location.getId());
+                db.closeDB();
+                bucketList.remove(position);
+                adapter.notifyDataSetChanged();
+                return false;
+            }
+        });
         return view;
     }
-
-
 
     public class CustomAdapter extends ArrayAdapter<Bucketlist> {
 
@@ -147,10 +155,10 @@ public class MyBucketListFragment extends Fragment {
                                 R.layout.bucketlist_card_view, parent, false);
             }
 
-            TextView name = (TextView) convertView.findViewById(R.id.name);
+            name = (TextView) convertView.findViewById(R.id.name);
             name.setText(item.getName());
 
-            return  convertView;
+            return convertView;
         }
 
 
