@@ -22,14 +22,26 @@
             android:orientation="horizontal"
             android:padding="0dp">
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
                 android:padding="4dp"
                 android:textSize="24sp"
                 android:text="Bucketlist Name"
                 android:layout_weight="1"
+                android:maxWidth="50dp"
                 android:fontFamily="serif"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/dayCounter"
+                android:layout_weight="1"
+                android:layout_gravity="right"
+                android:textSize="25sp"
+                android:textColor="@android:color/holo_green_light"
+                android:gravity="right"
+                android:textAlignment="textEnd" />
 
             //add clock here
             <!--<ImageView-->
@@ -76,21 +88,27 @@
             android:layout_gravity="center_horizontal">
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:id="@+id/addphoto"
-                android:layout_marginRight="10dp" />
+                android:id="@+id/additem"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp" />
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:id="@+id/edit"
-                android:layout_marginRight="10dp" />
+                android:id="@+id/addphoto"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp" />
+
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:id="@+id/edit"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp" />
+            <ImageView
                 android:id="@+id/delete"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp" />
 
         </LinearLayout>
 
