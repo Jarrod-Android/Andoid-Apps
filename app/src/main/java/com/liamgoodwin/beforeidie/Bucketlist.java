@@ -11,15 +11,15 @@ public class Bucketlist {
     private int id;
     private String name;
     private String description;
-    private int time;
+    private String time;
 
-    public Bucketlist(String name, String description, int time){
+    public Bucketlist(String name, String description, String time){
         this.name = name;
         this.description = description;
         this.time = time;
     }
 
-    public Bucketlist(int id, String name, String description, int time){
+    public Bucketlist(int id, String name, String description, String time){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -46,11 +46,9 @@ public class Bucketlist {
         this.description = description;
     }
 
-    public int getTime() {
-        return time;
-    }
+    public String getTime() { return time; }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

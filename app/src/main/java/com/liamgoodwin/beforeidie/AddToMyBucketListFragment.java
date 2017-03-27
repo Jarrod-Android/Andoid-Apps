@@ -36,8 +36,12 @@ public class AddToMyBucketListFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String formattedDate = date.getDayOfMonth() + "/" + date.getMonth() + "/" + date.getYear();
+
+
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
-                        description.getText().toString(), date.);
+                        description.getText().toString(), formattedDate);
+
                 DatabaseHandler db = new DatabaseHandler(getContext());
                 db.addLocation(location);
                 db.closeDB();
