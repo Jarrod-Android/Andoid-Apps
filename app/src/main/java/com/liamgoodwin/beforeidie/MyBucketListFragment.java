@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
@@ -22,6 +24,7 @@ public class MyBucketListFragment extends Fragment {
         fm = getActivity().getSupportFragmentManager();
 
         list = (ListView) view.findViewById(R.id.bucketlistListView);
+        final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
 
         return view;
     }
