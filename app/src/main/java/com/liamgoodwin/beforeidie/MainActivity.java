@@ -1,5 +1,6 @@
 package com.liamgoodwin.beforeidie;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +13,8 @@ import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
-public class MainActivity extends ActionBarActivity implements MaterialTabListener {
+public class MainActivity extends ActionBarActivity implements MaterialTabListener,
+    ImageFragment.OnFragmentInteractionListener {
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
@@ -68,6 +70,11 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     //tab on unselected
     @Override
     public void onTabUnselected(MaterialTab materialTab) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 

@@ -60,10 +60,6 @@ public class ImageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bucketlist_card_view, container, false);
-        if(mParam1 != 0){
-            ImageView image = (ImageView) view.findViewById(R.id.bucketlistImage);
-            image.setImageResource(R.drawable.checkmark);
-        }
 
         return view;
     }
