@@ -12,6 +12,7 @@
     cardView:cardUseCompatPadding="true"
     cardView:cardBackgroundColor="?attr/colorButtonNormal">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,13 +44,6 @@
                 android:gravity="right"
                 android:textAlignment="textEnd" />
 
-            //add clock here
-            <!--<ImageView-->
-                <!--android:layout_width="40dp"-->
-                <!--android:layout_height="40dp"-->
-                <!--cardView:srcCompat="@drawable/ic_place_black_24dp"-->
-                <!--android:id="@+id/location"-->
-                <!--android:layout_weight="1" />-->
         </LinearLayout>
 
         <TextView
@@ -59,10 +53,64 @@
             android:textStyle="normal|italic"/>
 
         <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                cardView:srcCompat="@drawable/checkmark"
+                android:id="@+id/imageView2"
+                android:layout_weight="1" />
+
+            </android.support.v4.view.ViewPager>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/additem"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/addphoto"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/delete"
+                android:layout_marginRight="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:text="Click to view more"
@@ -71,45 +119,14 @@
                 android:id="@+id/details"
                 android:gravity="center_horizontal"
                 android:textStyle="normal|italic"
-                android:layout_gravity="right"/>
+                android:layout_weight="0" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 cardView:srcCompat="@drawable/ic_expand_more_black_24dp"
                 android:id="@+id/chevron"
-                android:layout_gravity="bottom|right"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal">
-
-            <ImageView
-                android:id="@+id/additem"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp" />
-
-            <ImageView
-                android:id="@+id/addphoto"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp" />
-
-            <ImageView
-                android:id="@+id/edit"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp" />
-            <ImageView
-                android:id="@+id/delete"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp" />
-
+                android:layout_weight="0" />
         </LinearLayout>
 
 
