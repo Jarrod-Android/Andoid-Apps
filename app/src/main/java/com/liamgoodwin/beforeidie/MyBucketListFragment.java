@@ -73,7 +73,6 @@ public class MyBucketListFragment extends Fragment {
                 java.util.Date bldate = null;
                 try {
 
-
                     DatePicker bucketlistDate = (DatePicker) view.findViewById(R.id.datePicker);
                     bldate = dateFormat.parse("27/3/2018");
 
@@ -84,8 +83,6 @@ public class MyBucketListFragment extends Fragment {
 
                     currentDate = dateFormat.parse(day + "/" + month + "/" + year);
 
-
-
                     //bldate = dateFormat.parse(bucketlistDate.getDayOfMonth() + "/" + bucketlistDate.getMonth() + "/" + bucketlistDate.getYear());
 
                     int diffInDays = (int) ((bldate.getTime() - currentDate.getTime())/ (1000 * 60 * 60 * 24));
@@ -94,12 +91,9 @@ public class MyBucketListFragment extends Fragment {
                     dayCounter.setVisibility(View.VISIBLE);
                     dayCounter.setText(diffInDays + " days");
 
-
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-
 
                 if(BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription() ){
                     //Update the text of the description
@@ -121,7 +115,6 @@ public class MyBucketListFragment extends Fragment {
                     details.setText("Click to show more");
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
-
                 }
             }
         });
