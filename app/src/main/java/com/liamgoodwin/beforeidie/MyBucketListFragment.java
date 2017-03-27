@@ -46,7 +46,7 @@ public class MyBucketListFragment extends Fragment {
                 ImageView addPhoto = (ImageView) view.findViewById(R.id.addphoto);
                 ImageView edit = (ImageView) view.findViewById(R.id.edit);
                 ImageView delete = (ImageView) view.findViewById(R.id.delete);
-                addPhoto.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+                addPhoto.setImageResource(R.drawable.camerabutton);
                 addPhoto.setVisibility(View.INVISIBLE);
                 edit.setImageResource(R.drawable.editimage);
                 edit.setVisibility(View.INVISIBLE);
