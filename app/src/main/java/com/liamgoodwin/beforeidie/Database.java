@@ -152,22 +152,22 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public ArrayList<Bucketlist> getAllBucketlist() {
-        ArrayList<Bucketlist> locationList = new ArrayList<Location>();
+        ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                Bucketlist location = new Bucketlist();
-                location.setId(Integer.parseInt(cursor.getString(0)));
-                location.setName(cursor.getString(1));
-                location.setDescription(cursor.getString(2));
-                location.setTime(cursor.getInt(3));
-                locationList.add(location);
+                Bucketlist bl = new Bucketlist();
+                bl.setId(Integer.parseInt(cursor.getString(0)));
+                bl.setName(cursor.getString(1));
+                bl.setDescription(cursor.getString(2));
+                bl.setTime(cursor.getInt(3));
+                bucketList.add(bl);
             } while (cursor.moveToNext());
         }
-        return locationList;
+        return bucketList;
     }
 
     public Image getImage(int id) {
