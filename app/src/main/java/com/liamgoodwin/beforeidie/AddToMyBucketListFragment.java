@@ -6,11 +6,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
 
 /**
  * Created by liamgoodwin on 2017-03-27.
  */
 public class AddToMyBucketListFragment extends Fragment {
+
+    EditText name;
+    EditText descriptuon;
+    DatePicker date;
+
+    public AddToMyBucketListFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
