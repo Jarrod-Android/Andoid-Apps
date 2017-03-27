@@ -10,9 +10,9 @@ public class Bucketlist {
 
     private String name;
     private String description;
-    private BigInteger time;
+    private int time;
 
-    public Bucketlist(String name, String description, BigInteger time){
+    public Bucketlist(String name, String description, int time){
         this.name = name;
         this.description = description;
         this.time = time;
@@ -34,11 +34,11 @@ public class Bucketlist {
         this.description = description;
     }
 
-    public BigInteger getTime() {
+    public int getTime() {
         return time;
     }
 
-    public void setTime(BigInteger time) {
+    public void setTime(int time) {
         this.time = time;
     }
 }

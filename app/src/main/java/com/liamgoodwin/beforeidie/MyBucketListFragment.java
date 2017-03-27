@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class MyBucketListFragment extends Fragment {
@@ -25,6 +26,7 @@ public class MyBucketListFragment extends Fragment {
 
         list = (ListView) view.findViewById(R.id.bucketlistListView);
         final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
+        bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is th largest aquatic animal habitant", 666));
 
         return view;
     }
