@@ -47,12 +47,10 @@ public class MainFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RecommendationsDescriptionTextView =
-                        (TextView) view.findViewById(R.id.description);
+                RecommendationsDescriptionTextView = (TextView) view.findViewById(R.id.description);
                 TextView details = (TextView) view.findViewById(R.id.details);
                 ImageView chevron = (ImageView) view.findViewById(R.id.chevron);
-                if(RecommendationsDescriptionTextView.getText() !=
-                        (recommendationList.get(position)).getDescription() ){
+                if(RecommendationsDescriptionTextView.getText() != (recommendationList.get(position)).getDescription() ){
                     //Update the text of the description
                     RecommendationsDescriptionTextView.setText(
                             ((Recommendations) list.getItemAtPosition(position)).getDescription());

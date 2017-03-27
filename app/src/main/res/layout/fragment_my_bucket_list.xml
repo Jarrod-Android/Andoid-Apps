@@ -1,13 +1,16 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.liamgoodwin.beforeidie.MyBucketListFragment">
+    tools:context="com.liamgoodwin.beforeidie.MyBucketListFragment"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/bucketlistListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="My Bucket List" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+    </ListView>
+
+</LinearLayout>
