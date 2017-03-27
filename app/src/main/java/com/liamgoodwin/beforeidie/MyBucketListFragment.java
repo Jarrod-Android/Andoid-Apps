@@ -139,8 +139,6 @@ public class MyBucketListFragment extends Fragment {
         return view;
     }
 
-
-
     public class CustomAdapter extends ArrayAdapter<Bucketlist> {
 
         public CustomAdapter(Context context, ArrayList<Bucketlist> items) {
