@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,6 +24,7 @@ public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
     ListView list;
+    TextView BucketlistDescriptionTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,6 +37,51 @@ public class MyBucketListFragment extends Fragment {
         bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 666));
         final CustomAdapter adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
+                TextView details = (TextView) view.findViewById(R.id.details);
+                ImageView chevron = (ImageView) view.findViewById(R.id.chevron);
+                ImageView addPhoto = (ImageView) view.findViewById(R.id.addphoto);
+                ImageView edit = (ImageView) view.findViewById(R.id.edit);
+                ImageView delete = (ImageView) view.findViewById(R.id.delete);
+                addPhoto.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
+                addPhoto.setVisibility(View.INVISIBLE);
+                edit.setImageResource(R.drawable.editimage);
+                edit.setVisibility(View.INVISIBLE);
+                delete.setImageResource(R.drawable.deleteimage);
+                delete.setVisibility(View.INVISIBLE);
+                if(BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription() ){
+                    //Update the text of the description
+                    BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
+
+                    //update the text of the show more
+                    details.setText("Click to show less");
+                    //update the chevron image
+                    chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                    addPhoto.setVisibility(View.VISIBLE);
+                    edit.setVisibility(View.VISIBLE);
+                    delete.setVisibility(View.VISIBLE);
+
+                }
+                else{
+                    BucketlistDescriptionTextView.setText("");
+                    //update the text of the show more
+                    details.setText("Click to show more");
+                    //update the chevron image
+                    chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
+                }
+            }
+        });
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                bucketList.remove(position);
+                adapter.notifyDataSetChanged();
+                return false;
+            }
+        });
 
         return view;
     }
@@ -52,7 +99,7 @@ public class MyBucketListFragment extends Fragment {
             if(convertView == null){
                 convertView =
                         LayoutInflater.from(getContext()).inflate(
-                                R.layout.card_view_item, parent, false);
+                                R.layout.bucketlist_card_view, parent, false);
             }
 
             TextView name = (TextView) convertView.findViewById(R.id.name);

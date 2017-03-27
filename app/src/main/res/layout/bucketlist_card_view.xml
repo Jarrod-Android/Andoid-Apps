@@ -43,7 +43,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/description"
+            android:id="@+id/bucketlistDescription"
             android:textStyle="normal|italic"/>
 
         <LinearLayout
@@ -78,18 +78,18 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                cardView:srcCompat="@drawable/ic_add_a_photo_black_24dp"
+                android:id="@+id/addphoto"
                 android:layout_marginRight="10dp" />
 
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                cardView:srcCompat="@drawable/editimage"
+                android:id="@+id/edit"
                 android:layout_marginRight="10dp" />
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                cardView:srcCompat="@drawable/deleteimage"
+                android:id="@+id/delete"
                 android:layout_marginRight="10dp" />
 
         </LinearLayout>
