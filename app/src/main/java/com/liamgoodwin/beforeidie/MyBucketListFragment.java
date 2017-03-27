@@ -30,7 +30,10 @@ import java.util.Date;
 public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
+    TextView name;
+    TextView description;
     ListView list;
+    Button 
     TextView BucketlistDescriptionTextView;
 
     @Override
@@ -39,11 +42,13 @@ public class MyBucketListFragment extends Fragment {
 
         fm = getActivity().getSupportFragmentManager();
 
-
-
         list = (ListView) view.findViewById(R.id.bucketlistListView);
-        final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 6666));
+        Database db = new Database(getContext());
+        final ArrayList<Bucketlist> bucketList = db.getAllBucketlist();
+        db.closeDB();
+
+//        final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
+//        bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 6666));
         final CustomAdapter adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -67,7 +72,6 @@ public class MyBucketListFragment extends Fragment {
 
                 SimpleDateFormat dateFormat =
                         new SimpleDateFormat("dd/M/yyyy");
-
 
                 java.util.Date currentDate = null;
                 java.util.Date bldate = null;
@@ -118,6 +122,19 @@ public class MyBucketListFragment extends Fragment {
                 }
             }
         });
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                DatabaseHandler db = new DatabaseHandler(getContext());
+                Location location = locationslist.get(position);
+                db.deleteLocation(location.getId());
+                db.closeDB();
+                locationslist.remove(position);
+                adapter.notifyDataSetChanged();
+                return false;
+            }
+        });
+        return view;
 
         return view;
     }
@@ -140,10 +157,10 @@ public class MyBucketListFragment extends Fragment {
                                 R.layout.bucketlist_card_view, parent, false);
             }
 
-            TextView name = (TextView) convertView.findViewById(R.id.name);
+            name = (TextView) convertView.findViewById(R.id.name);
             name.setText(item.getName());
 
-            return  convertView;
+            return convertView;
         }
 
 

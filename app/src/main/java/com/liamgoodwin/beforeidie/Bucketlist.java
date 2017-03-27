@@ -12,6 +12,7 @@ public class Bucketlist {
     private String name;
     private String description;
     private String time;
+    private String bucketList;
 
     public Bucketlist(String name, String description, String time){
         this.name = name;
@@ -50,6 +51,14 @@ public class Bucketlist {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getBucketlist() {
+        return bucketList;
+    }
+
+    public void setBucketlist(String time) {
+        this.bucketList = bucketList;
     }
 
     public int getId() {
