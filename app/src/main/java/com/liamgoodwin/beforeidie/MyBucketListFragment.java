@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,15 +34,19 @@ public class MyBucketListFragment extends Fragment {
     FragmentManager fm;
     ListView list;
     TextView BucketlistDescriptionTextView;
+    SectionPagerAdapter sectionPagerAdapter;
+    ViewPager viewPager;
+    ImageView image;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
-
+        image = (ImageView) view.findViewById(R.id.bucketlistImage);
         fm = getActivity().getSupportFragmentManager();
 
-
-
+        sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
+        viewPager = (ViewPager) view.findViewById(R.id.imageViewpager);
+        viewPager.setAdapter(sectionPagerAdapter);
         list = (ListView) view.findViewById(R.id.bucketlistListView);
         final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 6666));
@@ -154,6 +160,29 @@ public class MyBucketListFragment extends Fragment {
         }
 
 
+
+    }
+
+
+    class SectionPagerAdapter extends FragmentPagerAdapter {
+        public SectionPagerAdapter(FragmentManager fm){
+            super(fm);
+        }
+
+        public Fragment getItem(int position){
+
+            switch(position){
+                case 0:
+                    return ImageFragment.newInstance(R.drawable.checkmark);
+                case 1:
+                    return ImageFragment.newInstance(R.drawable.beforeidie);
+                default:
+                    return ImageFragment.newInstance(R.drawable.deleteimage);
+            }
+        }
+        public int getCount(){
+            return 2;
+        }
 
     }
 }

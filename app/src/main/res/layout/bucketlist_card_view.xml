@@ -59,13 +59,14 @@
 
             <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/imageViewpager">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 cardView:srcCompat="@drawable/checkmark"
-                android:id="@+id/imageView2"
+                android:id="@+id/bucketlistImage"
                 android:layout_weight="1" />
 
             </android.support.v4.view.ViewPager>
