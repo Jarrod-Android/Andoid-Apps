@@ -1,6 +1,5 @@
 package com.liamgoodwin.beforeidie;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -92,8 +91,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                     return new SettingsFragment();
                 case 3:
                     return new MyBucketListFragment();
-                case 4:
-                    return new MainFragment();
                 default:
                     return new MainFragment();
             }
@@ -101,7 +98,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
 
         @Override
@@ -109,15 +106,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
             switch(tabposition) {
                 case 1:
-                    return "Bucket List";
+                    return "My List";
                 case 2:
-                    return "Home";
+                    return "Add";
                 case 3:
-                    return "Settings";
-                case 4:
-                    return "Bucket List";
-                case 5:
                     return "Home";
+                case 4:
+                    return "Settings";
                 default:
                     return "Home";
             }
