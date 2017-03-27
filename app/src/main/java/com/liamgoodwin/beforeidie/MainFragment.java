@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.support.v4.app.FragmentManager;å
+import android.support.v4.app.FragmentManager;
 
 /**
  * Created by HP on 4/4/2016.
@@ -32,17 +32,17 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        LearnMore.findViewById(R.id.learnMore);
-        LearnMore.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                FragmentManager fm = getFragmentManager();
-                RecommendationDialog dialogFragment = new RecommendationDialog();
-//                dialogFragment.show(fm, "Sample Fragment");
-            }
-        });
+//        LearnMore.findViewById(R.id.learnMore);
+//        LearnMore.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                FragmentManager fm = getFragmentManager();
+//                RecommendationDialog dialogFragment = new RecommendationDialog();
+////                dialogFragment.show(fm, "Sample Fragment");
+//            }
+//        });
 //
 //        list = (ListView) view.findViewById(R.id.recommendationList);
 //        final ArrayList<Recommendations> recommendationList = new ArrayList<Recommendations>();
