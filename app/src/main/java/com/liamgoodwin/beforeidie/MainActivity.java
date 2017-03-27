@@ -86,11 +86,11 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                 case 0:
                     return new MyBucketListFragment();
                 case 1:
-                    return new MainFragment();
+                    return new AddToMyBucketListFragment();
                 case 2:
-                    return new SettingsFragment();
+                    return new MainFragment();
                 case 3:
-                    return new MyBucketListFragment();
+                    return new SettingsFragment();
                 default:
                     return new MainFragment();
             }
