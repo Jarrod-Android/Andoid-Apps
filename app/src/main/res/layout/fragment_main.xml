@@ -34,13 +34,80 @@
                 android:textSize="25sp"
                 android:padding="10dp" />
 
-            <ListView
-                android:id="@+id/recommendationList"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_margin="10dp"
-                android:layout_height="250dp">
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimaryDark"
+                android:layout_margin="10dp">
 
-            </ListView>
+                <Button
+                    android:text="Learn More"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/button"
+                    android:layout_gravity="right"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
+
+                <TextView
+                    android:text="Paris, France"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="10dp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:text="You're running out of time to complete this Bucket List item!"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:textSize="25sp"
+                android:layout_margin="10dp"
+                android:textAlignment="center"
+                android:fontFamily="sans-serif" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:padding="10dp">
+
+                <TextView
+                    android:text="Run A Marathon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/white"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView4"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textSize="24sp"
+                    tools:text="17 Days"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <!--<ListView-->
+                <!--android:id="@+id/recommendationList"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_height="250dp">-->
+
+            <!--</ListView>-->
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
