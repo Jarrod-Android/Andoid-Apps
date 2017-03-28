@@ -19,13 +19,6 @@
         android:layout_weight="1"
         android:descendantFocusability="blocksDescendants">
 
-        <ListView
-            android:id="@+id/bucketlistListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -91,12 +84,10 @@
             android:textStyle="normal|italic"/>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/imageViewpager"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center">
-
-        </android.support.v4.view.ViewPager>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            class="android.support.v4.view.ViewPager"
+            android:id="@+id/imageViewpager" />
 
         <LinearLayout
             android:layout_width="match_parent"
