@@ -72,8 +72,7 @@ public class MyBucketListFragment extends Fragment {
                 delete.setImageResource(R.drawable.deleteimage);
                 delete.setVisibility(View.INVISIBLE);
 
-                SimpleDateFormat dateFormat =
-                        new SimpleDateFormat("dd/M/yyyy");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
 
                 java.util.Date currentDate = null;
                 java.util.Date bldate = null;
@@ -148,6 +147,8 @@ public class MyBucketListFragment extends Fragment {
 
         public View getView(int position, View convertView, ViewGroup parent){
             final Bucketlist item = getItem(position);
+
+
 
             if(convertView == null){
                 convertView =
