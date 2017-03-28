@@ -1,8 +1,8 @@
 package com.liamgoodwin.beforeidie;
 
-
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -85,8 +85,6 @@ public class MyBucketListFragment extends Fragment {
                 ImageView email = (ImageView) view.findViewById(R.id.email);
                 ImageView twitter = (ImageView) view.findViewById(R.id.twitter);
                 ImageView facebook = (ImageView) view.findViewById(R.id.facebook);
-//                viewPager.setVisibility(View.INVISIBLE);
-//                image.setVisibility(View.INVISIBLE);
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.INVISIBLE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
@@ -109,22 +107,42 @@ public class MyBucketListFragment extends Fragment {
                 try {
 
                     DatePicker bucketlistDate = (DatePicker) view.findViewById(R.id.datePicker);
-                    bldate = dateFormat.parse("27/3/2018");
 
-                    Calendar calandar = Calendar.getInstance();
-                    int day = calandar.get(Calendar.DAY_OF_MONTH);
-                    int month = calandar.get(Calendar.MONTH) + 1;
-                    int year = calandar.get(Calendar.YEAR);
+                    bldate = dateFormat.parse("29/4/2017");
 
+                    //Get an instance of Calendar and get the day, month, and year
+                    Calendar calendar = Calendar.getInstance();
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    int month = calendar.get(Calendar.MONTH) + 1;
+                    int year = calendar.get(Calendar.YEAR);
+
+                    //Set the value of current date to follow the SimpleDateFormat using the values from calendar to properly check the time difference
                     currentDate = dateFormat.parse(day + "/" + month + "/" + year);
 
                     //bldate = dateFormat.parse(bucketlistDate.getDayOfMonth() + "/" + bucketlistDate.getMonth() + "/" + bucketlistDate.getYear());
 
+                    //Calculate the difference in days between the currentDate and the BucketList date, and convert it to days
                     int diffInDays = (int) ((bldate.getTime() - currentDate.getTime())/ (1000 * 60 * 60 * 24));
 
                     TextView dayCounter = (TextView) view.findViewById(R.id.dayCounter);
                     dayCounter.setVisibility(View.VISIBLE);
-                    dayCounter.setText(diffInDays + " days");
+
+                    //Check if the difference in days is equal to 1 day, if so set
+                    //the text to say 'day', else it is more than 1 so say 'days'
+                    if(diffInDays == 1) {
+                        dayCounter.setText(diffInDays + " day");
+                    } else {
+                        dayCounter.setText(diffInDays + " days");
+                    }
+
+                    //Check if the difference in days is equal to or less than 7,
+                    // if so set the text Color to red, else if less than or equal to 30,
+                    // set the text Color to Yellow, else it will be green
+                    if (diffInDays <= 7) {
+                        dayCounter.setTextColor(Color.RED);
+                    } else if(diffInDays <= 30) {
+                        dayCounter.setTextColor(Color.YELLOW);
+                    }
 
                 } catch (ParseException e) {
                     e.printStackTrace();

@@ -45,8 +45,6 @@ public class AddToMyBucketListFragment extends Fragment {
                 Database db = new Database(getContext());
                 db.addBucketlist(bucketlist);
                 db.closeDB();
-//                fm = getActivity().getSupportFragmentManager();
-//                fm.popBackStack();
             }
         });
 
