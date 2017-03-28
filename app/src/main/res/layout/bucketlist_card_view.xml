@@ -13,21 +13,32 @@
     cardView:cardBackgroundColor="?attr/colorButtonNormal">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_weight="1"
+        android:descendantFocusability="blocksDescendants">
+
+        <ListView
+            android:id="@+id/bucketlistListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0">
+
+        </ListView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:padding="0dp">
+
             <TextView
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/name"
                 android:padding="4dp"
                 android:textSize="24sp"
-                android:text="Bucketlist Name"
                 android:layout_weight="1"
                 android:maxWidth="50dp"
                 android:fontFamily="serif"/>
@@ -45,31 +56,40 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/bucketlistDescription"
-            android:textStyle="normal|italic"/>
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v4.view.ViewPager
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/imageViewpager">
+            <TextView
+                android:text="Click to view more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/details"
+                android:gravity="center_horizontal"
+                android:textStyle="normal|italic"
+                android:layout_weight="0" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                cardView:srcCompat="@drawable/checkmark"
-                android:id="@+id/bucketlistImage"
-                android:layout_weight="1" />
+                cardView:srcCompat="@drawable/ic_expand_more_black_24dp"
+                android:id="@+id/chevron"
+                android:layout_weight="0" />
 
-            </android.support.v4.view.ViewPager>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/galleryLayout"></LinearLayout>
+
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/bucketlistDescription"
+            android:textStyle="normal|italic"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,28 +127,14 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/imageViewpager"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center">
 
-            <TextView
-                android:text="Click to view more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/details"
-                android:gravity="center_horizontal"
-                android:textStyle="normal|italic"
-                android:layout_weight="0" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                cardView:srcCompat="@drawable/ic_expand_more_black_24dp"
-                android:id="@+id/chevron"
-                android:layout_weight="0" />
-        </LinearLayout>
-
-
+        </android.support.v4.view.ViewPager>
     </LinearLayout>
+
+
 </android.support.v7.widget.CardView>

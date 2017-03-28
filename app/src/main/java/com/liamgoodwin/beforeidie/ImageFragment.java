@@ -20,7 +20,7 @@ import android.widget.ImageView;
 public class ImageFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final int ARG_PARAM1 = 1;
+    private static final String ARG_PARAM1 = "param1";
 
     // TODO: Rename and change types of parameters
     private int mParam1;
@@ -42,7 +42,7 @@ public class ImageFragment extends Fragment {
     public static ImageFragment newInstance(int param1) {
         ImageFragment fragment = new ImageFragment();
         Bundle args = new Bundle();
-        args.putInt(String.valueOf(param1), ARG_PARAM1);
+        args.putInt(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,7 +51,7 @@ public class ImageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getInt(String.valueOf(ARG_PARAM1));
+            mParam1 = getArguments().getInt(ARG_PARAM1);
 
         }
     }
@@ -59,7 +59,15 @@ public class ImageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bucketlist_card_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_image, container, false);
+        if(mParam1 != 0){
+            ImageView image = (ImageView) view.findViewById(R.id.bucketlistImage);
+            image.setImageResource(mParam1);
+        }
+        else {
+            ImageView image = (ImageView) view.findViewById(R.id.bucketlistImage);
+            image.setImageResource(mParam1);
+        }
 
         return view;
     }
