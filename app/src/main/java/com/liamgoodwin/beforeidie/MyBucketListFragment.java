@@ -1,6 +1,5 @@
 package com.liamgoodwin.beforeidie;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,22 +41,25 @@ public class MyBucketListFragment extends Fragment {
     TextView description;
     ListView list;
     TextView BucketlistDescriptionTextView;
-    SectionPagerAdapter sectionPagerAdapter;
     ViewPager viewPager;
     ImageView image;
     LinearLayout galleryLayout;
     DatePicker bucketlistDate;
+    SectionPagerAdapter sectionPagerAdapter;
     GestureDetectorCompat tapGestureDetector;
+    ArrayList<Bucketlist> bucketList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
         //image = (ImageView) view.findViewById(R.id.bucketlistImage);
         fm = getActivity().getSupportFragmentManager();
+        image = (ImageView) view.findViewById(R.id.bucketlistImage);
+        fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
 //        delete = (Button) view.findViewById(R.id.delete);
         Database db = new Database(getContext());
-        final ArrayList<Bucketlist> bucketList = db.getAllBucketlist();
+        bucketList = db.getAllBucketlist();
         db.closeDB();
 
 //        final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
@@ -87,6 +89,9 @@ public class MyBucketListFragment extends Fragment {
                 viewPager.setVisibility(View.INVISIBLE);
 //                viewPager.setVisibility(View.INVISIBLE);
 //                image.setVisibility(View.INVISIBLE);
+                ImageView email = (ImageView) view.findViewById(R.id.email);
+                ImageView twitter = (ImageView) view.findViewById(R.id.twitter);
+                ImageView facebook = (ImageView) view.findViewById(R.id.facebook);
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.INVISIBLE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
@@ -97,54 +102,60 @@ public class MyBucketListFragment extends Fragment {
                 delete.setVisibility(View.INVISIBLE);
 
 
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
-
-                java.util.Date currentDate = null;
-                java.util.Date bldate = null;
-                try {
-
-                    bucketlistDate = (DatePicker) view.findViewById(R.id.datePicker);
-                    bucketlistDate.
-
-                    bldate = dateFormat.parse(bldate);
-
-                    //Get an instance of Calendar and get the day, month, and year
-                    Calendar calendar = Calendar.getInstance();
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
-                    int month = calendar.get(Calendar.MONTH) + 1;
-                    int year = calendar.get(Calendar.YEAR);
-
-                    //Set the value of current date to follow the SimpleDateFormat using the values from calendar to properly check the time difference
-                    currentDate = dateFormat.parse(day + "/" + month + "/" + year);
-
-                    //bldate = dateFormat.parse(bucketlistDate.getDayOfMonth() + "/" + bucketlistDate.getMonth() + "/" + bucketlistDate.getYear());
-
-                    //Calculate the difference in days between the currentDate and the BucketList date, and convert it to days
-                    int diffInDays = (int) ((bldate.getTime() - currentDate.getTime())/ (1000 * 60 * 60 * 24));
-
-                    TextView dayCounter = (TextView) view.findViewById(R.id.dayCounter);
-                    dayCounter.setVisibility(View.VISIBLE);
-
-                    //Check if the difference in days is equal to 1 day, if so set
-                    //the text to say 'day', else it is more than 1 so say 'days'
-                    if(diffInDays == 1) {
-                        dayCounter.setText(diffInDays + " day");
-                    } else {
-                        dayCounter.setText(diffInDays + " days");
-                    }
-
-                    //Check if the difference in days is equal to or less than 7,
-                    // if so set the text Color to red, else if less than or equal to 30,
-                    // set the text Color to Yellow, else it will be green
-                    if (diffInDays <= 7) {
-                        dayCounter.setTextColor(Color.RED);
-                    } else if(diffInDays <= 30) {
-                        dayCounter.setTextColor(Color.YELLOW);
-                    }
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+//
+//                java.util.Date currentDate = null;
+//                java.util.Date bldate = null;
+//                try {
+//
+//                    bucketlistDate = (DatePicker) view.findViewById(R.id.datePicker);
+//                    bucketlistDate.
+//
+//                    bldate = dateFormat.parse(bldate);
+//
+//                    //Get an instance of Calendar and get the day, month, and year
+//                    Calendar calendar = Calendar.getInstance();
+//                    int day = calendar.get(Calendar.DAY_OF_MONTH);
+//                    int month = calendar.get(Calendar.MONTH) + 1;
+//                    int year = calendar.get(Calendar.YEAR);
+//
+//                    //Set the value of current date to follow the SimpleDateFormat using the values from calendar to properly check the time difference
+//                    currentDate = dateFormat.parse(day + "/" + month + "/" + year);
+//
+//                    //bldate = dateFormat.parse(bucketlistDate.getDayOfMonth() + "/" + bucketlistDate.getMonth() + "/" + bucketlistDate.getYear());
+//
+//                    //Calculate the difference in days between the currentDate and the BucketList date, and convert it to days
+//                    int diffInDays = (int) ((bldate.getTime() - currentDate.getTime())/ (1000 * 60 * 60 * 24));
+//
+//                    TextView dayCounter = (TextView) view.findViewById(R.id.dayCounter);
+//                    dayCounter.setVisibility(View.VISIBLE);
+//
+//                    //Check if the difference in days is equal to 1 day, if so set
+//                    //the text to say 'day', else it is more than 1 so say 'days'
+//                    if(diffInDays == 1) {
+//                        dayCounter.setText(diffInDays + " day");
+//                    } else {
+//                        dayCounter.setText(diffInDays + " days");
+//                    }
+//
+//                    //Check if the difference in days is equal to or less than 7,
+//                    // if so set the text Color to red, else if less than or equal to 30,
+//                    // set the text Color to Yellow, else it will be green
+//                    if (diffInDays <= 7) {
+//                        dayCounter.setTextColor(Color.RED);
+//                    } else if(diffInDays <= 30) {
+//                        dayCounter.setTextColor(Color.YELLOW);
+//                    }
+//
+//                } catch (ParseException e) {
+//                    e.printStackTrace();
+//                }
+                email.setImageResource(R.drawable.emailicon);
+                email.setVisibility(View.INVISIBLE);
+                twitter.setImageResource(R.drawable.twittericon);
+                twitter.setVisibility(View.INVISIBLE);
+                facebook.setImageResource(R.drawable.facebookicon);
+                facebook.setVisibility(View.INVISIBLE);
 
                 if(BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription() ){
                     //Update the text of the description
@@ -162,6 +173,9 @@ public class MyBucketListFragment extends Fragment {
                     delete.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.VISIBLE);
 
+                    email.setVisibility(View.VISIBLE);
+                    twitter.setVisibility(View.VISIBLE);
+                    facebook.setVisibility(View.VISIBLE);
                 }
                 else{
                     BucketlistDescriptionTextView.setText("");
@@ -197,7 +211,7 @@ public class MyBucketListFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent){
             final Bucketlist item = getItem(position);
 
-
+            String blDate = item.getTime();
 
             if(convertView == null){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
@@ -205,7 +219,6 @@ public class MyBucketListFragment extends Fragment {
                 name = (TextView) convertView.findViewById(R.id.name);
                 name.setText(item.getName());
             }
-
 //            galleryLayout = (LinearLayout) convertView.findViewById(R.id.galleryLayout);
 //            //Make the gallery layout invisible
 //            galleryLayout.setVisibility(View.GONE);

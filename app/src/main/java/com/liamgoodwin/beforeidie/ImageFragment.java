@@ -64,10 +64,6 @@ public class ImageFragment extends Fragment {
             ImageView image = (ImageView) view.findViewById(R.id.bucketlistImage);
             image.setImageResource(mParam1);
         }
-        else {
-            ImageView image = (ImageView) view.findViewById(R.id.bucketlistImage);
-            image.setImageResource(mParam1);
-        }
 
         return view;
     }

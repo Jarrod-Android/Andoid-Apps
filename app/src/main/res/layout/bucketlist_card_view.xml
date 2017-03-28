@@ -91,6 +91,7 @@
 
         </android.support.v4.view.ViewPager>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -99,30 +100,51 @@
 
             <ImageView
                 android:id="@+id/additem"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/addphoto"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/edit"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/delete"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/email"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/twitter"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
                 android:layout_weight="1" />
 
         </LinearLayout>

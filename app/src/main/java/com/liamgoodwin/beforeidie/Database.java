@@ -138,7 +138,7 @@ public class Database extends SQLiteOpenHelper {
     /**
      * READ objects from database
      */
-    public Bucketlist getTime(int id) {
+    public String getTime(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_BUCKET_LIST,
                 new String[]{COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_TIME}, COLUMN_ID + "=?",
@@ -146,9 +146,8 @@ public class Database extends SQLiteOpenHelper {
 
         if (cursor != null)
             cursor.moveToFirst();
-        Bucketlist bl = new Bucketlist(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3));
-        return bl;
+
+        return cursor.getString(3);
     }
 
     public ArrayList<Bucketlist> getAllBucketlist() {
