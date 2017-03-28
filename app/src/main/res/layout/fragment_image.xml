@@ -9,6 +9,8 @@
         android:id="@+id/bucketlistImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:srcCompat="@drawable/beforeidie" />
+        app:srcCompat="@drawable/beforeidie"
+        android:adjustViewBounds="true"
+        />
 
 </LinearLayout>

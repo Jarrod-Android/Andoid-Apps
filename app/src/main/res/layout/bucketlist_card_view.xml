@@ -22,8 +22,7 @@
         <ListView
             android:id="@+id/bucketlistListView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0">
+            android:layout_height="match_parent">
 
         </ListView>
 
@@ -91,6 +90,14 @@
             android:id="@+id/bucketlistDescription"
             android:textStyle="normal|italic"/>
 
+        <android.support.v4.view.ViewPager
+            android:id="@+id/imageViewpager"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center">
+
+        </android.support.v4.view.ViewPager>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -127,13 +134,6 @@
 
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/imageViewpager"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center">
-
-        </android.support.v4.view.ViewPager>
     </LinearLayout>
 
 
