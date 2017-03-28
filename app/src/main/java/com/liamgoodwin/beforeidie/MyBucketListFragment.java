@@ -82,6 +82,9 @@ public class MyBucketListFragment extends Fragment {
                 ImageView addPhoto = (ImageView) view.findViewById(R.id.addphoto);
                 ImageView edit = (ImageView) view.findViewById(R.id.edit);
                 ImageView delete = (ImageView) view.findViewById(R.id.delete);
+                ImageView email = (ImageView) view.findViewById(R.id.email);
+                ImageView twitter = (ImageView) view.findViewById(R.id.twitter);
+                ImageView facebook = (ImageView) view.findViewById(R.id.facebook);
 //                viewPager.setVisibility(View.INVISIBLE);
 //                image.setVisibility(View.INVISIBLE);
                 additem.setImageResource(R.drawable.checkmark);
@@ -92,6 +95,12 @@ public class MyBucketListFragment extends Fragment {
                 edit.setVisibility(View.INVISIBLE);
                 delete.setImageResource(R.drawable.deleteimage);
                 delete.setVisibility(View.INVISIBLE);
+                email.setImageResource(R.drawable.emailicon);
+                email.setVisibility(View.INVISIBLE);
+                twitter.setImageResource(R.drawable.twittericon);
+                twitter.setVisibility(View.INVISIBLE);
+                facebook.setImageResource(R.drawable.facebookicon);
+                facebook.setVisibility(View.INVISIBLE);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
 
@@ -135,6 +144,9 @@ public class MyBucketListFragment extends Fragment {
                     addPhoto.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.VISIBLE);
                     delete.setVisibility(View.VISIBLE);
+                    email.setVisibility(View.VISIBLE);
+                    twitter.setVisibility(View.VISIBLE);
+                    facebook.setVisibility(View.VISIBLE);
 
                 }
                 else{
