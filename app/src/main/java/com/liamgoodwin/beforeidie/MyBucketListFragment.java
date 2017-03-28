@@ -8,8 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GestureDetectorCompat;
+import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,17 +40,30 @@ public class MyBucketListFragment extends Fragment {
     TextView name;
     TextView description;
     ListView list;
-    Button delete;
     TextView BucketlistDescriptionTextView;
+    SectionPagerAdapter sectionPagerAdapter;
+    ViewPager viewPager;
+    ImageView image;
+    LinearLayout galleryLayout;
+    GestureDetectorCompat tapGestureDetector;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
-
+        View view = inflater.inflate(R.layout.bucketlist_card_view, container, false);
+        image = (ImageView) view.findViewById(R.id.bucketlistImage);
         fm = getActivity().getSupportFragmentManager();
-
+        sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
+        viewPager = (ViewPager) view.findViewById(R.id.imageViewpager);
+//        tapGestureDetector = new GestureDetector(this, new TapGestureListener());
+//        viewPager.setOnTouchListener(new View.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                tapGestureDetector.onTouchEvent(event);
+//                return false;
+//            }
+//        });
+        viewPager.setAdapter(sectionPagerAdapter);
         list = (ListView) view.findViewById(R.id.bucketlistListView);
-        delete = (Button) view.findViewById(R.id.delete);
+//        delete = (Button) view.findViewById(R.id.delete);
         Database db = new Database(getContext());
         final ArrayList<Bucketlist> bucketList = db.getAllBucketlist();
         db.closeDB();
@@ -63,6 +82,8 @@ public class MyBucketListFragment extends Fragment {
                 ImageView addPhoto = (ImageView) view.findViewById(R.id.addphoto);
                 ImageView edit = (ImageView) view.findViewById(R.id.edit);
                 ImageView delete = (ImageView) view.findViewById(R.id.delete);
+//                viewPager.setVisibility(View.INVISIBLE);
+//                image.setVisibility(View.INVISIBLE);
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.INVISIBLE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
@@ -108,6 +129,8 @@ public class MyBucketListFragment extends Fragment {
                     details.setText("Click to show less");
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+//                    viewPager.setVisibility(View.VISIBLE);
+//                    image.setVisibility(View.VISIBLE);
                     additem.setVisibility(View.VISIBLE);
                     addPhoto.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.VISIBLE);
@@ -151,13 +174,20 @@ public class MyBucketListFragment extends Fragment {
 
 
             if(convertView == null){
-                convertView =
-                        LayoutInflater.from(getContext()).inflate(
-                                R.layout.bucketlist_card_view, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
+
+//            galleryLayout = (LinearLayout) convertView.findViewById(R.id.galleryLayout);
+//            //Make the gallery layout invisible
+//            galleryLayout.setVisibility(View.GONE);
+//            //only add items to the gallery if the gallery is empty
+//            if(galleryLayout.getChildCount() == 0) {
+//                image.setImageResource(R.drawable.checkmark);
+//            }
 
             name = (TextView) convertView.findViewById(R.id.name);
             name.setText(item.getName());
+
 
             return convertView;
         }
@@ -165,4 +195,25 @@ public class MyBucketListFragment extends Fragment {
 
 
     }
+
+    class SectionPagerAdapter extends FragmentPagerAdapter {
+        public SectionPagerAdapter(FragmentManager fm){
+            super(fm);
+        }
+
+        public Fragment getItem(int position){
+
+            switch(position){
+                case 0:
+                    return ImageFragment.newInstance(R.drawable.checkmark);
+                case 1:
+                    return ImageFragment.newInstance(R.drawable.beforeidie);
+                default:
+                    return ImageFragment.newInstance(R.drawable.deleteimage);
+            }
+        }
+        public int getCount(){ return 2; }
+
+    }
+
 }
