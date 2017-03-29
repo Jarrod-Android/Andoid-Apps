@@ -42,7 +42,7 @@ public class AddToMyBucketListFragment extends Fragment {
 
 
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
-                        description.getText().toString(), formattedDate);
+                        description.getText().toString(), date);
 
                 Database db = new Database(getContext());
                 db.addBucketlist(bucketlist);

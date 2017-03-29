@@ -1,5 +1,7 @@
 package com.liamgoodwin.beforeidie;
 
+import android.widget.DatePicker;
+
 import java.math.BigInteger;
 
 /**
@@ -11,16 +13,16 @@ public class Bucketlist {
     private int id;
     private String name;
     private String description;
-    private String time;
+    private DatePicker time;
     private String bucketList;
 
-    public Bucketlist(String name, String description, String time){
+    public Bucketlist(String name, String description, DatePicker time){
         this.name = name;
         this.description = description;
         this.time = time;
     }
 
-    public Bucketlist(int id, String name, String description, String time){
+    public Bucketlist(int id, String name, String description, DatePicker time){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -47,7 +49,7 @@ public class Bucketlist {
         this.description = description;
     }
 
-    public String getTime() { return time; }
+    public DatePicker getTime() { return time; }
 
     public void setTime(String time) {
         this.time = time;
