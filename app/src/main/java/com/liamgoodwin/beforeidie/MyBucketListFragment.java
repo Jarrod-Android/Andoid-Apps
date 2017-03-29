@@ -102,14 +102,13 @@ public class MyBucketListFragment extends Fragment {
                 delete.setVisibility(View.INVISIBLE);
 
 
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
-//
-//                java.util.Date currentDate = null;
-//                java.util.Date bldate = null;
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
+
+                java.util.Date currentDate = null;
+                java.util.Date bldate = null;
 //                try {
 //
 //                    bucketlistDate = (DatePicker) view.findViewById(R.id.datePicker);
-//                    bucketlistDate.
 //
 //                    bldate = dateFormat.parse(bldate);
 //
