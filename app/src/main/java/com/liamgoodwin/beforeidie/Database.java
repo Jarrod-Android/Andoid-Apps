@@ -237,7 +237,7 @@ public class Database extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, bl.getName());
         values.put(COLUMN_DESCRIPTION, bl.getDescription());
-        values.put(COLUMN_TIME, bl.getTime());
+        values.put(COLUMN_TIME, String.valueOf(bl.getTime()));
         return db.update(TABLE_BUCKET_LIST, values, COLUMN_ID + " = ?", new String[]{String.valueOf(bl.getId())});
     }
 
