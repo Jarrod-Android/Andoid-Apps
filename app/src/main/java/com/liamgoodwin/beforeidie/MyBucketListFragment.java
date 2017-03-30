@@ -54,18 +54,16 @@ public class MyBucketListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
-        //image = (ImageView) view.findViewById(R.id.bucketlistImage);
+
         fm = getActivity().getSupportFragmentManager();
         image = (ImageView) view.findViewById(R.id.bucketlistImage);
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
-//        delete = (Button) view.findViewById(R.id.delete);
+
         Database db = new Database(getContext());
         bucketList = db.getAllBucketlist();
         db.closeDB();
 
-//        final ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-//        bucketList.add(new Bucketlist("Snorkel in The Great Barrier Reef", "The Great Barrier Reef is the largest aquatic animal habitat in the world", 6666));
         final CustomAdapter adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -79,20 +77,11 @@ public class MyBucketListFragment extends Fragment {
                 ImageView edit = (ImageView) view.findViewById(R.id.edit);
                 delete = (ImageView) view.findViewById(R.id.delete);
 
-
-
                 sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
-
-
                 viewPager = (ViewPager) view.findViewById(R.id.imageViewpager);
-
-
-
                 viewPager.setAdapter(sectionPagerAdapter);
-
                 viewPager.setVisibility(View.INVISIBLE);
-//                viewPager.setVisibility(View.INVISIBLE);
-//                image.setVisibility(View.INVISIBLE);
+
                 ImageView email = (ImageView) view.findViewById(R.id.email);
                 ImageView twitter = (ImageView) view.findViewById(R.id.twitter);
                 ImageView facebook = (ImageView) view.findViewById(R.id.facebook);
@@ -164,19 +153,24 @@ public class MyBucketListFragment extends Fragment {
 
         public View getView(int position, View convertView, ViewGroup parent){
             final Bucketlist item = getItem(position);
+            final int pos = position;
 
             if(convertView == null){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
-//            galleryLayout = (LinearLayout) convertView.findViewById(R.id.galleryLayout);
-//            //Make the gallery layout invisible
-//            galleryLayout.setVisibility(View.GONE);
-//            //only add items to the gallery if the gallery is empty
-//            if(galleryLayout.getChildCount() == 0) {
-//                image.setImageResource(R.drawable.checkmark);
-//            }
 
             ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
+            delete.setOnClickListener(new AdapterView.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    Database db = new Database(getContext());
+                    Bucketlist location = bucketList.get(pos);
+                    db.deleteBucketlist(location.getId());
+                    db.closeDB();
+                    bucketList.remove(pos);
+                    //adapter.notifyDataSetChanged();
+                }
+            });
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
