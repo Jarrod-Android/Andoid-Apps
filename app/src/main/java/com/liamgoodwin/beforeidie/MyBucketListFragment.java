@@ -48,8 +48,17 @@ public class MyBucketListFragment extends Fragment {
     SectionPagerAdapter sectionPagerAdapter;
     GestureDetectorCompat tapGestureDetector;
     ArrayList<Bucketlist> bucketList;
-    ImageView delete;
     TextView dayCounter;
+    TextView details;
+    ImageView chevron;
+    CustomAdapter adapter;
+    ImageView additem;
+    ImageView addPhoto;
+    ImageView edit;
+    ImageView delete;
+    ImageView email;
+    ImageView twitter;
+    ImageView facebook;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -64,41 +73,41 @@ public class MyBucketListFragment extends Fragment {
         bucketList = db.getAllBucketlist();
         db.closeDB();
 
-        final CustomAdapter adapter = new CustomAdapter(getContext(), bucketList);
+        adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
-                TextView details = (TextView) view.findViewById(R.id.details);
-                ImageView chevron = (ImageView) view.findViewById(R.id.chevron);
-                ImageView additem = (ImageView) view.findViewById(R.id.additem);
-                ImageView addPhoto = (ImageView) view.findViewById(R.id.addphoto);
-                ImageView edit = (ImageView) view.findViewById(R.id.edit);
+                details = (TextView) view.findViewById(R.id.details);
+                chevron = (ImageView) view.findViewById(R.id.chevron);
+                additem = (ImageView) view.findViewById(R.id.additem);
+                addPhoto = (ImageView) view.findViewById(R.id.addphoto);
+                edit = (ImageView) view.findViewById(R.id.edit);
                 delete = (ImageView) view.findViewById(R.id.delete);
+                email = (ImageView) view.findViewById(R.id.email);
+                twitter = (ImageView) view.findViewById(R.id.twitter);
+                facebook = (ImageView) view.findViewById(R.id.facebook);
 
                 sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
                 viewPager = (ViewPager) view.findViewById(R.id.imageViewpager);
                 viewPager.setAdapter(sectionPagerAdapter);
-                viewPager.setVisibility(View.INVISIBLE);
+                viewPager.setVisibility(View.GONE);
 
-                ImageView email = (ImageView) view.findViewById(R.id.email);
-                ImageView twitter = (ImageView) view.findViewById(R.id.twitter);
-                ImageView facebook = (ImageView) view.findViewById(R.id.facebook);
                 additem.setImageResource(R.drawable.checkmark);
-                additem.setVisibility(View.INVISIBLE);
+                additem.setVisibility(View.GONE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
-                addPhoto.setVisibility(View.INVISIBLE);
+                addPhoto.setVisibility(View.GONE);
                 edit.setImageResource(R.drawable.editimage);
-                edit.setVisibility(View.INVISIBLE);
+                edit.setVisibility(View.GONE);
                 delete.setImageResource(R.drawable.deleteimage);
-                delete.setVisibility(View.INVISIBLE);
+                delete.setVisibility(View.GONE);
                 email.setImageResource(R.drawable.emailicon);
-                email.setVisibility(View.INVISIBLE);
+                email.setVisibility(View.GONE);
                 twitter.setImageResource(R.drawable.twittericon);
-                twitter.setVisibility(View.INVISIBLE);
+                twitter.setVisibility(View.GONE);
                 facebook.setImageResource(R.drawable.facebookicon);
-                facebook.setVisibility(View.INVISIBLE);
+                facebook.setVisibility(View.GONE);
 
                 if(BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription() ){
                     //Update the text of the description
@@ -155,6 +164,15 @@ public class MyBucketListFragment extends Fragment {
             final Bucketlist item = getItem(position);
             final int pos = position;
 
+            additem.setVisibility(View.GONE);
+            addPhoto.setVisibility(View.GONE);
+            edit.setVisibility(View.GONE);
+            delete.setVisibility(View.GONE);
+            email.setVisibility(View.GONE);
+            twitter.setVisibility(View.GONE);
+            facebook.setVisibility(View.GONE);
+            viewPager.setVisibility(View.GONE);
+            
             if(convertView == null){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
@@ -168,7 +186,7 @@ public class MyBucketListFragment extends Fragment {
                     db.deleteBucketlist(location.getId());
                     db.closeDB();
                     bucketList.remove(pos);
-                    //adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                 }
             });
 
