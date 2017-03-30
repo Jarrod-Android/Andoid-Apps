@@ -6,6 +6,27 @@
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <Button
+            android:text="Current"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/currentBucketlist"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="Completed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/completedBucketlist"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
     <ListView
 
         android:layout_width="match_parent"

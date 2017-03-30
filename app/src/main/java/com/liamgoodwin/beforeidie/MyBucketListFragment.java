@@ -48,6 +48,7 @@ public class MyBucketListFragment extends Fragment {
     SectionPagerAdapter sectionPagerAdapter;
     GestureDetectorCompat tapGestureDetector;
     ArrayList<Bucketlist> bucketList;
+    ImageView delete;
     TextView dayCounter;
 
     @Override
@@ -76,7 +77,9 @@ public class MyBucketListFragment extends Fragment {
                 ImageView additem = (ImageView) view.findViewById(R.id.additem);
                 ImageView addPhoto = (ImageView) view.findViewById(R.id.addphoto);
                 ImageView edit = (ImageView) view.findViewById(R.id.edit);
-                ImageView delete = (ImageView) view.findViewById(R.id.delete);
+                delete = (ImageView) view.findViewById(R.id.delete);
+
+
 
                 sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
 
@@ -165,6 +168,15 @@ public class MyBucketListFragment extends Fragment {
             if(convertView == null){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
+//            galleryLayout = (LinearLayout) convertView.findViewById(R.id.galleryLayout);
+//            //Make the gallery layout invisible
+//            galleryLayout.setVisibility(View.GONE);
+//            //only add items to the gallery if the gallery is empty
+//            if(galleryLayout.getChildCount() == 0) {
+//                image.setImageResource(R.drawable.checkmark);
+//            }
+
+            ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
