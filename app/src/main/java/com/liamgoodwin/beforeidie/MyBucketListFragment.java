@@ -170,55 +170,30 @@ public class MyBucketListFragment extends Fragment {
             name = (TextView) convertView.findViewById(R.id.name);
             name.setText(item.getName());
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
             long databaseTime = item.getTime();
 
-            java.util.Date currentDate = null;
-            java.util.Date temp = null;
-            java.util.Date databaseName = null;
+            long time = System.currentTimeMillis();
 
-            try {
-                Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
+            long diffInMillis = databaseTime - time;
 
-                //bldate = dateFormat.parse(dayFormatted + "/" + monthFormatted + "/" + yearFormatted);
-//                String theDate = databaseTime.toString();
-//                temp = dateFormat.parse(theDate);
-//                databaseName = dateFormat.parse(String.valueOf(temp));
-                //int dbInt = Integer.parseInt(databaseTime);
+            int diffInDays = (int) (diffInMillis / (1000*60*60*24));
 
-                currentDate = dateFormat.parse(day + "/" + month + "/" + year);
+            dayCounter.setVisibility(View.VISIBLE);
 
-                long time = System.currentTimeMillis();
-
-                long diffInMillis = databaseTime - time;
-
-                int diffInDays = (int) (diffInMillis / (1000*60*60*24));
-
-                dayCounter.setVisibility(View.VISIBLE);
-
-                if(diffInDays == 1) {
-                    dayCounter.setText(diffInDays + " day");
-                } else {
-                    dayCounter.setText(diffInDays + " days" );
-                }
-
-                if(diffInDays <= 7) {
-                    dayCounter.setTextColor(Color.RED);
-                } else if(diffInDays <= 30) {
-                    dayCounter.setTextColor(Color.YELLOW);
-                } else {
-                    dayCounter.setTextColor(Color.parseColor("#60be6a"));
-                }
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if(diffInDays == 1) {
+                dayCounter.setText(diffInDays + " day");
+            } else {
+                dayCounter.setText(diffInDays + " days" );
             }
 
+            if(diffInDays <= 7) {
+                dayCounter.setTextColor(Color.RED);
+            } else if(diffInDays <= 30) {
+                dayCounter.setTextColor(Color.YELLOW);
+            } else {
+                dayCounter.setTextColor(Color.parseColor("#60be6a"));
+            }
+            
             return convertView;
         }
     }
