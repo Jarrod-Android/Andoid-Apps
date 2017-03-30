@@ -9,6 +9,7 @@
     cardView:cardCornerRadius="5dp"
     cardView:contentPadding="16dp"
     cardView:cardElevation="2dp"
+    android:id="@+id/bucketlist"
     cardView:cardUseCompatPadding="true"
     cardView:cardBackgroundColor="?attr/colorButtonNormal">
 
