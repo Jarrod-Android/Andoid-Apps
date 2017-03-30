@@ -164,6 +164,14 @@ public class MyBucketListFragment extends Fragment {
             final Bucketlist item = getItem(position);
             final int pos = position;
 
+            additem = (ImageView) convertView.findViewById(R.id.additem);
+            addPhoto = (ImageView) convertView.findViewById(R.id.addphoto);
+            edit = (ImageView) convertView.findViewById(R.id.edit);
+            delete = (ImageView) convertView.findViewById(R.id.delete);
+            email = (ImageView) convertView.findViewById(R.id.email);
+            twitter = (ImageView) convertView.findViewById(R.id.twitter);
+            facebook = (ImageView) convertView.findViewById(R.id.facebook);
+
             additem.setVisibility(View.GONE);
             addPhoto.setVisibility(View.GONE);
             edit.setVisibility(View.GONE);
@@ -172,7 +180,7 @@ public class MyBucketListFragment extends Fragment {
             twitter.setVisibility(View.GONE);
             facebook.setVisibility(View.GONE);
             viewPager.setVisibility(View.GONE);
-            
+
             if(convertView == null){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
