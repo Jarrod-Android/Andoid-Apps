@@ -78,6 +78,12 @@ public class MyBucketListFragment extends Fragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
+                viewPager = (ViewPager) view.findViewById(R.id.imageViewpager);
+                viewPager.setAdapter(sectionPagerAdapter);
+                viewPager.setVisibility(View.GONE);
+
                 BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
                 details = (TextView) view.findViewById(R.id.details);
                 chevron = (ImageView) view.findViewById(R.id.chevron);
@@ -88,11 +94,6 @@ public class MyBucketListFragment extends Fragment {
                 email = (ImageView) view.findViewById(R.id.email);
                 twitter = (ImageView) view.findViewById(R.id.twitter);
                 facebook = (ImageView) view.findViewById(R.id.facebook);
-
-                sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
-                viewPager = (ViewPager) view.findViewById(R.id.imageViewpager);
-                viewPager.setAdapter(sectionPagerAdapter);
-                viewPager.setVisibility(View.GONE);
 
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
@@ -117,14 +118,11 @@ public class MyBucketListFragment extends Fragment {
                     details.setText("Click to show less");
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
-//                    viewPager.setVisibility(View.VISIBLE);
-//                    image.setVisibility(View.VISIBLE);
                     additem.setVisibility(View.VISIBLE);
                     addPhoto.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.VISIBLE);
                     delete.setVisibility(View.VISIBLE);
                     viewPager.setVisibility(View.VISIBLE);
-
                     email.setVisibility(View.VISIBLE);
                     twitter.setVisibility(View.VISIBLE);
                     facebook.setVisibility(View.VISIBLE);
@@ -136,18 +134,6 @@ public class MyBucketListFragment extends Fragment {
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
                 }
-            }
-        });
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Database db = new Database(getContext());
-                Bucketlist location = bucketList.get(position);
-                db.deleteBucketlist(location.getId());
-                db.closeDB();
-                bucketList.remove(position);
-                adapter.notifyDataSetChanged();
-                return false;
             }
         });
         return view;
@@ -164,22 +150,6 @@ public class MyBucketListFragment extends Fragment {
             final Bucketlist item = getItem(position);
             final int pos = position;
 
-            additem = (ImageView) convertView.findViewById(R.id.additem);
-            addPhoto = (ImageView) convertView.findViewById(R.id.addphoto);
-            edit = (ImageView) convertView.findViewById(R.id.edit);
-            delete = (ImageView) convertView.findViewById(R.id.delete);
-            email = (ImageView) convertView.findViewById(R.id.email);
-            twitter = (ImageView) convertView.findViewById(R.id.twitter);
-            facebook = (ImageView) convertView.findViewById(R.id.facebook);
-
-            additem.setVisibility(View.GONE);
-            addPhoto.setVisibility(View.GONE);
-            edit.setVisibility(View.GONE);
-            delete.setVisibility(View.GONE);
-            email.setVisibility(View.GONE);
-            twitter.setVisibility(View.GONE);
-            facebook.setVisibility(View.GONE);
-            viewPager.setVisibility(View.GONE);
 
             if(convertView == null){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
