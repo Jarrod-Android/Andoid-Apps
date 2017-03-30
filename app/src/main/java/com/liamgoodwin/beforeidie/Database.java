@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String CREATE_BUCKET_LIST_TABLE = "CREATE TABLE " + TABLE_BUCKET_LIST + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
-            + COLUMN_TIME + " TEXT" + ")";
+            + COLUMN_TIME + " BIGINT" + ")";
 
     private static final String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_RESOURCE + " TEXT" + ")";
@@ -103,7 +103,7 @@ public class Database extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, bucketlist.getName());
         values.put(COLUMN_DESCRIPTION, bucketlist.getDescription());
-        values.put(COLUMN_TIME, bucketlist.getTime());
+        values.put(COLUMN_TIME, String.valueOf(bucketlist.getTime()));
         db.insert(TABLE_BUCKET_LIST, null, values);
         db.close();
     }
@@ -162,7 +162,7 @@ public class Database extends SQLiteOpenHelper {
                 bl.setId(Integer.parseInt(cursor.getString(0)));
                 bl.setName(cursor.getString(1));
                 bl.setDescription(cursor.getString(2));
-                bl.setTime(cursor.getString(3));
+                bl.setTime(cursor.getLong(3));
                 bucketList.add(bl);
             } while (cursor.moveToNext());
         }
@@ -237,7 +237,7 @@ public class Database extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, bl.getName());
         values.put(COLUMN_DESCRIPTION, bl.getDescription());
-        values.put(COLUMN_TIME, bl.getTime());
+        values.put(COLUMN_TIME, String.valueOf(bl.getTime()));
         return db.update(TABLE_BUCKET_LIST, values, COLUMN_ID + " = ?", new String[]{String.valueOf(bl.getId())});
     }
 

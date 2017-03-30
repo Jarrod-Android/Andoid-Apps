@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -44,11 +45,11 @@ public class MyBucketListFragment extends Fragment {
     ViewPager viewPager;
     ImageView image;
     LinearLayout galleryLayout;
-    DatePicker bucketlistDate;
     SectionPagerAdapter sectionPagerAdapter;
     GestureDetectorCompat tapGestureDetector;
     ArrayList<Bucketlist> bucketList;
     ImageView delete;
+    TextView dayCounter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -103,55 +104,6 @@ public class MyBucketListFragment extends Fragment {
                 edit.setVisibility(View.INVISIBLE);
                 delete.setImageResource(R.drawable.deleteimage);
                 delete.setVisibility(View.INVISIBLE);
-
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/M/yyyy");
-
-                java.util.Date currentDate = null;
-                java.util.Date bldate = null;
-//                try {
-//
-//                    bucketlistDate = (DatePicker) view.findViewById(R.id.datePicker);
-//
-//                    bldate = dateFormat.parse(bldate);
-//
-//                    //Get an instance of Calendar and get the day, month, and year
-//                    Calendar calendar = Calendar.getInstance();
-//                    int day = calendar.get(Calendar.DAY_OF_MONTH);
-//                    int month = calendar.get(Calendar.MONTH) + 1;
-//                    int year = calendar.get(Calendar.YEAR);
-//
-//                    //Set the value of current date to follow the SimpleDateFormat using the values from calendar to properly check the time difference
-//                    currentDate = dateFormat.parse(day + "/" + month + "/" + year);
-//
-//                    //bldate = dateFormat.parse(bucketlistDate.getDayOfMonth() + "/" + bucketlistDate.getMonth() + "/" + bucketlistDate.getYear());
-//
-//                    //Calculate the difference in days between the currentDate and the BucketList date, and convert it to days
-//                    int diffInDays = (int) ((bldate.getTime() - currentDate.getTime())/ (1000 * 60 * 60 * 24));
-//
-//                    TextView dayCounter = (TextView) view.findViewById(R.id.dayCounter);
-//                    dayCounter.setVisibility(View.VISIBLE);
-//
-//                    //Check if the difference in days is equal to 1 day, if so set
-//                    //the text to say 'day', else it is more than 1 so say 'days'
-//                    if(diffInDays == 1) {
-//                        dayCounter.setText(diffInDays + " day");
-//                    } else {
-//                        dayCounter.setText(diffInDays + " days");
-//                    }
-//
-//                    //Check if the difference in days is equal to or less than 7,
-//                    // if so set the text Color to red, else if less than or equal to 30,
-//                    // set the text Color to Yellow, else it will be green
-//                    if (diffInDays <= 7) {
-//                        dayCounter.setTextColor(Color.RED);
-//                    } else if(diffInDays <= 30) {
-//                        dayCounter.setTextColor(Color.YELLOW);
-//                    }
-//
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
                 email.setImageResource(R.drawable.emailicon);
                 email.setVisibility(View.INVISIBLE);
                 twitter.setImageResource(R.drawable.twittericon);
@@ -213,13 +165,8 @@ public class MyBucketListFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent){
             final Bucketlist item = getItem(position);
 
-            String blDate = item.getTime();
-
             if(convertView == null){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
-
-                name = (TextView) convertView.findViewById(R.id.name);
-                name.setText(item.getName());
             }
 //            galleryLayout = (LinearLayout) convertView.findViewById(R.id.galleryLayout);
 //            //Make the gallery layout invisible
@@ -231,11 +178,36 @@ public class MyBucketListFragment extends Fragment {
 
             ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
 
+            dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
+            name = (TextView) convertView.findViewById(R.id.name);
+            name.setText(item.getName());
+
+            long databaseTime = item.getTime();
+
+            long time = System.currentTimeMillis();
+
+            long diffInMillis = databaseTime - time;
+
+            int diffInDays = (int) (diffInMillis / (1000*60*60*24));
+
+            dayCounter.setVisibility(View.VISIBLE);
+
+            if(diffInDays == 1) {
+                dayCounter.setText(diffInDays + " day");
+            } else {
+                dayCounter.setText(diffInDays + " days" );
+            }
+
+            if(diffInDays <= 7) {
+                dayCounter.setTextColor(Color.RED);
+            } else if(diffInDays <= 30) {
+                dayCounter.setTextColor(Color.YELLOW);
+            } else {
+                dayCounter.setTextColor(Color.parseColor("#60be6a"));
+            }
+            
             return convertView;
         }
-
-
-
     }
 
     class SectionPagerAdapter extends FragmentPagerAdapter {

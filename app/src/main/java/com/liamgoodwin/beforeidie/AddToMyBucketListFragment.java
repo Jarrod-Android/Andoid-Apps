@@ -1,5 +1,8 @@
 package com.liamgoodwin.beforeidie;
 
+import android.annotation.TargetApi;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,13 +39,19 @@ public class AddToMyBucketListFragment extends Fragment {
 
         Button submit = (Button) view.findViewById(R.id.submitButton);
         submit.setOnClickListener(new View.OnClickListener() {
+            @android.support.annotation.RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                String formattedDate = date.getDayOfMonth() + "/" + date.getMonth() + "/" + date.getYear();
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(date.getYear(), date.getMonth(), date.getDayOfMonth());
+                long millis = calendar.getTimeInMillis();
+
+//                String formattedDate = date.getDayOfMonth() + "/" + date.getMonth() + "/" + date.getYear();
 
 
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
-                        description.getText().toString(), formattedDate);
+                        description.getText().toString(), millis);
 
                 Database db = new Database(getContext());
                 db.addBucketlist(bucketlist);
