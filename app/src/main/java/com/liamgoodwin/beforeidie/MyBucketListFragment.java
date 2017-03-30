@@ -48,6 +48,7 @@ public class MyBucketListFragment extends Fragment {
     SectionPagerAdapter sectionPagerAdapter;
     GestureDetectorCompat tapGestureDetector;
     ArrayList<Bucketlist> bucketList;
+    ImageView delete;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,7 +76,9 @@ public class MyBucketListFragment extends Fragment {
                 ImageView additem = (ImageView) view.findViewById(R.id.additem);
                 ImageView addPhoto = (ImageView) view.findViewById(R.id.addphoto);
                 ImageView edit = (ImageView) view.findViewById(R.id.edit);
-                ImageView delete = (ImageView) view.findViewById(R.id.delete);
+                delete = (ImageView) view.findViewById(R.id.delete);
+
+
 
                 sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
 
@@ -225,6 +228,9 @@ public class MyBucketListFragment extends Fragment {
 //            if(galleryLayout.getChildCount() == 0) {
 //                image.setImageResource(R.drawable.checkmark);
 //            }
+
+            ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
+
             return convertView;
         }
 
