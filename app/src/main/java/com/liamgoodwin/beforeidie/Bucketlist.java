@@ -13,16 +13,16 @@ public class Bucketlist {
     private int id;
     private String name;
     private String description;
-    private DatePicker time;
+    private long time;
     private String bucketList;
 
-    public Bucketlist(String name, String description, DatePicker time){
+    public Bucketlist(String name, String description, long time){
         this.name = name;
         this.description = description;
         this.time = time;
     }
 
-    public Bucketlist(int id, String name, String description, DatePicker time){
+    public Bucketlist(int id, String name, String description, long time){
         this.id = id;
         this.name = name;
         this.description = description;
@@ -49,9 +49,9 @@ public class Bucketlist {
         this.description = description;
     }
 
-    public DatePicker getTime() { return time; }
+    public long getTime() { return time; }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
     }
 
@@ -70,4 +70,5 @@ public class Bucketlist {
     public void setId(int id) {
         this.id = id;
     }
+
 }

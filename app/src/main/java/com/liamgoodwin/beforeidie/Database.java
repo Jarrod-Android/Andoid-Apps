@@ -55,7 +55,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String CREATE_BUCKET_LIST_TABLE = "CREATE TABLE " + TABLE_BUCKET_LIST + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
-            + COLUMN_TIME + " TEXT" + ")";
+            + COLUMN_TIME + " BIGINT" + ")";
 
     private static final String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_RESOURCE + " TEXT" + ")";
@@ -162,7 +162,7 @@ public class Database extends SQLiteOpenHelper {
                 bl.setId(Integer.parseInt(cursor.getString(0)));
                 bl.setName(cursor.getString(1));
                 bl.setDescription(cursor.getString(2));
-                bl.setTime(cursor.getString(3));
+                bl.setTime(cursor.getLong(3));
                 bucketList.add(bl);
             } while (cursor.moveToNext());
         }

@@ -172,12 +172,11 @@ public class MyBucketListFragment extends Fragment {
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-            DatePicker databaseTime = item.getTime();
+            long databaseTime = item.getTime();
 
             java.util.Date currentDate = null;
             java.util.Date temp = null;
             java.util.Date databaseName = null;
-
 
             try {
                 Calendar calendar = Calendar.getInstance();
@@ -186,28 +185,36 @@ public class MyBucketListFragment extends Fragment {
                 int year = calendar.get(Calendar.YEAR);
 
                 //bldate = dateFormat.parse(dayFormatted + "/" + monthFormatted + "/" + yearFormatted);
-                String theDate = databaseTime.toString();
-                temp = dateFormat.parse(theDate);
+//                String theDate = databaseTime.toString();
+//                temp = dateFormat.parse(theDate);
 //                databaseName = dateFormat.parse(String.valueOf(temp));
                 //int dbInt = Integer.parseInt(databaseTime);
 
                 currentDate = dateFormat.parse(day + "/" + month + "/" + year);
 
-                int diffInDays = (int) ((temp.getTime() - currentDate.getTime() / (1000 * 60 * 60 * 24)));
+                long time = System.currentTimeMillis();
+
+                long diffInMillis = databaseTime - time;
+
+                int diffInDays = (int) (diffInMillis / (1000*60*60*24));
 
                 dayCounter.setVisibility(View.VISIBLE);
 
                 if(diffInDays == 1) {
-                    dayCounter.setText( "" + " day");
+                    dayCounter.setText(diffInDays + " day");
                 } else {
-                    dayCounter.setText(temp + " days" );
+                    dayCounter.setText(diffInDays + " days" );
                 }
 
                 if(diffInDays <= 7) {
                     dayCounter.setTextColor(Color.RED);
                 } else if(diffInDays <= 30) {
                     dayCounter.setTextColor(Color.YELLOW);
+                } else {
+                    dayCounter.setTextColor(Color.parseColor("#60be6a"));
                 }
+
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
