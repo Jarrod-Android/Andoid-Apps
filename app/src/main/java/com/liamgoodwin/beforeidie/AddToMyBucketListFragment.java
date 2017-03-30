@@ -47,9 +47,6 @@ public class AddToMyBucketListFragment extends Fragment {
                 calendar.set(date.getYear(), date.getMonth(), date.getDayOfMonth());
                 long millis = calendar.getTimeInMillis();
 
-//                String formattedDate = date.getDayOfMonth() + "/" + date.getMonth() + "/" + date.getYear();
-
-
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
                         description.getText().toString(), millis);
 

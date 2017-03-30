@@ -176,7 +176,7 @@ public class MyBucketListFragment extends Fragment {
 
             long diffInMillis = databaseTime - time;
 
-            int diffInDays = (int) (diffInMillis / (1000*60*60*24));
+            int diffInDays = (int) (diffInMillis / (1000 * 60 * 60 * 24));
 
             dayCounter.setVisibility(View.VISIBLE);
 
@@ -193,7 +193,7 @@ public class MyBucketListFragment extends Fragment {
             } else {
                 dayCounter.setTextColor(Color.parseColor("#60be6a"));
             }
-            
+
             return convertView;
         }
     }
