@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.text.format.DateUtils;
@@ -38,6 +39,7 @@ import java.util.Date;
 public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
+    FragmentTransaction ft;
     TextView name;
     TextView description;
     ListView list;
@@ -165,6 +167,17 @@ public class MyBucketListFragment extends Fragment {
                     db.closeDB();
                     bucketList.remove(pos);
                     adapter.notifyDataSetChanged();
+                }
+            });
+
+            addPhoto = (ImageView) convertView.findViewById(R.id.addphoto);
+            addPhoto.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.bucketlist, new AddPhotoFragment());
+                    transaction.commit();
                 }
             });
 
