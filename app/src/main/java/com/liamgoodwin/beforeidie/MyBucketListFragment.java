@@ -1,5 +1,6 @@
 package com.liamgoodwin.beforeidie;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -157,7 +158,7 @@ public class MyBucketListFragment extends Fragment {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
 
-            ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
+            delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener(){
                 @Override
                 public void onClick(View view) {
@@ -176,7 +177,7 @@ public class MyBucketListFragment extends Fragment {
                 public void onClick(View view) {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
-                    transaction.replace(R.id.bucketlist, new AddPhotoFragment());
+                    transaction.replace(R.id.mainActivity, new AddPhotoFragment());
                     transaction.commit();
                 }
             });

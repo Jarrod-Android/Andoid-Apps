@@ -100,6 +100,8 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                     return new MainFragment();
                 case 3:
                     return new SettingsFragment();
+                case 4:
+                    return new AddPhotoFragment();
                 default:
                     return new MainFragment();
             }

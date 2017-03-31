@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/addPhotoFragment"
-    tools:context="com.liamgoodwin.beforeidie.AddPhotoFragment">
+    tools:context="com.liamgoodwin.beforeidie.AddPhotoFragment"
+    android:background="@color/colorAccent">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Button
+        android:text="Return"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:id="@+id/returnButton" />
 
 </LinearLayout>
