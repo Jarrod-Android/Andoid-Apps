@@ -1,6 +1,5 @@
 package com.liamgoodwin.beforeidie;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,8 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +37,6 @@ public class AddPhotoFragment extends Fragment {
     private static final int CAMERA_INTENT = 1;
     private String imageLocation;
 
-
-    private OnFragmentInteractionListener mListener;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,10 +48,7 @@ public class AddPhotoFragment extends Fragment {
         spin = (Spinner) view.findViewById(R.id.blSpinner);
 
         Database db = new Database(getContext());
-
         ArrayList<Bucketlist> listOfNames = db.getAllBucketlist();
-        icon.setText(listOfNames.toString());
-
         db.closeDB();
 
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, listOfNames);
@@ -127,9 +118,12 @@ public class AddPhotoFragment extends Fragment {
         String timeStamp =
                 new SimpleDateFormat("yyyyMMdd_HHss").format(new Date());
         //Create the name of the image
-        String fileName = "bucket_list" + timeStamp;
+        String fileName = "hiking_log_" + timeStamp;
         //Grab the directory we want to save the image
-        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File directory =
+                Environment.
+                        getExternalStoragePublicDirectory
+                                (Environment.DIRECTORY_PICTURES);
         //Create the image in that directory
         File picture = File.createTempFile(fileName, ".jpg", directory);
         //Save the location of the image
