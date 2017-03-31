@@ -70,11 +70,11 @@
                 android:id="@+id/chevron"
                 android:layout_weight="0" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/galleryLayout"></LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:id="@+id/galleryLayout"></LinearLayout>-->
 
         </LinearLayout>
 
@@ -84,14 +84,12 @@
             android:id="@+id/bucketlistDescription"
             android:textStyle="normal|italic"/>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/imageViewpager"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:layout_width="150dp">
 
-        </android.support.v4.view.ViewPager>
-
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/galleryLayout"></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

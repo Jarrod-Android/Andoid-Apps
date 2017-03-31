@@ -1,5 +1,6 @@
 package com.liamgoodwin.beforeidie;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -44,9 +45,6 @@ public class MyBucketListFragment extends Fragment {
     TextView description;
     ListView list;
     TextView BucketlistDescriptionTextView;
-    ViewPager viewPager;
-    ImageView image;
-    LinearLayout galleryLayout;
     SectionPagerAdapter sectionPagerAdapter;
     GestureDetectorCompat tapGestureDetector;
     ArrayList<Bucketlist> bucketList;
@@ -67,8 +65,6 @@ public class MyBucketListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
 
         fm = getActivity().getSupportFragmentManager();
-        image = (ImageView) view.findViewById(R.id.bucketlistImage);
-        fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
 
         Database db = new Database(getContext());
@@ -81,12 +77,8 @@ public class MyBucketListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
-                viewPager = (ViewPager) view.findViewById(R.id.imageViewpager);
-                viewPager.setAdapter(sectionPagerAdapter);
-                viewPager.setVisibility(View.GONE);
-
                 BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
+
                 details = (TextView) view.findViewById(R.id.details);
                 chevron = (ImageView) view.findViewById(R.id.chevron);
                 additem = (ImageView) view.findViewById(R.id.additem);
@@ -124,7 +116,6 @@ public class MyBucketListFragment extends Fragment {
                     addPhoto.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.VISIBLE);
                     delete.setVisibility(View.VISIBLE);
-                    viewPager.setVisibility(View.VISIBLE);
                     email.setVisibility(View.VISIBLE);
                     twitter.setVisibility(View.VISIBLE);
                     facebook.setVisibility(View.VISIBLE);
@@ -157,7 +148,7 @@ public class MyBucketListFragment extends Fragment {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
 
-            ImageView delete = (ImageView) convertView.findViewById(R.id.delete);
+            delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener(){
                 @Override
                 public void onClick(View view) {
@@ -176,7 +167,7 @@ public class MyBucketListFragment extends Fragment {
                 public void onClick(View view) {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
-                    transaction.replace(R.id.bucketlist, new AddPhotoFragment());
+                    transaction.replace(R.id.mainActivity, new AddPhotoFragment());
                     transaction.commit();
                 }
             });
