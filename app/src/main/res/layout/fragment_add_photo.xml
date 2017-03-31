@@ -18,7 +18,7 @@
         android:textAlignment="center" />
 
     <Spinner
-        android:id="@+id/locationSpinner"
+        android:id="@+id/blSpinner"
         android:layout_height="50dp"
         android:layout_width="300dp"
         android:gravity="center_vertical"
@@ -42,9 +42,11 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/galleryLayout"></LinearLayout>
+        android:layout_width="300dp"
+        android:id="@+id/galleryLayout"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"></LinearLayout>
 
     <Button
         android:text="Return to your bucket list"
