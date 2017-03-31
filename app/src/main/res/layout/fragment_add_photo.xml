@@ -2,14 +2,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/addPhotoFragment"
     tools:context="com.liamgoodwin.beforeidie.AddPhotoFragment"
     android:background="@color/colorAccent">
 
     <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:text="Bucket List Item Name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:textSize="22sp"
+        android:textAlignment="center" />
+
+    <Spinner
+        android:id="@+id/locationSpinner"
+        android:layout_height="50dp"
+        android:layout_width="300dp"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:text="Click the icon below to add a photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:textSize="22sp"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:layout_width="80dp"
+        app:srcCompat="@drawable/ic_add_a_photo_black_24dp"
+        android:id="@+id/cameraButton"
+        android:adjustViewBounds="false"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/galleryLayout"></LinearLayout>
+
     <Button
-        android:text="Return"
+        android:text="Return to your bucket list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/returnButton" />
