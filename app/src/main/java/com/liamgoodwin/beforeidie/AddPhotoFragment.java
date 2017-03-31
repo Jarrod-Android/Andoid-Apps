@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -34,6 +35,7 @@ public class AddPhotoFragment extends Fragment {
     Spinner spin;
     ImageView cameraButton;
     LinearLayout galleryLayout;
+    TextView icon;
 
     private static final int CAMERA_INTENT = 1;
     private String imageLocation;
@@ -46,6 +48,7 @@ public class AddPhotoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_add_photo, container, false);
+        icon = (TextView) view.findViewById(R.id.icon);
 
         galleryLayout = (LinearLayout) view.findViewById(R.id.galleryLayout);
         spin = (Spinner) view.findViewById(R.id.blSpinner);
@@ -53,6 +56,7 @@ public class AddPhotoFragment extends Fragment {
         Database db = new Database(getContext());
 
         ArrayList<Bucketlist> listOfNames = db.getAllBucketlist();
+        icon.setText(listOfNames.toString());
 
         db.closeDB();
 
@@ -123,12 +127,9 @@ public class AddPhotoFragment extends Fragment {
         String timeStamp =
                 new SimpleDateFormat("yyyyMMdd_HHss").format(new Date());
         //Create the name of the image
-        String fileName = "hiking_log_" + timeStamp;
+        String fileName = "bucket_list" + timeStamp;
         //Grab the directory we want to save the image
-        File directory =
-                Environment.
-                        getExternalStoragePublicDirectory
-                                (Environment.DIRECTORY_PICTURES);
+        File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         //Create the image in that directory
         File picture = File.createTempFile(fileName, ".jpg", directory);
         //Save the location of the image

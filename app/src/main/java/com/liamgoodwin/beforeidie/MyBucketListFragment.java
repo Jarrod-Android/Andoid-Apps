@@ -45,9 +45,6 @@ public class MyBucketListFragment extends Fragment {
     TextView description;
     ListView list;
     TextView BucketlistDescriptionTextView;
-    ViewPager viewPager;
-    ImageView image;
-    LinearLayout galleryLayout;
     SectionPagerAdapter sectionPagerAdapter;
     GestureDetectorCompat tapGestureDetector;
     ArrayList<Bucketlist> bucketList;
@@ -68,8 +65,6 @@ public class MyBucketListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
 
         fm = getActivity().getSupportFragmentManager();
-        image = (ImageView) view.findViewById(R.id.bucketlistImage);
-        fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
 
         Database db = new Database(getContext());
@@ -82,12 +77,8 @@ public class MyBucketListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                sectionPagerAdapter = new SectionPagerAdapter(getChildFragmentManager());
-                viewPager = (ViewPager) view.findViewById(R.id.imageViewpager);
-                viewPager.setAdapter(sectionPagerAdapter);
-                viewPager.setVisibility(View.GONE);
-
                 BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
+
                 details = (TextView) view.findViewById(R.id.details);
                 chevron = (ImageView) view.findViewById(R.id.chevron);
                 additem = (ImageView) view.findViewById(R.id.additem);
@@ -125,7 +116,6 @@ public class MyBucketListFragment extends Fragment {
                     addPhoto.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.VISIBLE);
                     delete.setVisibility(View.VISIBLE);
-                    viewPager.setVisibility(View.VISIBLE);
                     email.setVisibility(View.VISIBLE);
                     twitter.setVisibility(View.VISIBLE);
                     facebook.setVisibility(View.VISIBLE);

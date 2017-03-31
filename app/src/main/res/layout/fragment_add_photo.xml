@@ -28,7 +28,7 @@
         android:text="Click the icon below to add a photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
+        android:id="@+id/icon"
         android:textSize="22sp"
         android:textAlignment="center" />
 
