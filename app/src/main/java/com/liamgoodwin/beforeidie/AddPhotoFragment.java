@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 
 /**
@@ -32,7 +33,14 @@ public class AddPhotoFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    LinearLayout addPhotoFragment;
+
+    Spinner spin;
+    ImageView cameraButton;
+    LinearLayout galleryLayout;
+
+    private static final int CAMERA_INTENT = 1;
+    private String imageLocation;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -68,8 +76,6 @@ public class AddPhotoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_add_photo, container, false);
-
-        addPhotoFragment = (LinearLayout) view.findViewById(R.id.addPhotoFragment);
 
         Button returnButton = (Button) view.findViewById(R.id.returnButton);
         returnButton.setOnClickListener(new View.OnClickListener(){
