@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -59,6 +60,7 @@ public class MyBucketListFragment extends Fragment {
     ImageView email;
     ImageView twitter;
     ImageView facebook;
+    String companyEmail = "goodwin_liam@outlook.com";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -104,7 +106,7 @@ public class MyBucketListFragment extends Fragment {
                 facebook.setImageResource(R.drawable.facebookicon);
                 facebook.setVisibility(View.GONE);
 
-                if(BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription() ){
+                if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
                     //Update the text of the description
                     BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
 
@@ -119,8 +121,7 @@ public class MyBucketListFragment extends Fragment {
                     email.setVisibility(View.VISIBLE);
                     twitter.setVisibility(View.VISIBLE);
                     facebook.setVisibility(View.VISIBLE);
-                }
-                else{
+                } else {
                     BucketlistDescriptionTextView.setText("");
                     //update the text of the show more
                     details.setText("Click to show more");
@@ -139,17 +140,18 @@ public class MyBucketListFragment extends Fragment {
         }
 
 
-        public View getView(int position, View convertView, ViewGroup parent){
+        public View getView(int position, View convertView, ViewGroup parent) {
             final Bucketlist item = getItem(position);
             final int pos = position;
+            final View view;
 
 
-            if(convertView == null){
+            if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
 
             delete = (ImageView) convertView.findViewById(R.id.delete);
-            delete.setOnClickListener(new AdapterView.OnClickListener(){
+            delete.setOnClickListener(new AdapterView.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Database db = new Database(getContext());
@@ -162,15 +164,31 @@ public class MyBucketListFragment extends Fragment {
             });
 
             addPhoto = (ImageView) convertView.findViewById(R.id.addphoto);
-            addPhoto.setOnClickListener(new View.OnClickListener(){
+            addPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.addToBackStack(null);
                     transaction.replace(R.id.mainActivity, new AddPhotoFragment());
                     transaction.commit();
                 }
             });
+
+            final String emailItem = item.getName();
+
+            email = (ImageView) convertView.findViewById(R.id.email);
+            email.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", companyEmail, null));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "My Bucketlist");
+                    intent.putExtra(Intent.EXTRA_TEXT, "Hey, I just added " + emailItem + " to my Bucklist. Download BeforeIDie so you can do it too");
+                    startActivity(Intent.createChooser(intent, "Choose an Email client :"));
+                }
+            });
+
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
@@ -186,15 +204,15 @@ public class MyBucketListFragment extends Fragment {
 
             dayCounter.setVisibility(View.VISIBLE);
 
-            if(diffInDays == 1) {
+            if (diffInDays == 1) {
                 dayCounter.setText(diffInDays + " day");
             } else {
-                dayCounter.setText(diffInDays + " days" );
+                dayCounter.setText(diffInDays + " days");
             }
 
-            if(diffInDays <= 7) {
+            if (diffInDays <= 7) {
                 dayCounter.setTextColor(Color.RED);
-            } else if(diffInDays <= 30) {
+            } else if (diffInDays <= 30) {
                 dayCounter.setTextColor(Color.YELLOW);
             } else {
                 dayCounter.setTextColor(Color.parseColor("#60be6a"));
@@ -202,16 +220,18 @@ public class MyBucketListFragment extends Fragment {
 
             return convertView;
         }
+
+
     }
 
     class SectionPagerAdapter extends FragmentPagerAdapter {
-        public SectionPagerAdapter(FragmentManager fm){
+        public SectionPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        public Fragment getItem(int position){
+        public Fragment getItem(int position) {
 
-            switch(position){
+            switch (position) {
                 case 0:
                     return ImageFragment.newInstance(R.drawable.checkmark);
                 case 1:
@@ -220,7 +240,10 @@ public class MyBucketListFragment extends Fragment {
                     return ImageFragment.newInstance(R.drawable.deleteimage);
             }
         }
-        public int getCount(){ return 2; }
+
+        public int getCount() {
+            return 2;
+        }
 
     }
 
