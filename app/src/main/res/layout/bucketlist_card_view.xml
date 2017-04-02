@@ -9,6 +9,7 @@
     cardView:cardCornerRadius="5dp"
     cardView:contentPadding="16dp"
     cardView:cardElevation="2dp"
+    android:id="@+id/bucketlist"
     cardView:cardUseCompatPadding="true"
     cardView:cardBackgroundColor="?attr/colorButtonNormal">
 
@@ -18,14 +19,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:descendantFocusability="blocksDescendants">
-
-        <ListView
-            android:id="@+id/bucketlistListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0">
-
-        </ListView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,11 +70,11 @@
                 android:id="@+id/chevron"
                 android:layout_weight="0" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/galleryLayout"></LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:id="@+id/galleryLayout"></LinearLayout>-->
 
         </LinearLayout>
 
@@ -91,6 +84,13 @@
             android:id="@+id/bucketlistDescription"
             android:textStyle="normal|italic"/>
 
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/galleryLayout"></LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -99,41 +99,55 @@
 
             <ImageView
                 android:id="@+id/additem"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/addphoto"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/edit"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
                 android:layout_weight="1" />
 
             <ImageView
                 android:id="@+id/delete"
-                android:layout_marginRight="10dp"
-                android:layout_height="50dp"
-                android:layout_width="50dp"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/email"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/twitter"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/facebook"
+                android:layout_marginRight="5dp"
+                android:layout_height="45dp"
+                android:layout_width="45dp"
                 android:layout_weight="1" />
 
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/imageViewpager"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center">
-
-        </android.support.v4.view.ViewPager>
     </LinearLayout>
 
 
