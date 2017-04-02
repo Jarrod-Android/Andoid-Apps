@@ -39,7 +39,7 @@ public class EditFragment extends Fragment {
         date = (DatePicker) view.findViewById(R.id.datePickerEdit);
 
         Database db = new Database(getContext());
-        ArrayList<Bucketlist> listOfNames = db.getAllBucketlist();
+        ArrayList<Bucketlist> listOfNames = db.getAllNames();
         db.closeDB();
 
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, listOfNames);
@@ -47,7 +47,7 @@ public class EditFragment extends Fragment {
 
         //Get the name, description and date and set them to the fields when an item is selected in the spinner
 
-        Button submit = (Button) view.findViewById(R.id.submitButton);
+        Button submit = (Button) view.findViewById(R.id.submitButtonEdit);
         submit.setOnClickListener(new View.OnClickListener() {
             @android.support.annotation.RequiresApi(api = Build.VERSION_CODES.N)
             @Override
