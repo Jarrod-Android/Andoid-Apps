@@ -68,9 +68,7 @@ public class EditFragment extends Fragment {
                 fm.popBackStack();
             }
         });
-
-
-
+        
         // Inflate the layout for this fragment
         return view;
     }
