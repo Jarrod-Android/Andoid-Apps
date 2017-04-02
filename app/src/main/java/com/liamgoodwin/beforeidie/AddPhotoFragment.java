@@ -33,6 +33,7 @@ public class AddPhotoFragment extends Fragment {
     ImageView cameraButton;
     LinearLayout galleryLayout;
     TextView icon;
+    TextView bucketlistItem;
 
     private static final int CAMERA_INTENT = 1;
     private String imageLocation;
@@ -70,6 +71,7 @@ public class AddPhotoFragment extends Fragment {
                 if(i.resolveActivity(getActivity().getPackageManager()) != null){
                     startActivityForResult(i, CAMERA_INTENT);
                 }
+
             }
         });
 
