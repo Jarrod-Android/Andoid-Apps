@@ -178,7 +178,7 @@ public class MyBucketListFragment extends Fragment {
                 public void onClick(View view) {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
-                    transaction.replace(R.id.mainActivity, new AddPhotoFragment());
+                    transaction.replace(R.id.mainActivity, new EditFragment());
                     transaction.commit();
                 }
             });

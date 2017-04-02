@@ -1,8 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.liamgoodwin.beforeidie.EditFragment">
+    android:orientation="vertical"
+    tools:context="com.liamgoodwin.beforeidie.EditFragment"
+    android:background="@color/colorAccent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,9 +19,11 @@
                 android:text="Edit An Item In Your Bucket List"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/blItemName"
-                android:textSize="22sp"
-                android:textAlignment="center" />
+                android:id="@+id/textView7"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textColor="@android:color/white"
+                android:layout_margin="10dp" />
 
             <Spinner
                 android:id="@+id/blEditSpinner"
@@ -99,10 +103,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/datePickeEdit"
-                    android:paddingLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/dateTextViewEdit"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:paddingRight="10dp" />
             </RelativeLayout>
 
             <Button
@@ -114,4 +118,4 @@
         </LinearLayout>
     </ScrollView>
 
-</FrameLayout>
+</LinearLayout>
