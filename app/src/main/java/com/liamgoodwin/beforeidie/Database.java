@@ -37,6 +37,8 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_TIME = "time";
+    private static final String COLUMN_COMPLETED = "0";
+
 
     /**
      * Image Table Column Names
@@ -55,7 +57,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String CREATE_BUCKET_LIST_TABLE = "CREATE TABLE " + TABLE_BUCKET_LIST + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
-            + COLUMN_TIME + " BIGINT" + ")";
+            + COLUMN_TIME + " BIGINT," + COLUMN_COMPLETED + " INT" + ")";
 
     private static final String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_RESOURCE + " TEXT" + ")";
@@ -104,6 +106,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_NAME, bucketlist.getName());
         values.put(COLUMN_DESCRIPTION, bucketlist.getDescription());
         values.put(COLUMN_TIME, String.valueOf(bucketlist.getTime()));
+        values.put(COLUMN_COMPLETED, bucketlist.getCompleted());
         db.insert(TABLE_BUCKET_LIST, null, values);
         db.close();
     }
@@ -150,6 +153,22 @@ public class Database extends SQLiteOpenHelper {
         return cursor.getString(3);
     }
 
+    public ArrayList<Bucketlist> getAllNames() {
+        ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Bucketlist bl = new Bucketlist();
+                bl.setName(cursor.getString(1));
+                bucketList.add(bl);
+            } while (cursor.moveToNext());
+        }
+        return bucketList;
+    }
+
     public ArrayList<Bucketlist> getAllBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST;
@@ -163,6 +182,7 @@ public class Database extends SQLiteOpenHelper {
                 bl.setName(cursor.getString(1));
                 bl.setDescription(cursor.getString(2));
                 bl.setTime(cursor.getLong(3));
+                bl.setCompleted(cursor.getInt(4));
                 bucketList.add(bl);
             } while (cursor.moveToNext());
         }
@@ -238,6 +258,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_NAME, bl.getName());
         values.put(COLUMN_DESCRIPTION, bl.getDescription());
         values.put(COLUMN_TIME, String.valueOf(bl.getTime()));
+        values.put(COLUMN_COMPLETED, bl.getCompleted());
         return db.update(TABLE_BUCKET_LIST, values, COLUMN_ID + " = ?", new String[]{String.valueOf(bl.getId())});
     }
 

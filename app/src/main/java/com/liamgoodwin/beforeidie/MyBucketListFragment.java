@@ -148,13 +148,11 @@ public class MyBucketListFragment extends Fragment {
             super(context, 0, items);
         }
 
-
         public View getView(int position, View convertView, ViewGroup parent) {
             final Bucketlist item = getItem(position);
             final int pos = position;
             final View view;
-
-
+            
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
@@ -227,6 +225,17 @@ public class MyBucketListFragment extends Fragment {
                 }
             });
 
+            edit = (ImageView) convertView.findViewById(R.id.edit);
+            edit.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.addToBackStack(null);
+                    transaction.replace(R.id.mainActivity, new EditFragment());
+                    transaction.commit();
+                }
+            });
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
@@ -242,7 +251,9 @@ public class MyBucketListFragment extends Fragment {
 
             dayCounter.setVisibility(View.VISIBLE);
 
-            if (diffInDays == 1) {
+            if(diffInDays <= 0) {
+                dayCounter.setText("Expired");
+            } else if(diffInDays == 1) {
                 dayCounter.setText(diffInDays + " day");
             } else {
                 dayCounter.setText(diffInDays + " days");
@@ -258,8 +269,6 @@ public class MyBucketListFragment extends Fragment {
 
             return convertView;
         }
-
-
     }
 
     class SectionPagerAdapter extends FragmentPagerAdapter {
