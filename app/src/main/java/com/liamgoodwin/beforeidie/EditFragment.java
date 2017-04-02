@@ -55,9 +55,10 @@ public class EditFragment extends Fragment {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(date.getYear(), date.getMonth(), date.getDayOfMonth());
                 long millis = calendar.getTimeInMillis();
+                int completed = 0;
 
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
-                        description.getText().toString(), millis);
+                        description.getText().toString(), millis, completed);
 
                 Database db = new Database(getContext());
                 db.updateBucketlist(bucketlist);
