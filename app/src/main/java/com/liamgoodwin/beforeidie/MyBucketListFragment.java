@@ -172,6 +172,17 @@ public class MyBucketListFragment extends Fragment {
                 }
             });
 
+            edit = (ImageView) convertView.findViewById(R.id.edit);
+            edit.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    transaction.replace(R.id.mainActivity, new AddPhotoFragment());
+                    transaction.commit();
+                }
+            });
+
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
             name.setText(item.getName());
@@ -186,7 +197,10 @@ public class MyBucketListFragment extends Fragment {
 
             dayCounter.setVisibility(View.VISIBLE);
 
-            if(diffInDays == 1) {
+            if(diffInDays <= 0) {
+                dayCounter.setText("Expired");
+            }
+            else if(diffInDays == 1) {
                 dayCounter.setText(diffInDays + " day");
             } else {
                 dayCounter.setText(diffInDays + " days" );
