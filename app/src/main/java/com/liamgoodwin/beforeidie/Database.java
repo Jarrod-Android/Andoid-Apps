@@ -160,8 +160,6 @@ public class Database extends SQLiteOpenHelper {
             do {
                 Bucketlist bl = new Bucketlist();
                 bl.setName(cursor.getString(1));
-                bl.setDescription(cursor.getString(2));
-                bl.setTime(cursor.getLong(3));
                 bucketList.add(bl);
             } while (cursor.moveToNext());
         }

@@ -26,7 +26,6 @@ public class EditFragment extends Fragment {
     DatePicker date;
     FragmentManager fm;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,7 +65,6 @@ public class EditFragment extends Fragment {
 
                 fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();
-
             }
         });
 
