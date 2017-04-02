@@ -4,10 +4,114 @@
     android:layout_height="match_parent"
     tools:context="com.liamgoodwin.beforeidie.EditFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:text="Edit An Item In Your Bucket List"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/blItemName"
+                android:textSize="22sp"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:id="@+id/blEditSpinner"
+                android:layout_height="50dp"
+                android:layout_width="300dp"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:text="Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nameTextViewEdit"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/nameEditTextEdit"
+                    android:layout_weight="1"
+                    android:textAlignment="textStart"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:text="Description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/descriptionTextViewEdit"
+                    android:textSize="18sp"
+                    android:padding="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/descriptionEditTextEdit"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:text="Date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dateTextViewEdit"
+                    android:textSize="18sp"
+                    android:padding="10dp" />
+
+                <DatePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/datePickeEdit"
+                    android:paddingLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/dateTextViewEdit"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <Button
+                android:text="Add Edit To Bucket List"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/submitButtonEdit"
+                android:layout_margin="10dp" />
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
