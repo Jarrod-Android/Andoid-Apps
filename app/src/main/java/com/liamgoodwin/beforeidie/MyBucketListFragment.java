@@ -3,6 +3,8 @@ package com.liamgoodwin.beforeidie;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.net.Uri;
@@ -29,14 +31,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import static android.R.id.message;
+import static android.content.ContentValues.TAG;
 
 public class MyBucketListFragment extends Fragment {
 
@@ -60,7 +69,7 @@ public class MyBucketListFragment extends Fragment {
     ImageView email;
     ImageView twitter;
     ImageView facebook;
-    String companyEmail = "goodwin_liam@outlook.com";
+    String companyEmail = "beforeidie@gmail.com";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -174,6 +183,37 @@ public class MyBucketListFragment extends Fragment {
                     transaction.commit();
                 }
             });
+
+
+            Intent tweetIntent = new Intent(Intent.ACTION_SEND);
+            tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
+            tweetIntent.setType("text/plain");
+
+            PackageManager packManager = getPackageManager();
+            List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent,  PackageManager.MATCH_DEFAULT_ONLY);
+
+            boolean resolved = false;
+            for(ResolveInfo resolveInfo: resolvedInfoList){
+                if(resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")){
+                    tweetIntent.setClassName(
+                            resolveInfo.activityInfo.packageName,
+                            resolveInfo.activityInfo.name );
+                    resolved = true;
+                    break;
+                }
+            }
+            if(resolved){
+                startActivity(tweetIntent);
+            }else{
+                Intent i = new Intent();
+                i.putExtra(Intent.EXTRA_TEXT, "Hello Download our app");
+                i.setAction(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://twitter.com/intent/tweet?text=" + (message));
+                startActivity(i);
+               // Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
+            }
+
+
 
             final String emailItem = item.getName();
 
