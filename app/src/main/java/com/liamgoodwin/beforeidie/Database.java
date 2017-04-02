@@ -37,6 +37,8 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_TIME = "time";
+    private static final int COLUMN_COMPLETED = 0;
+
 
     /**
      * Image Table Column Names
@@ -55,7 +57,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String CREATE_BUCKET_LIST_TABLE = "CREATE TABLE " + TABLE_BUCKET_LIST + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
-            + COLUMN_TIME + " BIGINT" + ")";
+            + COLUMN_TIME + " BIGINT," + COLUMN_COMPLETED + " INT" + ")";
 
     private static final String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_RESOURCE + " TEXT" + ")";
@@ -104,6 +106,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_NAME, bucketlist.getName());
         values.put(COLUMN_DESCRIPTION, bucketlist.getDescription());
         values.put(COLUMN_TIME, String.valueOf(bucketlist.getTime()));
+        values.put(COLUMN_COMPLETED, bucketlist.get));
         db.insert(TABLE_BUCKET_LIST, null, values);
         db.close();
     }

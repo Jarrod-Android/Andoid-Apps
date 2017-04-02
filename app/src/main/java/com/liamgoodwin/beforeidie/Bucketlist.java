@@ -15,6 +15,7 @@ public class Bucketlist {
     private String description;
     private long time;
     private String bucketList;
+    private int completed;
 
     public Bucketlist(String name, String description, long time){
         this.name = name;
@@ -70,5 +71,9 @@ public class Bucketlist {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getCompleted() {return completed;}
+
+    public void setCompleted(int completed) {this.completed = completed;}
 
 }
