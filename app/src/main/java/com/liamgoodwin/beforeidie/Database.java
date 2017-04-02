@@ -37,7 +37,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_TIME = "time";
-    private static final int COLUMN_COMPLETED = 0;
+    private static final String COLUMN_COMPLETED = "0";
 
 
     /**
@@ -106,7 +106,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_NAME, bucketlist.getName());
         values.put(COLUMN_DESCRIPTION, bucketlist.getDescription());
         values.put(COLUMN_TIME, String.valueOf(bucketlist.getTime()));
-        values.put(COLUMN_COMPLETED, bucketlist.get));
+        values.put(COLUMN_COMPLETED, bucketlist.getCompleted());
         db.insert(TABLE_BUCKET_LIST, null, values);
         db.close();
     }
@@ -182,6 +182,7 @@ public class Database extends SQLiteOpenHelper {
                 bl.setName(cursor.getString(1));
                 bl.setDescription(cursor.getString(2));
                 bl.setTime(cursor.getLong(3));
+                bl.setCompleted(cursor.getInt(4));
                 bucketList.add(bl);
             } while (cursor.moveToNext());
         }
@@ -257,6 +258,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_NAME, bl.getName());
         values.put(COLUMN_DESCRIPTION, bl.getDescription());
         values.put(COLUMN_TIME, String.valueOf(bl.getTime()));
+        values.put(COLUMN_COMPLETED, bl.getCompleted());
         return db.update(TABLE_BUCKET_LIST, values, COLUMN_ID + " = ?", new String[]{String.valueOf(bl.getId())});
     }
 

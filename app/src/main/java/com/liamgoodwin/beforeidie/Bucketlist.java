@@ -17,17 +17,20 @@ public class Bucketlist {
     private String bucketList;
     private int completed;
 
-    public Bucketlist(String name, String description, long time){
+    public Bucketlist(String name, String description, long time, int completed){
         this.name = name;
         this.description = description;
         this.time = time;
+        this.completed = completed;
     }
 
-    public Bucketlist(int id, String name, String description, long time){
+    public Bucketlist(int id, String name, String description, long time, int completed){
         this.id = id;
         this.name = name;
         this.description = description;
         this.time = time;
+        this.completed = completed;
+
     }
 
     public Bucketlist(){
