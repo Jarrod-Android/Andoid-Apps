@@ -5,6 +5,7 @@ import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -32,6 +33,8 @@ public class EditFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit, container, false);
 
         Bundle extras = getArguments();
+        final int bucketListID = extras.getInt("editBucketListID");
+        final Bucketlist bucketlistItem = extras.getParcelable("bucketlistItem");
         String bucketListItemName = extras.getString("editBucketListItemName");
         String bucketListItemDescription = extras.getString("editBucketListItemDescription");
 
@@ -59,12 +62,17 @@ public class EditFragment extends Fragment {
                 long millis = calendar.getTimeInMillis();
                 int completed = 0;
 
+                Bucketlist bl = bucketlistItem;
+                //bl = (name.getText().toString(), description.getText().toString(), millis, completed);
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
                         description.getText().toString(), millis, completed);
 
                 Database db = new Database(getContext());
                 db.updateBucketlist(bucketlist);
+
                 db.closeDB();
+
+
 
                 fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();
