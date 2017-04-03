@@ -5,6 +5,7 @@ import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 
 public class EditFragment extends Fragment {
 
-    Spinner editSpin;
     EditText name;
     EditText description;
     DatePicker date;
@@ -32,17 +32,22 @@ public class EditFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_edit, container, false);
 
-        editSpin = (Spinner) view.findViewById(R.id.blEditSpinner);
+        Bundle extras = getArguments();
+        final int bucketListID = extras.getInt("editBucketListID");
+        final Bucketlist bucketlistItem = extras.getParcelable("bucketlistItem");
+        String bucketListItemName = extras.getString("editBucketListItemName");
+        String bucketListItemDescription = extras.getString("editBucketListItemDescription");
+
         name = (EditText) view.findViewById(R.id.nameEditTextEdit);
+        name.setText(bucketListItemName);
         description = (EditText) view.findViewById(R.id.descriptionEditTextEdit);
+        description.setText(bucketListItemDescription);
+
         date = (DatePicker) view.findViewById(R.id.datePickerEdit);
 
         Database db = new Database(getContext());
         ArrayList<Bucketlist> listOfNames = db.getAllNames();
         db.closeDB();
-
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, listOfNames);
-        editSpin.setAdapter(adapter);
 
         //Get the name, description and date and set them to the fields when an item is selected in the spinner
 
@@ -57,12 +62,17 @@ public class EditFragment extends Fragment {
                 long millis = calendar.getTimeInMillis();
                 int completed = 0;
 
+                Bucketlist bl = bucketlistItem;
+                //bl = (name.getText().toString(), description.getText().toString(), millis, completed);
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
                         description.getText().toString(), millis, completed);
 
                 Database db = new Database(getContext());
                 db.updateBucketlist(bucketlist);
+
                 db.closeDB();
+
+
 
                 fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();

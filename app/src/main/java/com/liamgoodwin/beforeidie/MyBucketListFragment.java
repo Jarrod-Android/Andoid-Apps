@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
+import android.os.Parcelable;
 import android.support.design.widget.Snackbar;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,12 +69,14 @@ public class MyBucketListFragment extends Fragment {
     ImageView delete;
     ImageView email;
     ImageView twitter;
-    ImageView facebook;
     String companyEmail = "beforeidie@gmail.com";
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.detach(this).attach(this).commit();
 
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
@@ -98,7 +101,6 @@ public class MyBucketListFragment extends Fragment {
                 delete = (ImageView) view.findViewById(R.id.delete);
                 email = (ImageView) view.findViewById(R.id.email);
                 twitter = (ImageView) view.findViewById(R.id.twitter);
-                facebook = (ImageView) view.findViewById(R.id.facebook);
 
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
@@ -112,8 +114,6 @@ public class MyBucketListFragment extends Fragment {
                 email.setVisibility(View.GONE);
                 twitter.setImageResource(R.drawable.twittericon);
                 twitter.setVisibility(View.GONE);
-                facebook.setImageResource(R.drawable.facebookicon);
-                facebook.setVisibility(View.GONE);
 
                 if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
                     //Update the text of the description
@@ -129,7 +129,6 @@ public class MyBucketListFragment extends Fragment {
                     delete.setVisibility(View.VISIBLE);
                     email.setVisibility(View.VISIBLE);
                     twitter.setVisibility(View.VISIBLE);
-                    facebook.setVisibility(View.VISIBLE);
                 } else {
                     BucketlistDescriptionTextView.setText("");
                     //update the text of the show more
@@ -239,13 +238,33 @@ public class MyBucketListFragment extends Fragment {
             edit.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
+
+                    int editBucketListID = item.getId();
+                    String editBucketListItemName = item.getName();
+                    String editBucketListItemDescription = item.getDescription();
+
+                    Bundle editBundle = new Bundle();
+
+                    editBundle.putParcelable("bucketlistItem", (Parcelable) item);
+                    editBundle.putInt("editBucketListID", editBucketListID);
+                    editBundle.putString("editBucketListItemName", editBucketListItemName);
+                    editBundle.putString("editBucketListItemDescription", editBucketListItemDescription);
+
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
+
+                    EditFragment editFrag = new EditFragment();
+                    editFrag.setArguments(editBundle);
+
                     transaction.addToBackStack(null);
-                    transaction.replace(R.id.mainActivity, new EditFragment());
+                    transaction.replace(R.id.mainActivity, editFrag);
                     transaction.commit();
+
                 }
             });
+
+
+
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
