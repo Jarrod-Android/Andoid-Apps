@@ -48,11 +48,9 @@ public class AddPhotoFragment extends Fragment {
         Bundle extras = getArguments();
         String bucketListItemName = extras.getString("bucketListItemName");
 
-
-
-
         galleryLayout = (LinearLayout) view.findViewById(R.id.galleryLayout);
         title = (TextView) view.findViewById(R.id.addPhotoTitle);
+        title.setText(bucketListItemName);
 
         cameraButton = (ImageView) view.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
