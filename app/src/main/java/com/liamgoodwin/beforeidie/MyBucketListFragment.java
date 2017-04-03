@@ -152,7 +152,7 @@ public class MyBucketListFragment extends Fragment {
             final Bucketlist item = getItem(position);
             final int pos = position;
             final View view;
-            
+
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }

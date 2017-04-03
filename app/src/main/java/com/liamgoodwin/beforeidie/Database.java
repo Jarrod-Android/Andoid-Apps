@@ -37,7 +37,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_TIME = "time";
-    private static final String COLUMN_COMPLETED = "0";
+    private static final String COLUMN_COMPLETED = "completed";
 
 
     /**
