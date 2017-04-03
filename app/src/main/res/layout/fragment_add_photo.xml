@@ -17,12 +17,17 @@
         android:textSize="22sp"
         android:textAlignment="center" />
 
-    <Spinner
-        android:id="@+id/blSpinner"
-        android:layout_height="50dp"
-        android:layout_width="300dp"
-        android:gravity="center_vertical"
-        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:text="itemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addPhotoTitle"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:padding="20dp"
+        android:textSize="24sp"
+        android:layout_margin="10dp"
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:text="Click the icon below to add a photo"

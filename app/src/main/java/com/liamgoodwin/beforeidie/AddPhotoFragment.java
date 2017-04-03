@@ -29,7 +29,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddPhotoFragment extends Fragment {
 
-    Spinner spin;
+    TextView title;
     ImageView cameraButton;
     LinearLayout galleryLayout;
     TextView icon;
@@ -45,15 +45,14 @@ public class AddPhotoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_photo, container, false);
         icon = (TextView) view.findViewById(R.id.icon);
 
+        Bundle extras = getArguments();
+        String bucketListItemName = extras.getString("bucketListItemName");
+
+
+
+
         galleryLayout = (LinearLayout) view.findViewById(R.id.galleryLayout);
-        spin = (Spinner) view.findViewById(R.id.blSpinner);
-
-        Database db = new Database(getContext());
-        ArrayList<Bucketlist> listOfNames = db.getAllBucketlist();
-        db.closeDB();
-
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, listOfNames);
-        spin.setAdapter(adapter);
+        title = (TextView) view.findViewById(R.id.addPhotoTitle);
 
         cameraButton = (ImageView) view.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -102,8 +101,6 @@ public class AddPhotoFragment extends Fragment {
             Database db = new Database(getContext());
             int picID = db.addImage(new Image(imageLocation));
             if(picID != -1){
-                Bucketlist location = (Bucketlist) spin.getSelectedItem();
-                db.addImageLocation(picID, location.getId());
                 Toast.makeText(getActivity(), "Photo Added",
                         Toast.LENGTH_LONG).show();
             }

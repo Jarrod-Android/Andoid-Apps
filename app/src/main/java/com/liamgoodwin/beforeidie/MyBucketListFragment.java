@@ -174,10 +174,20 @@ public class MyBucketListFragment extends Fragment {
             addPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    String bucketListItemName = item.getName();
+
+                    Bundle data = new Bundle();
+                    data.putString("bucketListItemName", bucketListItemName);
+
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
+
+                    AddPhotoFragment newFrag = new AddPhotoFragment();
+                    newFrag.setArguments(data);
+
                     transaction.addToBackStack(null);
-                    transaction.replace(R.id.mainActivity, new AddPhotoFragment());
+                    transaction.replace(R.id.mainActivity, newFrag);
                     transaction.commit();
                 }
             });
