@@ -229,13 +229,31 @@ public class MyBucketListFragment extends Fragment {
             edit.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
+
+                    String editBucketListItemName = item.getName();
+                    String editBucketListItemDescription = item.getDescription();
+
+                    Bundle editBundle = new Bundle();
+
+                    editBundle.putString("editBucketListItemName", editBucketListItemName);
+                    editBundle.putString("editBucketListItemDescription", editBucketListItemDescription);
+
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
+
+                    EditFragment editFrag = new EditFragment();
+                    editFrag.setArguments(editBundle);
+
                     transaction.addToBackStack(null);
-                    transaction.replace(R.id.mainActivity, new EditFragment());
+                    transaction.replace(R.id.mainActivity, editFrag);
                     transaction.commit();
+
+
                 }
             });
+
+
+
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
