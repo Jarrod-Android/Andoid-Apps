@@ -57,7 +57,6 @@ public class AddToMyBucketListFragment extends Fragment {
 
                 fm = getActivity().getSupportFragmentManager();
                 fm.popBackStack();
-
             }
         });
 
