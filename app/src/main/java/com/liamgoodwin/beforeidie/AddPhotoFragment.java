@@ -43,7 +43,6 @@ public class AddPhotoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_add_photo, container, false);
-        icon = (TextView) view.findViewById(R.id.icon);
 
         Bundle extras = getArguments();
         String bucketListItemName = extras.getString("bucketListItemName");
@@ -68,7 +67,6 @@ public class AddPhotoFragment extends Fragment {
                 if(i.resolveActivity(getActivity().getPackageManager()) != null){
                     startActivityForResult(i, CAMERA_INTENT);
                 }
-
             }
         });
 
@@ -115,7 +113,7 @@ public class AddPhotoFragment extends Fragment {
         String timeStamp =
                 new SimpleDateFormat("yyyyMMdd_HHss").format(new Date());
         //Create the name of the image
-        String fileName = "hiking_log_" + timeStamp;
+        String fileName = "before_i_die_" + timeStamp;
         //Grab the directory we want to save the image
         File directory =
                 Environment.
