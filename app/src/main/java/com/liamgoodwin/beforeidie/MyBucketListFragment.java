@@ -245,7 +245,7 @@ public class MyBucketListFragment extends Fragment {
 
                     Bundle editBundle = new Bundle();
 
-                    editBundle.putParcelable("bucketlistItem", (Parcelable) item);
+                    //editBundle.putParcelable("bucketlistItem", (Parcelable) item);
                     editBundle.putInt("editBucketListID", editBucketListID);
                     editBundle.putString("editBucketListItemName", editBucketListItemName);
                     editBundle.putString("editBucketListItemDescription", editBucketListItemDescription);
