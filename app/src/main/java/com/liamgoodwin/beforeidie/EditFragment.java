@@ -63,8 +63,9 @@ public class EditFragment extends Fragment {
                 int completed = 0;
 
                 Bucketlist bl = bucketlistItem;
+
                 //bl = (name.getText().toString(), description.getText().toString(), millis, completed);
-                Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
+                Bucketlist bucketlist = new Bucketlist(bucketListID, name.getText().toString(),
                         description.getText().toString(), millis, completed);
 
                 Database db = new Database(getContext());
