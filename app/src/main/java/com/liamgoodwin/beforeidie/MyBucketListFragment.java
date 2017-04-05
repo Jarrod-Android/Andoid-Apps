@@ -2,6 +2,7 @@ package com.liamgoodwin.beforeidie;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -17,6 +18,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -160,12 +162,32 @@ public class MyBucketListFragment extends Fragment {
             delete.setOnClickListener(new AdapterView.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Database db = new Database(getContext());
-                    Bucketlist location = bucketList.get(pos);
-                    db.deleteBucketlist(location.getId());
-                    db.closeDB();
-                    bucketList.remove(pos);
-                    adapter.notifyDataSetChanged();
+
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    //Yes button clicked
+                                    Database db = new Database(getContext());
+                                    Bucketlist location = bucketList.get(pos);
+                                    db.deleteBucketlist(location.getId());
+                                    db.closeDB();
+                                    bucketList.remove(pos);
+                                    adapter.notifyDataSetChanged();
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    //No button clicked
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("Are you sure you want to delete " + name.getText() + "?");
+                            builder.setPositiveButton("Yes", dialogClickListener);
+                            builder.setNegativeButton("Cancel", dialogClickListener).show();
                 }
             });
 

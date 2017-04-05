@@ -85,11 +85,11 @@
             android:textStyle="normal|italic"/>
 
 
-        <LinearLayout
-            android:orientation="vertical"
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/galleryLayout"></LinearLayout>
+            android:columnCount="3"
+            android:id="@+id/galleryLayout"></GridLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

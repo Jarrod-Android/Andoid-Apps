@@ -67,16 +67,7 @@ public class AddPhotoFragment extends Fragment {
                 if(i.resolveActivity(getActivity().getPackageManager()) != null){
                     startActivityForResult(i, CAMERA_INTENT);
                 }
-            }
-        });
 
-        Button returnButton = (Button) view.findViewById(R.id.returnButton);
-        returnButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-
-                Intent i = new Intent(getActivity(), MainActivity.class);
-                getActivity().startActivity(i);
             }
         });
 
@@ -113,7 +104,7 @@ public class AddPhotoFragment extends Fragment {
         String timeStamp =
                 new SimpleDateFormat("yyyyMMdd_HHss").format(new Date());
         //Create the name of the image
-        String fileName = "before_i_die_" + timeStamp;
+        String fileName = "hiking_log_" + timeStamp;
         //Grab the directory we want to save the image
         File directory =
                 Environment.

@@ -8,15 +8,6 @@
     tools:context="com.liamgoodwin.beforeidie.AddPhotoFragment"
     android:background="@color/colorAccent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:text="Bucket List Item Name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bucketlistItem"
-        android:textSize="22sp"
-        android:textAlignment="center" />
-
     <TextView
         android:text="itemTitle"
         android:layout_width="match_parent"
