@@ -35,7 +35,7 @@ public class MainFragment extends Fragment {
     Button LearnMore;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -69,23 +69,24 @@ public class MainFragment extends Fragment {
 
         LearnMore = (Button) view.findViewById(R.id.learnMore);
         LearnMore.setOnClickListener(new View.OnClickListener() {
-            showPopup();
+            @Override
+            public void onClick(View view) {
+                showPopup(inflater, view);
+            }
         });
 
         return view;
     }
 
-    public void showPopup(View anchorView) {
+    public void showPopup(LayoutInflater inflater, View anchorView) {
 
-        View popupView = getLayoutInflater().inflate(R.layout.popup_layout, null);
+        View popupView = inflater.inflate(R.layout.popup_layout, null);
 
         PopupWindow popupWindow = new PopupWindow(popupView,
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         // Example: If you have a TextView inside `popup_layout.xml`
-        TextView tv = (TextView) popupView.findViewById(R.id.tv);
-
-        tv.setText(....);
+        TextView tv = (TextView) popupView.findViewById(R.id.thisIsShowing);
 
         // If the PopupWindow should be focusable
         popupWindow.setFocusable(true);
