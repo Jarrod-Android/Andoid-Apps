@@ -61,12 +61,10 @@ public class MainFragment extends Fragment {
         List<String> keys = new ArrayList<String>(recommendations.keySet());
         String randomKey = keys.get(r.nextInt(keys.size()));
 
-        String name = "";
-
         LocationText = (TextView) view.findViewById(R.id.locationText);
         LearnMore = (Button) view.findViewById(R.id.learnMore);
 
-        LocationText.setText(recommendationsName.get(randomKey));
+        LocationText.setText(recommendationsName.get(randomName));
 
         return view;
     }
