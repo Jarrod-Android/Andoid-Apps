@@ -100,8 +100,9 @@ public class MainFragment extends Fragment {
         anchorView.getLocationOnScreen(location);
 
         // Using location, the PopupWindow will be displayed right under anchorView
-        popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY,
-                location[0], location[1] + anchorView.getHeight());
+        popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, location[0], location[1] + anchorView.getHeight());
+
+        //popupwindow.dismiss();
 
     }
 }
