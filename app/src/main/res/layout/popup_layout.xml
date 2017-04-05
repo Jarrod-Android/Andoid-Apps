@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fab_stroke_top_outer_color"
-    android:layout_margin="20dp">
+    android:padding="20dp">
 
     <TextView
         android:text="THIS IS SHOWING"
