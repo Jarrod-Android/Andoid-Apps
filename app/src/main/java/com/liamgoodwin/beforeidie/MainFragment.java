@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,12 +41,33 @@ public class MainFragment extends Fragment {
     ListView list;
     TextView LocationText;
     Button LearnMore;
+    TextView daysName;
+    TextView daysTime;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        Database db = new Database(getContext());
+        Bucketlist bucketListSmallestTime = db.getSmallestTime();
+        System.out.println("Error" + bucketListSmallestTime);
+        db.closeDB();
+
+        long smallestDays = bucketListSmallestTime.getTime();
+        String homeBucketListItemName = bucketListSmallestTime.getName();
+
+        long homeTime = System.currentTimeMillis();
+
+        long homeDiffInMillis = smallestDays - homeTime;
+
+        int homeDiffInDays = (int) (homeDiffInMillis / (1000 * 60 * 60 * 24));
+
+        daysName = (TextView) view.findViewById(R.id.daysName);
+        daysTime = (TextView) view.findViewById(R.id.daysTime);
+
+            daysName.setText(homeBucketListItemName);
+            daysTime.setText("" + homeDiffInDays);
 
         Map<String, String> recommendationsName = new HashMap<String, String>();
 

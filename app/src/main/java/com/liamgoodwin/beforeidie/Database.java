@@ -169,6 +169,21 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
+    public Bucketlist getSmallestTime() {
+        Bucketlist bucketList = null;
+        String smallestDays = "SELECT " + COLUMN_TIME + ", " + COLUMN_NAME + " FROM " + TABLE_BUCKET_LIST + " ORDER BY " + COLUMN_TIME + " ASC LIMIT 1";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(smallestDays, null);
+        if (cursor.moveToFirst()) {
+                bucketList = new Bucketlist();
+                bucketList.setName(cursor.getString(1));
+                bucketList.setTime(cursor.getLong(0));
+        }
+        return bucketList;
+
+    }
+
     public ArrayList<Bucketlist> getAllBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
@@ -187,6 +202,24 @@ public class Database extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         return bucketList;
+    }
+
+    public ArrayList<Picture> getAllPictures() {
+        ArrayList<Picture> pictureList = new ArrayList<Picture>();
+        String selectQuery = "SELECT  * FROM " + TABLE_IMAGE;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Picture picture = new Picture();
+                picture.setId(Integer.parseInt(cursor.getString(0)));
+                picture.setResource(cursor.getString(1));
+                pictureList.add(picture);
+            } while (cursor.moveToNext());
+        }
+        return pictureList;
     }
 
     public ArrayList<Bucketlist> getAllBucketlistCompleted() {
