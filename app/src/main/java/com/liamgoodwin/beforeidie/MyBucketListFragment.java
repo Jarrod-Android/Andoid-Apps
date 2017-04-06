@@ -30,12 +30,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
@@ -71,6 +75,7 @@ public class MyBucketListFragment extends Fragment {
     ImageView delete;
     ImageView email;
     ImageView twitter;
+    GridLayout galleryLayout;
     String companyEmail = "beforeidie@gmail.com";
     Button current;
     Button completed;
@@ -245,6 +250,7 @@ public class MyBucketListFragment extends Fragment {
                 email = (ImageView) view.findViewById(R.id.email);
                 twitter = (ImageView) view.findViewById(R.id.twitter);
 
+                galleryLayout.setVisibility(View.INVISIBLE);
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
@@ -266,6 +272,7 @@ public class MyBucketListFragment extends Fragment {
                     details.setText("Click to show less");
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                    galleryLayout.setVisibility(View.VISIBLE);
                     additem.setVisibility(View.VISIBLE);
                     addPhoto.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.VISIBLE);
@@ -299,6 +306,24 @@ public class MyBucketListFragment extends Fragment {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
 
+            galleryLayout = (GridLayout) convertView.findViewById(R.id.galleryLayout);
+            //Make the gallery layout invisible
+            galleryLayout.setVisibility(View.GONE);
+            //only add items to the gallery if the gallery is empty
+            if(galleryLayout.getChildCount() == 0){
+                //Grab all the photos that match the id of the current location
+                Database db = new Database(getContext());
+                ArrayList<Image> pics = db.getAllImages(item.getId());
+                db.closeDB();
+                //Add those photos to the gallery
+                for(int i =0; i < pics.size(); i++){
+                    File image = new File(pics.get(i).getResource());
+                    ImageView imageView = new ImageView(getContext());
+                    Picasso.with(getContext()).load(image).resize(280, 280).centerCrop().into(imageView);
+                    galleryLayout.addView(imageView);
+                }
+            }
+
             delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener() {
                 @Override
@@ -326,7 +351,7 @@ public class MyBucketListFragment extends Fragment {
                     };
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                    builder.setMessage("Are you sure you want to delete " + name.getText() + "?");
+                    builder.setMessage("Are you sure you want to delete this" + "?");
                             builder.setPositiveButton("Yes", dialogClickListener);
                             builder.setNegativeButton("Cancel", dialogClickListener).show();
                 }

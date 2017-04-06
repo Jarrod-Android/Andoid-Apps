@@ -204,6 +204,24 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
+    public ArrayList<Picture> getAllPictures() {
+        ArrayList<Picture> pictureList = new ArrayList<Picture>();
+        String selectQuery = "SELECT  * FROM " + TABLE_IMAGE;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Picture picture = new Picture();
+                picture.setId(Integer.parseInt(cursor.getString(0)));
+                picture.setResource(cursor.getString(1));
+                pictureList.add(picture);
+            } while (cursor.moveToNext());
+        }
+        return pictureList;
+    }
+
     public ArrayList<Bucketlist> getAllBucketlistCompleted() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 1";

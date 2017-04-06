@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +39,8 @@ public class AddPhotoFragment extends Fragment {
     LinearLayout galleryLayout;
     TextView icon;
     TextView bucketlistItem;
+    FragmentManager fm;
+    Button returnButton;
 
     private static final int CAMERA_INTENT = 1;
     private String imageLocation;
@@ -57,6 +61,14 @@ public class AddPhotoFragment extends Fragment {
         galleryLayout = (LinearLayout) view.findViewById(R.id.galleryLayout);
         title = (TextView) view.findViewById(R.id.addPhotoTitle);
         title.setText(bucketListItemName);
+        returnButton = (Button) view.findViewById(R.id.returnButton);
+        returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+            }
+        });
 
         cameraButton = (ImageView) view.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
