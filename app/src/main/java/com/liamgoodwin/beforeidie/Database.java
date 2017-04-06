@@ -25,6 +25,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String TABLE_BUCKET_LIST = "bucket_list";
     private static final String TABLE_IMAGE = "image";
     private static final String TABLE_IMAGELOCATION = "image_location";
+    private static final String TABLE_RECOMMENDATIONS = "recommendations";
 
     /**
      * Common column names
@@ -38,7 +39,6 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_TIME = "time";
     private static final String COLUMN_COMPLETED = "completed";
-
 
     /**
      * Image Table Column Names
@@ -66,6 +66,11 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_LOCATION + " INTEGER REFERENCES " + TABLE_BUCKET_LIST + "(" + COLUMN_ID + "),"
             + COLUMN_PICTURE + " INTEGER REFERENCES " + TABLE_BUCKET_LIST + "(" + COLUMN_ID + ")" + ")";
 
+    private static final String CREATE_RECOMMENDATIONS_TABLE = "CREATE TABLE " + TABLE_RECOMMENDATIONS + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
+            + COLUMN_PICTURE + " INT" + ")";
+
+
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -80,6 +85,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(CREATE_BUCKET_LIST_TABLE);
         db.execSQL(CREATE_IMAGE_TABLE);
         db.execSQL(CREATE_IMAGE_LOCATION_TABLE);
+        db.execSQL(CREATE_RECOMMENDATIONS_TABLE);
     }
 
     /**
@@ -90,6 +96,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGELOCATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGELOCATION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECOMMENDATIONS);
         onCreate(db);
     }
 
@@ -240,6 +247,12 @@ public class Database extends SQLiteOpenHelper {
         }
         return pictureList;
     }
+
+    SELECT column FROM table
+    ORDER BY RAND()
+    LIMIT 1
+
+
 
     /**
      * The second getAllPictures is used to grab all images associated with an location
