@@ -56,8 +56,8 @@ public class MainFragment extends Fragment {
         daysName = (TextView) view.findViewById(R.id.daysName);
         daysTime = (TextView) view.findViewById(R.id.daysTime);
 
-            daysName.setText(homeBucketListItemName);
-            daysTime.setText("" + homeDiffInDays);
+        daysName.setText(homeBucketListItemName);
+        daysTime.setText("" + homeDiffInDays);
 
         Recommendation recommendation1 = new Recommendation("Paris, France",
                 "Paris, France's capital, is a major European city and a global center for art, fashion, gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.",
@@ -75,21 +75,20 @@ public class MainFragment extends Fragment {
                 "Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaiʻi in the Pacific Ocean. The largest subaerial volcano in both mass and volume, Mauna Loa has historically been considered the largest volcano on Earth.",
                 R.drawable.emailicon);
 
-//        Database db = new Database(getContext());
-//        db.addRecommendation(recommendation1);
-//        db.addRecommendation(recommendation2);
-//        db.addRecommendation(recommendation3);
-//        db.addRecommendation(recommendation4);
-//        db.addRecommendation(recommendation5);
-//        db.closeDB();
-//
-////        final Bucketlist item = getItem(position);
-////        final int pos = position;
-//
-//        db = new Database(getContext());
-//        recommendation = db.getRandomRecommendation();
-//        //String recName =
-//        db.closeDB();
+        db = new Database(getContext());
+        db.addRecommendation(recommendation1);
+        db.addRecommendation(recommendation2);
+        db.addRecommendation(recommendation3);
+        db.addRecommendation(recommendation4);
+        db.addRecommendation(recommendation5);
+        db.closeDB();
+
+        db = new Database(getContext());
+        Recommendation rec = db.getRandomRecommendation();
+        String recName = rec.getName();
+        String recDescription = rec.getDescription();
+        long recImage = rec.getImage();
+        db.closeDB();
 
 //        Map<String, String> recommendationsName = new HashMap<String, String>();
 //

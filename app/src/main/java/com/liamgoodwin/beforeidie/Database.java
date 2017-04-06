@@ -188,7 +188,6 @@ public class Database extends SQLiteOpenHelper {
                 bucketList.setTime(cursor.getLong(0));
         }
         return bucketList;
-
     }
 
     public ArrayList<Bucketlist> getAllBucketlist() {
@@ -281,25 +280,23 @@ public class Database extends SQLiteOpenHelper {
         return pictureList;
     }
 
-    public ArrayList<Recommendation> getRandomRecommendation() {
-        ArrayList<Recommendation> recommendationList = new ArrayList<Recommendation>();
+    public Recommendation getRandomRecommendation() {
+        Recommendation recommendationList = null;
         String selectQuery = "SELECT * FROM " + TABLE_RECOMMENDATIONS + "ORDER BY RAND() LIMIT 1";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
-            do {
-                Recommendation rec = new Recommendation();
-                rec.setId(Integer.parseInt(cursor.getString(0)));
-                rec.setName(cursor.getString(1));
-                rec.setDescription(cursor.getString(2));
-                rec.setImage(Integer.parseInt(cursor.getString(3)));
-                recommendationList.add(rec);
-            } while (cursor.moveToNext());
-        }
+            Recommendation rec = new Recommendation();
+            rec.setId(Integer.parseInt(cursor.getString(0)));
+            rec.setName(cursor.getString(1));
+            rec.setDescription(cursor.getString(2));
+            rec.setImage(Integer.parseInt(cursor.getString(3)));
+        }s
         return recommendationList;
     }
+
 
     public void addRecommendation(Recommendation recommendation) {
         SQLiteDatabase db = this.getWritableDatabase();

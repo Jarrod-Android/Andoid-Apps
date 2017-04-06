@@ -10,15 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-<<<<<<< HEAD
-=======
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.view.GestureDetector;
->>>>>>> staging
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,28 +19,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-<<<<<<< HEAD
-=======
-import android.widget.DatePicker;
 import android.widget.GridLayout;
->>>>>>> staging
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-=======
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
->>>>>>> staging
 import java.util.ArrayList;
 
 public class MyBucketListFragment extends Fragment {
