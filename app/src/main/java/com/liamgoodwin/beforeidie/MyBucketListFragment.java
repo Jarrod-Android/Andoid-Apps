@@ -1,13 +1,8 @@
 package com.liamgoodwin.beforeidie;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
-import android.os.Parcelable;
-import android.support.design.widget.Snackbar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,12 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.ViewPager;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -29,37 +19,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import static android.R.id.message;
-import static android.content.ContentValues.TAG;
 
 public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
-    FragmentTransaction ft;
     TextView name;
-    TextView description;
     ListView list;
     TextView BucketlistDescriptionTextView;
-    SectionPagerAdapter sectionPagerAdapter;
-    GestureDetectorCompat tapGestureDetector;
     ArrayList<Bucketlist> bucketList;
     TextView dayCounter;
     TextView details;
@@ -467,29 +439,6 @@ public class MyBucketListFragment extends Fragment {
 
             return convertView;
         }
-    }
-
-    class SectionPagerAdapter extends FragmentPagerAdapter {
-        public SectionPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public Fragment getItem(int position) {
-
-            switch (position) {
-                case 0:
-                    return ImageFragment.newInstance(R.drawable.checkmark);
-                case 1:
-                    return ImageFragment.newInstance(R.drawable.beforeidie);
-                default:
-                    return ImageFragment.newInstance(R.drawable.deleteimage);
-            }
-        }
-
-        public int getCount() {
-            return 2;
-        }
-
     }
 
 }
