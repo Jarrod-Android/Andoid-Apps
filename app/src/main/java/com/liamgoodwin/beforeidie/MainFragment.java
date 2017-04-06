@@ -71,26 +71,25 @@ public class MainFragment extends Fragment {
         if(rec != null) {
             String recName = rec.getName();
             String recDescription = rec.getDescription();
-            long recImage = rec.getImage();
+            int recImage = rec.getImage();
             LocationText.setText(recName);
+
+            final String name = recName;
+            final String description = recDescription;
+            final Integer image = recImage;
+
+            LearnMore = (Button) view.findViewById(R.id.learnMore);
+            LearnMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPopup(inflater, view, name, description, image);
+                }
+            });
         } else {
             LocationText.setText("Cannot Pull From DB");
         }
 
         db.closeDB();
-
-
-//        final String name = recommendationsName.get(randomName);
-//        final String description = recommendationsDescription.get(randomDescription);
-//        final Integer image = recommendationsImage.get(randomImage);
-
-        LearnMore = (Button) view.findViewById(R.id.learnMore);
-        LearnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                showPopup(inflater, view, name, description, image);
-            }
-        });
 
         return view;
     }

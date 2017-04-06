@@ -40,7 +40,7 @@ public class Recommendation {
         this.description = description;
     }
 
-    public long getImage() { return image; }
+    public int getImage() { return image; }
 
     public void setImage(int image) {
         this.image = image;
