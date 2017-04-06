@@ -12,7 +12,17 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:subtitleTextColor="@color/colorWhite"
-        app:titleTextColor="@color/colorWhite" />
+        app:titleTextColor="@color/colorWhite">
+
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/twitter_login_button"
+        android:layout_centerInParent="true"
+        android:layout_gravity="end"
+        android:layout_height="45dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="250dp" />
+
+    </android.support.v7.widget.Toolbar>
 
     <it.neokree.materialtabs.MaterialTabHost
         android:id="@+id/tabHost"
