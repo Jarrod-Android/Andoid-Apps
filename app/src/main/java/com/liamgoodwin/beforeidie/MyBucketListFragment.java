@@ -259,12 +259,31 @@ public class MyBucketListFragment extends Fragment {
                     transaction.addToBackStack(null);
                     transaction.replace(R.id.mainActivity, editFrag);
                     transaction.commit();
-
                 }
             });
 
+            additem = (ImageView) convertView.findViewById(R.id.edit);
+            additem.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
 
+                    int completedID = item.getId();
+                    String completedName = item.getName();
+                    String completedDescription = item.getDescription();
+                    Long completedmillis = item.getTime();
+                    int completedField = 1;
 
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+
+                    Bucketlist bucketlist = new Bucketlist(completedID, completedName,
+                            completedDescription, completedmillis, completedField);
+
+                    Database db = new Database(getContext());
+                    db.updateBucketlist(bucketlist);
+                    db.closeDB();
+                }
+            });
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
