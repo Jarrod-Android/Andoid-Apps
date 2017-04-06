@@ -41,6 +41,7 @@ public class AddPhotoFragment extends Fragment {
     TextView bucketlistItem;
     FragmentManager fm;
     Button returnButton;
+    int addPhoto;
 
     private static final int CAMERA_INTENT = 1;
     private String imageLocation;
@@ -57,6 +58,7 @@ public class AddPhotoFragment extends Fragment {
 
         Bundle extras = getArguments();
         String bucketListItemName = extras.getString("bucketListItemName");
+        addPhoto = extras.getInt("addPhotoBucketlistID");
 
         galleryLayout = (LinearLayout) view.findViewById(R.id.galleryLayout);
         title = (TextView) view.findViewById(R.id.addPhotoTitle);
@@ -107,6 +109,7 @@ public class AddPhotoFragment extends Fragment {
             Database db = new Database(getContext());
             int picID = db.addImage(new Image(imageLocation));
             if(picID != -1){
+                db.addImageLocation(picID, addPhoto);
                 Toast.makeText(getActivity(), "Photo Added",
                         Toast.LENGTH_LONG).show();
             }
