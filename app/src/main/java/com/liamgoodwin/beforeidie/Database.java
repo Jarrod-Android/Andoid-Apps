@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -70,6 +71,25 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
             + COLUMN_PICTURE + " INT" + ")";
 
+    private static final String ADD_PARIS = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
+            + "'Paris France', " + "'Paris Frances capital is a major European city and a global center for art fashion gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century Gothic Notre-Dame cathedral the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.', "
+            + R.drawable.deleteimage + ")";
+
+    private static final String ADD_ZEALAND = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
+            + "'New Zealand', " + "'New Zealand is a country in the southwestern Pacific Ocean consisting of 2 main islands both marked by volcanoes and glaciation. Capital Wellington on the North Island is home to Te Papa Tongarewa the expansive national museum. Wellingtons dramatic Mt. Victoria along with the South Islands Fiordland and Southern Lakes stood in for mythical Middle Earth in Peter Jacksons \"Lord of the Rings\" films.', "
+            + R.drawable.camerabutton + ")";
+
+    private static final String ADD_NEWYORK = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
+            + "'New York City', " + "'New York City comprises 5 boroughs sitting where the Hudson River meets the Atlantic Ocean. At its core is Manhattan a densely populated borough thats among the worlds major commercial financial and cultural centers. Its iconic sites include skyscrapers such as the Empire State Building and sprawling Central Park. Broadway theater is staged in neon-lit Times Square.', "
+            + R.drawable.checkmark + ")";
+
+    private static final String ADD_GRANDCANYON = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
+            + "'Grand Canyon', " + "'The Grand Canyon in Arizona is a natural formation distinguished by layered bands of red rock revealing millions of years of geological history in cross-section. Vast in scale the canyon averages 10 miles across and a mile deep along its 277-mile length. Much of the area is a national park with Colorado River white-water rapids and sweeping vistas.', "
+            + R.drawable.facebookicon + ")";
+
+    private static final String ADD_MAUNA = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
+            + "'Mauna Loa', " + "'Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaii in the Pacific Ocean. The largest subaerial volcano in both mass and volume Mauna Loa has historically been considered the largest volcano on Earth.', "
+            + R.drawable.emailicon + ")";
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -86,6 +106,11 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(CREATE_IMAGE_TABLE);
         db.execSQL(CREATE_IMAGE_LOCATION_TABLE);
         db.execSQL(CREATE_RECOMMENDATIONS_TABLE);
+        db.execSQL(ADD_PARIS);
+        db.execSQL(ADD_ZEALAND);
+        db.execSQL(ADD_NEWYORK);
+        db.execSQL(ADD_GRANDCANYON);
+        db.execSQL(ADD_MAUNA);
     }
 
     /**
@@ -281,22 +306,24 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public Recommendation getRandomRecommendation() {
+        Random r = new Random();
+        int row = r.nextInt(5);
+
         Recommendation recommendationList = null;
-        String selectQuery = "SELECT * FROM " + TABLE_RECOMMENDATIONS + "ORDER BY RAND() LIMIT 1";
+        String selectQuery = "SELECT * FROM " + TABLE_RECOMMENDATIONS + " WHERE " + COLUMN_ID + "=" + row ;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
-            Recommendation rec = new Recommendation();
-            rec.setId(Integer.parseInt(cursor.getString(0)));
-            rec.setName(cursor.getString(1));
-            rec.setDescription(cursor.getString(2));
-            rec.setImage(Integer.parseInt(cursor.getString(3)));
-        }s
+            recommendationList = new Recommendation();
+            recommendationList.setId(Integer.parseInt(cursor.getString(0)));
+            recommendationList.setName(cursor.getString(1));
+            recommendationList.setDescription(cursor.getString(2));
+            recommendationList.setImage(Integer.parseInt(cursor.getString(3)));
+        }
         return recommendationList;
     }
-
 
     public void addRecommendation(Recommendation recommendation) {
         SQLiteDatabase db = this.getWritableDatabase();
