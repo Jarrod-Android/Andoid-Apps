@@ -21,11 +21,26 @@ public class MainFragment extends Fragment {
     ListView list;
     TextView RecommendationsDescriptionTextView;
     Button LearnMore;
+    TextView daysName;
+    TextView daysTime;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+//        daysName = (TextView) view.findViewById(R.id.daysName);
+//        daysTime = (TextView) view.findViewById(R.id.daysTime);
+//
+//        Bundle extras = getArguments();
+//        String bucketListItemName = extras.getString("homeBucketListItemName");
+//        String homeBucketListDays = extras.getString("homeBucketListItemDays");
+//
+//
+//        daysName.setText(bucketListItemName);
+//        daysTime.setText(homeBucketListDays);
+
+
 
         return view;
     }

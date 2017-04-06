@@ -285,9 +285,6 @@ public class MyBucketListFragment extends Fragment {
                 }
             });
 
-
-
-
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
             name.setText(item.getName());
@@ -317,6 +314,32 @@ public class MyBucketListFragment extends Fragment {
             } else {
                 dayCounter.setTextColor(Color.parseColor("#60be6a"));
             }
+
+
+
+            Database db = new Database(getContext());
+            ArrayList<Bucketlist> bucketListSmallestTime;
+            bucketListSmallestTime = db.getSmallestTime();
+            db.closeDB();
+
+            final Bucketlist bucketlistTime = getItem(position);
+
+            long smallestDays = bucketlistTime.getTime();
+            String homeBucketListItemName = item.getName();
+
+            long homeTime = System.currentTimeMillis();
+
+            long homeDiffInMillis = smallestDays - homeTime;
+
+            int homeDiffInDays = (int) (homeDiffInMillis / (1000 * 60 * 60 * 24));
+
+
+            String smallestDaysString = Integer.toString(homeDiffInDays);
+
+            Bundle homeBundle = new Bundle();
+
+            homeBundle.putString("homeBucketListItemDays", smallestDaysString);
+            homeBundle.putString("homeBucketListItemName", homeBucketListItemName);
 
             return convertView;
         }
