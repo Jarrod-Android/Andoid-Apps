@@ -169,18 +169,16 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
-    public ArrayList<Bucketlist> getSmallestTime() {
-        ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        String smallestDays = "SELECT MIN(time) FROM bucket_list";
+    public Bucketlist getSmallestTime() {
+        Bucketlist bucketList = null;
+        String smallestDays = "SELECT " + COLUMN_TIME + ", " + COLUMN_NAME + " FROM " + TABLE_BUCKET_LIST + " ORDER BY " + COLUMN_TIME + " ASC LIMIT 1";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(smallestDays, null);
         if (cursor.moveToFirst()) {
-            do {
-                Bucketlist bl = new Bucketlist();
-                bl.setTime(cursor.getLong(3));
-                bucketList.add(bl);
-            } while (cursor.moveToNext());
+                bucketList = new Bucketlist();
+                bucketList.setName(cursor.getString(1));
+                bucketList.setTime(cursor.getLong(0));
         }
         return bucketList;
 
