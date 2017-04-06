@@ -64,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                 String username = result.data.getUserName();
                 TwitterSession userInfo = result.data;
                 String userName = userInfo.getUserName();
-                loginButton.setText(userName);
+                loginButton.setText("@" + userName);
                 //TwitterSession session = result.data;
                 // TODO: Remove toast and use the TwitterSession's userID
                 // with your app's user model
