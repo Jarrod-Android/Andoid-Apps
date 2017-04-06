@@ -87,6 +87,29 @@ public class MyBucketListFragment extends Fragment {
         bucketList = db.getAllBucketlist();
         db.closeDB();
 
+        current = (Button) view.findViewById(R.id.currentBucketlist);
+        completed = (Button) view.findViewById(R.id.completedBucketlist);
+
+        current.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                Database db = new Database(getContext());
+                bucketList = db.getAllBucketlist();
+                db.closeDB();
+            }
+        });
+
+        completed.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                Database db = new Database(getContext());
+                bucketList = db.getAllBucketlistCompleted();
+                db.closeDB();
+            }
+        });
+
         adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -266,30 +289,6 @@ public class MyBucketListFragment extends Fragment {
 
             additem = (ImageView) convertView.findViewById(R.id.additem);
             additem.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view) {
-
-                    int completedID = item.getId();
-                    String completedName = item.getName();
-                    String completedDescription = item.getDescription();
-                    Long completedmillis = item.getTime();
-                    int completedField = 1;
-
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction transaction = fm.beginTransaction();
-
-                    Bucketlist bucketlist = new Bucketlist(completedID, completedName,
-                            completedDescription, completedmillis, completedField);
-
-                    Database db = new Database(getContext());
-                    db.updateBucketlist(bucketlist);
-                    db.closeDB();
-                }
-            });
-
-            current = (Button) convertView.findViewById(R.id.currentBucketlist);
-            completed = (Button) convertView.findViewById(R.id.completedBucketlist);
-            current.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
 
