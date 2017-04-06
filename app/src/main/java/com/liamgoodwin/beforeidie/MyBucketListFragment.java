@@ -308,7 +308,6 @@ public class MyBucketListFragment extends Fragment {
                 }
             });
 
-
             Intent tweetIntent = new Intent(Intent.ACTION_SEND);
             tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
             tweetIntent.setType("text/plain");

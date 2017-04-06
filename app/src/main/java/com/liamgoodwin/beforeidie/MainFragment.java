@@ -1,11 +1,6 @@
 package com.liamgoodwin.beforeidie;
 
-import android.app.Activity;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -17,18 +12,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.support.v4.app.FragmentManager;
 
-import org.w3c.dom.Text;
-
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import static android.support.v4.content.res.ResourcesCompat.getDrawable;
 
 /**
  * Created by HP on 4/4/2016.
@@ -46,7 +35,6 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-
         Map<String, String> recommendationsName = new HashMap<String, String>();
 
         recommendationsName.put("0", "Paris, France");
@@ -63,16 +51,16 @@ public class MainFragment extends Fragment {
         recommendationsDescription.put("Grand Canyon", "The Grand Canyon in Arizona is a natural formation distinguished by layered bands of red rock, revealing millions of years of geological history in cross-section. Vast in scale, the canyon averages 10 miles across and a mile deep along its 277-mile length. Much of the area is a national park, with Colorado River white-water rapids and sweeping vistas.");
         recommendationsDescription.put("Mauna Loa", "Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaiʻi in the Pacific Ocean. The largest subaerial volcano in both mass and volume, Mauna Loa has historically been considered the largest volcano on Earth.");
 
-        Map<String, Drawable> recommendationsImage = new HashMap<String, Drawable>();
+        Map<String, Integer> recommendationsImage = new HashMap<String, Integer>();
 
-        recommendationsImage.put("Paris, France", getDrawable(getResources(), R.drawable.beforeidie, null));
-        recommendationsImage.put("New Zealand", getDrawable(getResources(), R.drawable.beforeidie, null));
-        recommendationsImage.put("New York", getDrawable(getResources(), R.drawable.beforeidie, null));
-        recommendationsImage.put("Grand Canyon", getDrawable(getResources(), R.drawable.beforeidie, null));
-        recommendationsImage.put("Mauna Loa", getDrawable(getResources(), R.drawable.beforeidie, null));
+        recommendationsImage.put("Paris, France",  R.drawable.beforeidie);
+        recommendationsImage.put("New Zealand", R.drawable.camerabutton);
+        recommendationsImage.put("New York", R.drawable.deleteimage);
+        recommendationsImage.put("Grand Canyon", R.drawable.emailicon);
+        recommendationsImage.put("Mauna Loa", R.drawable.facebookicon);
 
         Random r = new Random();
-        int randomNum = r.nextInt(5);
+        int randomNum = 3;
 
         List<String> titles = new ArrayList<String>(recommendationsName.keySet());
         String randomName = titles.get(randomNum);
@@ -81,14 +69,14 @@ public class MainFragment extends Fragment {
         String randomDescription = keys.get(randomNum);
 
         List<String> images = new ArrayList<String>(recommendationsImage.keySet());
-        Drawable randomImage = Drawable.createFromPath(images.get(randomNum));
+        String randomImage = images.get(randomNum);
 
         LocationText = (TextView) view.findViewById(R.id.locationText);
         LocationText.setText(recommendationsName.get(randomName));
 
         final String name = recommendationsName.get(randomName);
         final String description = recommendationsDescription.get(randomDescription);
-        final Drawable image = recommendationsImage.get(randomImage);
+        final Integer image = recommendationsImage.get(randomImage);
 
         LearnMore = (Button) view.findViewById(R.id.learnMore);
         LearnMore.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +89,7 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    public void showPopup(LayoutInflater inflater, View anchorView, String name, String description, Drawable image) {
+    public void showPopup(LayoutInflater inflater, View anchorView, String name, String description, Integer image) {
 
         View popupView = inflater.inflate(R.layout.popup_layout, null);
 
@@ -114,7 +102,7 @@ public class MainFragment extends Fragment {
         TextView popupDescription = (TextView) popupView.findViewById(R.id.popupDescription);
 
         popupName.setText(name);
-        popupImage.setImageDrawable(image);
+        popupImage.setImageResource(image.intValue());
         popupDescription.setText(description);
 
         // If the PopupWindow should be focusable
