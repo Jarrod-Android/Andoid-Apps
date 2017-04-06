@@ -128,6 +128,8 @@ public class MyBucketListFragment extends Fragment {
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
 
+
+                        galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
                         additem.setVisibility(View.GONE);
                         addPhoto.setImageResource(R.drawable.camerabutton);
@@ -149,6 +151,7 @@ public class MyBucketListFragment extends Fragment {
                             details.setText("Click to show less");
                             //update the chevron image
                             chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                            galleryLayout.setVisibility(View.VISIBLE);
                             additem.setVisibility(View.VISIBLE);
                             addPhoto.setVisibility(View.VISIBLE);
                             edit.setVisibility(View.VISIBLE);
@@ -196,6 +199,7 @@ public class MyBucketListFragment extends Fragment {
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
 
+                        galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
                         additem.setVisibility(View.GONE);
                         addPhoto.setImageResource(R.drawable.camerabutton);
@@ -217,6 +221,7 @@ public class MyBucketListFragment extends Fragment {
                             details.setText("Click to show less");
                             //update the chevron image
                             chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                            galleryLayout.setVisibility(View.VISIBLE);
                             additem.setVisibility(View.VISIBLE);
                             addPhoto.setVisibility(View.VISIBLE);
                             edit.setVisibility(View.VISIBLE);
@@ -256,7 +261,7 @@ public class MyBucketListFragment extends Fragment {
                 email = (ImageView) view.findViewById(R.id.email);
                 twitter = (ImageView) view.findViewById(R.id.twitter);
 
-                galleryLayout.setVisibility(View.INVISIBLE);
+                galleryLayout.setVisibility(View.GONE);
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
@@ -369,8 +374,10 @@ public class MyBucketListFragment extends Fragment {
                 public void onClick(View view) {
 
                     String bucketListItemName = item.getName();
+                    int addPhotoBucketListID = item.getId();
 
                     Bundle data = new Bundle();
+                    data.putInt("addPhotoBucketlistID", addPhotoBucketListID);
                     data.putString("bucketListItemName", bucketListItemName);
 
                     FragmentManager fm = getFragmentManager();

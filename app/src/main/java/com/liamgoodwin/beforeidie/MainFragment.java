@@ -48,26 +48,27 @@ public class MainFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
         Database db = new Database(getContext());
         Bucketlist bucketListSmallestTime = db.getSmallestTime();
-        System.out.println("Error" + bucketListSmallestTime);
         db.closeDB();
 
-        long smallestDays = bucketListSmallestTime.getTime();
-        String homeBucketListItemName = bucketListSmallestTime.getName();
+        if (bucketListSmallestTime != null) {
+            long smallestDays = bucketListSmallestTime.getTime();
+            String homeBucketListItemName = bucketListSmallestTime.getName();
 
-        long homeTime = System.currentTimeMillis();
+            long homeTime = System.currentTimeMillis();
 
-        long homeDiffInMillis = smallestDays - homeTime;
+            long homeDiffInMillis = smallestDays - homeTime;
 
-        int homeDiffInDays = (int) (homeDiffInMillis / (1000 * 60 * 60 * 24));
+            int homeDiffInDays = (int) (homeDiffInMillis / (1000 * 60 * 60 * 24));
 
-        daysName = (TextView) view.findViewById(R.id.daysName);
-        daysTime = (TextView) view.findViewById(R.id.daysTime);
+            daysName = (TextView) view.findViewById(R.id.daysName);
+            daysTime = (TextView) view.findViewById(R.id.daysTime);
 
             daysName.setText(homeBucketListItemName);
             daysTime.setText("" + homeDiffInDays);
+
+        }
 
         Map<String, String> recommendationsName = new HashMap<String, String>();
 
