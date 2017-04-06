@@ -29,47 +29,81 @@ public class MainFragment extends Fragment {
     ListView list;
     TextView LocationText;
     Button LearnMore;
+    ArrayList<Recommendation> recommendation;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        Map<String, String> recommendationsName = new HashMap<String, String>();
 
-        recommendationsName.put("0", "Paris, France");
-        recommendationsName.put("1", "New Zealand");
-        recommendationsName.put("2", "New York City");
-        recommendationsName.put("3", "Grand Canyon");
-        recommendationsName.put("4", "Mauna Loa");
+        Recommendation recommendation1 = new Recommendation("Paris, France",
+                "Paris, France's capital, is a major European city and a global center for art, fashion, gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.",
+                R.drawable.deleteimage);
+        Recommendation recommendation2 = new Recommendation("New Zealand",
+                "New Zealand is a country in the southwestern Pacific Ocean consisting of 2 main islands, both marked by volcanoes and glaciation. Capital Wellington, on the North Island, is home to Te Papa Tongarewa, the expansive national museum. Wellington’s dramatic Mt. Victoria, along with the South Island’s Fiordland and Southern Lakes, stood in for mythical Middle Earth in Peter Jackson’s \"Lord of the Rings\" films.",
+                R.drawable.camerabutton);
+        Recommendation recommendation3 = new Recommendation("New York City",
+                "New York City comprises 5 boroughs sitting where the Hudson River meets the Atlantic Ocean. At its core is Manhattan, a densely populated borough that’s among the world’s major commercial, financial and cultural centers. Its iconic sites include skyscrapers such as the Empire State Building and sprawling Central Park. Broadway theater is staged in neon-lit Times Square.",
+                R.drawable.checkmark);
+        Recommendation recommendation4 = new Recommendation("Grand Canyon",
+                "The Grand Canyon in Arizona is a natural formation distinguished by layered bands of red rock, revealing millions of years of geological history in cross-section. Vast in scale, the canyon averages 10 miles across and a mile deep along its 277-mile length. Much of the area is a national park, with Colorado River white-water rapids and sweeping vistas.",
+                R.drawable.facebookicon);
+        Recommendation recommendation5 = new Recommendation("Mauna Loa",
+                "Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaiʻi in the Pacific Ocean. The largest subaerial volcano in both mass and volume, Mauna Loa has historically been considered the largest volcano on Earth.",
+                R.drawable.emailicon);
 
-        Map<String, String> recommendationsDescription = new HashMap<String, String>();
+        Database db = new Database(getContext());
+        db.addRecommendation(recommendation1);
+        db.addRecommendation(recommendation2);
+        db.addRecommendation(recommendation3);
+        db.addRecommendation(recommendation4);
+        db.addRecommendation(recommendation5);
+        db.closeDB();
 
-        recommendationsDescription.put("Paris, France", "Paris, France's capital, is a major European city and a global center for art, fashion, gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.");
-        recommendationsDescription.put("New Zealand", "New Zealand is a country in the southwestern Pacific Ocean consisting of 2 main islands, both marked by volcanoes and glaciation. Capital Wellington, on the North Island, is home to Te Papa Tongarewa, the expansive national museum. Wellington’s dramatic Mt. Victoria, along with the South Island’s Fiordland and Southern Lakes, stood in for mythical Middle Earth in Peter Jackson’s \"Lord of the Rings\" films.");
-        recommendationsDescription.put("New York", "New York City comprises 5 boroughs sitting where the Hudson River meets the Atlantic Ocean. At its core is Manhattan, a densely populated borough that’s among the world’s major commercial, financial and cultural centers. Its iconic sites include skyscrapers such as the Empire State Building and sprawling Central Park. Broadway theater is staged in neon-lit Times Square.");
-        recommendationsDescription.put("Grand Canyon", "The Grand Canyon in Arizona is a natural formation distinguished by layered bands of red rock, revealing millions of years of geological history in cross-section. Vast in scale, the canyon averages 10 miles across and a mile deep along its 277-mile length. Much of the area is a national park, with Colorado River white-water rapids and sweeping vistas.");
-        recommendationsDescription.put("Mauna Loa", "Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaiʻi in the Pacific Ocean. The largest subaerial volcano in both mass and volume, Mauna Loa has historically been considered the largest volcano on Earth.");
+        final Bucketlist item = getItem(position);
+        final int pos = position;
 
-        Map<String, Integer> recommendationsImage = new HashMap<String, Integer>();
+        db = new Database(getContext());
+        recommendation = db.getRandomRecommendation();
+        String recName =
+        db.closeDB();
 
-        recommendationsImage.put("Paris, France",  R.drawable.beforeidie);
-        recommendationsImage.put("New Zealand", R.drawable.camerabutton);
-        recommendationsImage.put("New York", R.drawable.deleteimage);
-        recommendationsImage.put("Grand Canyon", R.drawable.emailicon);
-        recommendationsImage.put("Mauna Loa", R.drawable.facebookicon);
-
-        Random r = new Random();
-        int randomNum = 3;
-
-        List<String> titles = new ArrayList<String>(recommendationsName.keySet());
-        String randomName = titles.get(randomNum);
-
-        List<String> keys = new ArrayList<String>(recommendationsDescription.keySet());
-        String randomDescription = keys.get(randomNum);
-
-        List<String> images = new ArrayList<String>(recommendationsImage.keySet());
-        String randomImage = images.get(randomNum);
+//        Map<String, String> recommendationsName = new HashMap<String, String>();
+//
+//        recommendationsName.put("0", "Paris, France");
+//        recommendationsName.put("1", "New Zealand");
+//        recommendationsName.put("2", "New York City");
+//        recommendationsName.put("3", "Grand Canyon");
+//        recommendationsName.put("4", "Mauna Loa");
+//
+//        Map<String, String> recommendationsDescription = new HashMap<String, String>();
+//
+//        recommendationsDescription.put("Paris, France", "Paris, France's capital, is a major European city and a global center for art, fashion, gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.");
+//        recommendationsDescription.put("New Zealand", "New Zealand is a country in the southwestern Pacific Ocean consisting of 2 main islands, both marked by volcanoes and glaciation. Capital Wellington, on the North Island, is home to Te Papa Tongarewa, the expansive national museum. Wellington’s dramatic Mt. Victoria, along with the South Island’s Fiordland and Southern Lakes, stood in for mythical Middle Earth in Peter Jackson’s \"Lord of the Rings\" films.");
+//        recommendationsDescription.put("New York", "New York City comprises 5 boroughs sitting where the Hudson River meets the Atlantic Ocean. At its core is Manhattan, a densely populated borough that’s among the world’s major commercial, financial and cultural centers. Its iconic sites include skyscrapers such as the Empire State Building and sprawling Central Park. Broadway theater is staged in neon-lit Times Square.");
+//        recommendationsDescription.put("Grand Canyon", "The Grand Canyon in Arizona is a natural formation distinguished by layered bands of red rock, revealing millions of years of geological history in cross-section. Vast in scale, the canyon averages 10 miles across and a mile deep along its 277-mile length. Much of the area is a national park, with Colorado River white-water rapids and sweeping vistas.");
+//        recommendationsDescription.put("Mauna Loa", "Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaiʻi in the Pacific Ocean. The largest subaerial volcano in both mass and volume, Mauna Loa has historically been considered the largest volcano on Earth.");
+//
+//        Map<String, Integer> recommendationsImage = new HashMap<String, Integer>();
+//
+//        recommendationsImage.put("Paris, France",  R.drawable.beforeidie);
+//        recommendationsImage.put("New Zealand", R.drawable.camerabutton);
+//        recommendationsImage.put("New York", R.drawable.deleteimage);
+//        recommendationsImage.put("Grand Canyon", R.drawable.emailicon);
+//        recommendationsImage.put("Mauna Loa", R.drawable.facebookicon);
+//
+//        Random r = new Random();
+//        int randomNum = 3;
+//
+//        List<String> titles = new ArrayList<String>(recommendationsName.keySet());
+//        String randomName = titles.get(randomNum);
+//
+//        List<String> keys = new ArrayList<String>(recommendationsDescription.keySet());
+//        String randomDescription = keys.get(randomNum);
+//
+//        List<String> images = new ArrayList<String>(recommendationsImage.keySet());
+//        String randomImage = images.get(randomNum);
 
         LocationText = (TextView) view.findViewById(R.id.locationText);
         LocationText.setText(recommendationsName.get(randomName));

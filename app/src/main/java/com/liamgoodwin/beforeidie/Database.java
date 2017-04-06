@@ -248,11 +248,35 @@ public class Database extends SQLiteOpenHelper {
         return pictureList;
     }
 
-    SELECT column FROM table
-    ORDER BY RAND()
-    LIMIT 1
+    public ArrayList<Recommendation> getRandomRecommendation() {
+        ArrayList<Recommendation> recommendationList = new ArrayList<Recommendation>();
+        String selectQuery = "SELECT * FROM " + TABLE_RECOMMENDATIONS + "ORDER BY RAND() LIMIT 1";
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                Recommendation rec = new Recommendation();
+                rec.setId(Integer.parseInt(cursor.getString(0)));
+                rec.setName(cursor.getString(1));
+                rec.setDescription(cursor.getString(2));
+                rec.setImage(Integer.parseInt(cursor.getString(3)));
+                recommendationList.add(rec);
+            } while (cursor.moveToNext());
+        }
+        return recommendationList;
+    }
+
+    public void addRecommendation(Recommendation recommendation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, recommendation.getName());
+        values.put(COLUMN_DESCRIPTION, recommendation.getDescription());
+        values.put(COLUMN_PICTURE, String.valueOf(recommendation.getImage()));
+        db.insert(TABLE_RECOMMENDATIONS, null, values);
+        db.close();
+    }
 
     /**
      * The second getAllPictures is used to grab all images associated with an location

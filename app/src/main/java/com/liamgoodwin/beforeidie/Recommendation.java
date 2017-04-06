@@ -13,7 +13,7 @@ public class Recommendation {
         this.image = image;
     }
 
-    public Recommendation(int id, String name, String description, int iamge){
+    public Recommendation(int id, String name, String description, int image){
         this.id = id;
         this.name = name;
         this.description = description;
