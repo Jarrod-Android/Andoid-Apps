@@ -1,7 +1,10 @@
 package com.liamgoodwin.beforeidie;
 
 import android.app.Activity;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -17,11 +21,14 @@ import android.support.v4.app.FragmentManager;
 
 import org.w3c.dom.Text;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import static android.support.v4.content.res.ResourcesCompat.getDrawable;
 
 /**
  * Created by HP on 4/4/2016.
@@ -56,45 +63,45 @@ public class MainFragment extends Fragment {
         recommendationsDescription.put("Grand Canyon", "The Grand Canyon in Arizona is a natural formation distinguished by layered bands of red rock, revealing millions of years of geological history in cross-section. Vast in scale, the canyon averages 10 miles across and a mile deep along its 277-mile length. Much of the area is a national park, with Colorado River white-water rapids and sweeping vistas.");
         recommendationsDescription.put("Mauna Loa", "Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaiʻi in the Pacific Ocean. The largest subaerial volcano in both mass and volume, Mauna Loa has historically been considered the largest volcano on Earth.");
 
-        Map<String, String> recommendationsImage = new HashMap<String, String>();
+        Map<String, Drawable> recommendationsImage = new HashMap<String, Drawable>();
 
-        recommendationsImage.put("Paris, France", "@drawable/beforeidie.png");
-        recommendationsImage.put("New Zealand", "@drawable/beforeidie.png");
-        recommendationsImage.put("New York", "@drawable/beforeidie.png");
-        recommendationsImage.put("Grand Canyon", "@drawable/beforeidie.png");
-        recommendationsImage.put("Mauna Loa", "@drawable/beforeidie.png");
+        recommendationsImage.put("Paris, France", getDrawable(getResources(), R.drawable.beforeidie, null));
+        recommendationsImage.put("New Zealand", getDrawable(getResources(), R.drawable.beforeidie, null));
+        recommendationsImage.put("New York", getDrawable(getResources(), R.drawable.beforeidie, null));
+        recommendationsImage.put("Grand Canyon", getDrawable(getResources(), R.drawable.beforeidie, null));
+        recommendationsImage.put("Mauna Loa", getDrawable(getResources(), R.drawable.beforeidie, null));
 
         Random r = new Random();
+        int randomNum = r.nextInt(5);
 
         List<String> titles = new ArrayList<String>(recommendationsName.keySet());
-        String randomName = titles.get(r.nextInt(titles.size()));
+        String randomName = titles.get(randomNum);
 
         List<String> keys = new ArrayList<String>(recommendationsDescription.keySet());
-        String randomDescription = keys.get(r.nextInt(keys.size()));
+        String randomDescription = keys.get(randomNum);
 
         List<String> images = new ArrayList<String>(recommendationsImage.keySet());
-        String randomImage = keys.get(r.nextInt(keys.size()));
+        Drawable randomImage = Drawable.createFromPath(images.get(randomNum));
 
         LocationText = (TextView) view.findViewById(R.id.locationText);
         LocationText.setText(recommendationsName.get(randomName));
 
-        String name = recommendationsName.get(randomName);
-        String description = recommendationsName.get(randomName);
-        String image = recommendationsName.get(randomName);
-
+        final String name = recommendationsName.get(randomName);
+        final String description = recommendationsDescription.get(randomDescription);
+        final Drawable image = recommendationsImage.get(randomImage);
 
         LearnMore = (Button) view.findViewById(R.id.learnMore);
         LearnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopup(inflater, view);
+                showPopup(inflater, view, name, description, image);
             }
         });
 
         return view;
     }
 
-    public void showPopup(LayoutInflater inflater, View anchorView) {
+    public void showPopup(LayoutInflater inflater, View anchorView, String name, String description, Drawable image) {
 
         View popupView = inflater.inflate(R.layout.popup_layout, null);
 
@@ -102,7 +109,13 @@ public class MainFragment extends Fragment {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
         // Example: If you have a TextView inside `popup_layout.xml`
-        TextView tv = (TextView) popupView.findViewById(R.id.thisIsShowing);
+        TextView popupName = (TextView) popupView.findViewById(R.id.popupName);
+        ImageView popupImage = (ImageView) popupView.findViewById(R.id.popupImage);
+        TextView popupDescription = (TextView) popupView.findViewById(R.id.popupDescription);
+
+        popupName.setText(name);
+        popupImage.setImageDrawable(image);
+        popupDescription.setText(description);
 
         // If the PopupWindow should be focusable
         popupWindow.setFocusable(true);
@@ -118,7 +131,8 @@ public class MainFragment extends Fragment {
         // Using location, the PopupWindow will be displayed right under anchorView
         popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, location[0], location[1] + anchorView.getHeight());
 
+        //For exit button
         //popupwindow.dismiss();
-
     }
+
 }
