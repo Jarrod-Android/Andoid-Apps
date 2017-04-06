@@ -423,6 +423,9 @@ public class MyBucketListFragment extends Fragment {
                     Database db = new Database(getContext());
                     db.updateBucketlist(bucketlist);
                     db.closeDB();
+
+                    Toast.makeText(getActivity(), "'" + completedName + "' was added to the Completed tab",
+                            Toast.LENGTH_LONG).show();
                 }
             });
 
