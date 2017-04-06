@@ -70,6 +70,8 @@ public class MyBucketListFragment extends Fragment {
     ImageView email;
     ImageView twitter;
     String companyEmail = "beforeidie@gmail.com";
+    Button current;
+    Button completed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,6 +103,8 @@ public class MyBucketListFragment extends Fragment {
                 delete = (ImageView) view.findViewById(R.id.delete);
                 email = (ImageView) view.findViewById(R.id.email);
                 twitter = (ImageView) view.findViewById(R.id.twitter);
+                current = (Button) view.findViewById(R.id.currentBucketlist);
+                completed = (Button) view.findViewById(R.id.completedBucketlist);
 
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
@@ -262,7 +266,7 @@ public class MyBucketListFragment extends Fragment {
                 }
             });
 
-            additem = (ImageView) convertView.findViewById(R.id.edit);
+            additem = (ImageView) convertView.findViewById(R.id.additem);
             additem.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view) {
@@ -284,6 +288,7 @@ public class MyBucketListFragment extends Fragment {
                     db.closeDB();
                 }
             });
+            
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);

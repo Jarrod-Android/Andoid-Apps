@@ -171,7 +171,7 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<Bucketlist> getAllBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST;
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
