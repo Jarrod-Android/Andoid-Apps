@@ -24,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -169,6 +171,7 @@ public class MyBucketListFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.addToBackStack(null);
+
                 adapter = new CustomAdapter(getContext(), bucketList);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -225,6 +228,9 @@ public class MyBucketListFragment extends Fragment {
 
             }
         });
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.swing_up_left);
+        view.startAnimation(animation);
 
         adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
