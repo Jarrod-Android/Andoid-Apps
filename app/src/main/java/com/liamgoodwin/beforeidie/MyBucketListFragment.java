@@ -1,63 +1,41 @@
 package com.liamgoodwin.beforeidie;
 
-import android.app.ActionBar;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
-import android.os.Parcelable;
-import android.support.design.widget.Snackbar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.ViewPager;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.view.GestureDetector;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import com.squareup.picasso.Picasso;
 
-import static android.R.id.message;
-import static android.content.ContentValues.TAG;
+import java.io.File;
+import java.util.ArrayList;
 
 public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
-    FragmentTransaction ft;
     TextView name;
-    TextView description;
     ListView list;
     TextView BucketlistDescriptionTextView;
-    SectionPagerAdapter sectionPagerAdapter;
-    GestureDetectorCompat tapGestureDetector;
     ArrayList<Bucketlist> bucketList;
     TextView dayCounter;
     TextView details;
@@ -69,6 +47,7 @@ public class MyBucketListFragment extends Fragment {
     ImageView delete;
     ImageView email;
     ImageView twitter;
+    GridLayout galleryLayout;
     String companyEmail = "beforeidie@gmail.com";
     Button current;
     Button completed;
@@ -119,6 +98,8 @@ public class MyBucketListFragment extends Fragment {
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
 
+
+                        galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
                         additem.setVisibility(View.GONE);
                         addPhoto.setImageResource(R.drawable.camerabutton);
@@ -140,6 +121,7 @@ public class MyBucketListFragment extends Fragment {
                             details.setText("Click to show less");
                             //update the chevron image
                             chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                            galleryLayout.setVisibility(View.VISIBLE);
                             additem.setVisibility(View.VISIBLE);
                             addPhoto.setVisibility(View.VISIBLE);
                             edit.setVisibility(View.VISIBLE);
@@ -169,6 +151,7 @@ public class MyBucketListFragment extends Fragment {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
                 transaction.addToBackStack(null);
+
                 adapter = new CustomAdapter(getContext(), bucketList);
                 list.setAdapter(adapter);
                 list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -186,6 +169,7 @@ public class MyBucketListFragment extends Fragment {
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
 
+                        galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
                         additem.setVisibility(View.GONE);
                         addPhoto.setImageResource(R.drawable.camerabutton);
@@ -207,6 +191,7 @@ public class MyBucketListFragment extends Fragment {
                             details.setText("Click to show less");
                             //update the chevron image
                             chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                            galleryLayout.setVisibility(View.VISIBLE);
                             additem.setVisibility(View.VISIBLE);
                             addPhoto.setVisibility(View.VISIBLE);
                             edit.setVisibility(View.VISIBLE);
@@ -226,6 +211,9 @@ public class MyBucketListFragment extends Fragment {
             }
         });
 
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.swing_up_left);
+        view.startAnimation(animation);
+
         adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -243,6 +231,7 @@ public class MyBucketListFragment extends Fragment {
                 email = (ImageView) view.findViewById(R.id.email);
                 twitter = (ImageView) view.findViewById(R.id.twitter);
 
+                galleryLayout.setVisibility(View.GONE);
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
@@ -264,6 +253,7 @@ public class MyBucketListFragment extends Fragment {
                     details.setText("Click to show less");
                     //update the chevron image
                     chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                    galleryLayout.setVisibility(View.VISIBLE);
                     additem.setVisibility(View.VISIBLE);
                     addPhoto.setVisibility(View.VISIBLE);
                     edit.setVisibility(View.VISIBLE);
@@ -297,16 +287,54 @@ public class MyBucketListFragment extends Fragment {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
 
+            galleryLayout = (GridLayout) convertView.findViewById(R.id.galleryLayout);
+            //Make the gallery layout invisible
+            galleryLayout.setVisibility(View.GONE);
+            //only add items to the gallery if the gallery is empty
+            if(galleryLayout.getChildCount() == 0){
+                //Grab all the photos that match the id of the current location
+                Database db = new Database(getContext());
+                ArrayList<Image> pics = db.getAllImages(item.getId());
+                db.closeDB();
+                //Add those photos to the gallery
+                for(int i =0; i < pics.size(); i++){
+                    File image = new File(pics.get(i).getResource());
+                    ImageView imageView = new ImageView(getContext());
+                    Picasso.with(getContext()).load(image).resize(280, 280).centerCrop().into(imageView);
+                    galleryLayout.addView(imageView);
+                }
+            }
+
             delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Database db = new Database(getContext());
-                    Bucketlist location = bucketList.get(pos);
-                    db.deleteBucketlist(location.getId());
-                    db.closeDB();
-                    bucketList.remove(pos);
-                    adapter.notifyDataSetChanged();
+
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    //Yes button clicked
+                                    Database db = new Database(getContext());
+                                    Bucketlist location = bucketList.get(pos);
+                                    db.deleteBucketlist(location.getId());
+                                    db.closeDB();
+                                    bucketList.remove(pos);
+                                    adapter.notifyDataSetChanged();
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    //No button clicked
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setMessage("Are you sure you want to delete this" + "?");
+                            builder.setPositiveButton("Yes", dialogClickListener);
+                            builder.setNegativeButton("Cancel", dialogClickListener).show();
                 }
             });
 
@@ -316,8 +344,10 @@ public class MyBucketListFragment extends Fragment {
                 public void onClick(View view) {
 
                     String bucketListItemName = item.getName();
+                    int addPhotoBucketListID = item.getId();
 
                     Bundle data = new Bundle();
+                    data.putInt("addPhotoBucketlistID", addPhotoBucketListID);
                     data.putString("bucketListItemName", bucketListItemName);
 
                     FragmentManager fm = getFragmentManager();
@@ -331,7 +361,6 @@ public class MyBucketListFragment extends Fragment {
                     transaction.commit();
                 }
             });
-
 
             Intent tweetIntent = new Intent(Intent.ACTION_SEND);
             tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
@@ -461,29 +490,6 @@ public class MyBucketListFragment extends Fragment {
 
             return convertView;
         }
-    }
-
-    class SectionPagerAdapter extends FragmentPagerAdapter {
-        public SectionPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public Fragment getItem(int position) {
-
-            switch (position) {
-                case 0:
-                    return ImageFragment.newInstance(R.drawable.checkmark);
-                case 1:
-                    return ImageFragment.newInstance(R.drawable.beforeidie);
-                default:
-                    return ImageFragment.newInstance(R.drawable.deleteimage);
-            }
-        }
-
-        public int getCount() {
-            return 2;
-        }
-
     }
 
 }
