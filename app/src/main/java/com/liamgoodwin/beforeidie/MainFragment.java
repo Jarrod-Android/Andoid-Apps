@@ -3,6 +3,7 @@ package com.liamgoodwin.beforeidie;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,33 @@ public class MainFragment extends Fragment {
     TextView LocationText;
     Button LearnMore;
     ArrayList<Recommendation> recommendation;
+    TextView daysName;
+    TextView daysTime;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        Database db = new Database(getContext());
+        Bucketlist bucketListSmallestTime = db.getSmallestTime();
+        System.out.println("Error" + bucketListSmallestTime);
+        db.closeDB();
+
+        long smallestDays = bucketListSmallestTime.getTime();
+        String homeBucketListItemName = bucketListSmallestTime.getName();
+
+        long homeTime = System.currentTimeMillis();
+
+        long homeDiffInMillis = smallestDays - homeTime;
+
+        int homeDiffInDays = (int) (homeDiffInMillis / (1000 * 60 * 60 * 24));
+
+        daysName = (TextView) view.findViewById(R.id.daysName);
+        daysTime = (TextView) view.findViewById(R.id.daysTime);
+
+            daysName.setText(homeBucketListItemName);
+            daysTime.setText("" + homeDiffInDays);
 
         Recommendation recommendation1 = new Recommendation("Paris, France",
                 "Paris, France's capital, is a major European city and a global center for art, fashion, gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century, Gothic Notre-Dame cathedral, the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.",
@@ -53,21 +75,21 @@ public class MainFragment extends Fragment {
                 "Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaiʻi in the Pacific Ocean. The largest subaerial volcano in both mass and volume, Mauna Loa has historically been considered the largest volcano on Earth.",
                 R.drawable.emailicon);
 
-        Database db = new Database(getContext());
-        db.addRecommendation(recommendation1);
-        db.addRecommendation(recommendation2);
-        db.addRecommendation(recommendation3);
-        db.addRecommendation(recommendation4);
-        db.addRecommendation(recommendation5);
-        db.closeDB();
-
-        final Bucketlist item = getItem(position);
-        final int pos = position;
-
-        db = new Database(getContext());
-        recommendation = db.getRandomRecommendation();
-        String recName =
-        db.closeDB();
+//        Database db = new Database(getContext());
+//        db.addRecommendation(recommendation1);
+//        db.addRecommendation(recommendation2);
+//        db.addRecommendation(recommendation3);
+//        db.addRecommendation(recommendation4);
+//        db.addRecommendation(recommendation5);
+//        db.closeDB();
+//
+////        final Bucketlist item = getItem(position);
+////        final int pos = position;
+//
+//        db = new Database(getContext());
+//        recommendation = db.getRandomRecommendation();
+//        //String recName =
+//        db.closeDB();
 
 //        Map<String, String> recommendationsName = new HashMap<String, String>();
 //
@@ -105,18 +127,18 @@ public class MainFragment extends Fragment {
 //        List<String> images = new ArrayList<String>(recommendationsImage.keySet());
 //        String randomImage = images.get(randomNum);
 
-        LocationText = (TextView) view.findViewById(R.id.locationText);
-        LocationText.setText(recommendationsName.get(randomName));
-
-        final String name = recommendationsName.get(randomName);
-        final String description = recommendationsDescription.get(randomDescription);
-        final Integer image = recommendationsImage.get(randomImage);
+//        LocationText = (TextView) view.findViewById(R.id.locationText);
+//        LocationText.setText(recommendationsName.get(randomName));
+//
+//        final String name = recommendationsName.get(randomName);
+//        final String description = recommendationsDescription.get(randomDescription);
+//        final Integer image = recommendationsImage.get(randomImage);
 
         LearnMore = (Button) view.findViewById(R.id.learnMore);
         LearnMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopup(inflater, view, name, description, image);
+//                showPopup(inflater, view, name, description, image);
             }
         });
 
