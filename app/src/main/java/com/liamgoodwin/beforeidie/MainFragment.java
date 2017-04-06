@@ -2,6 +2,7 @@ package com.liamgoodwin.beforeidie;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -62,11 +63,25 @@ public class MainFragment extends Fragment {
 
             int homeDiffInDays = (int) (homeDiffInMillis / (1000 * 60 * 60 * 24));
 
+
             daysName = (TextView) view.findViewById(R.id.daysName);
             daysTime = (TextView) view.findViewById(R.id.daysTime);
 
             daysName.setText(homeBucketListItemName);
-            daysTime.setText("" + homeDiffInDays);
+
+            if(homeDiffInDays == 1) {
+                daysTime.setText(homeDiffInDays + " day");
+            } else {
+                daysTime.setText(homeDiffInDays + " days");
+            }
+
+            if (homeDiffInDays <= 7) {
+                daysTime.setTextColor(Color.RED);
+            } else if (homeDiffInDays <= 30) {
+                daysTime.setTextColor(Color.YELLOW);
+            } else {
+                daysTime.setTextColor(Color.parseColor("#60be6a"));
+            }
 
         }
 
