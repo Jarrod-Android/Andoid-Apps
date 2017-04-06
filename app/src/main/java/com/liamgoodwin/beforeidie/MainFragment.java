@@ -1,5 +1,9 @@
 package com.liamgoodwin.beforeidie;
 
+import android.app.Activity;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,16 +41,14 @@ public class MainFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
         Database db = new Database(getContext());
         Bucketlist bucketListSmallestTime = db.getSmallestTime();
-        System.out.println("Error" + bucketListSmallestTime);
         db.closeDB();
 
         daysName = (TextView) view.findViewById(R.id.daysName);
         daysTime = (TextView) view.findViewById(R.id.daysTime);
 
-        if(bucketListSmallestTime != null ) {
+        if (bucketListSmallestTime != null) {
             long smallestDays = bucketListSmallestTime.getTime();
             String homeBucketListItemName = bucketListSmallestTime.getName();
 
@@ -58,10 +59,21 @@ public class MainFragment extends Fragment {
             int homeDiffInDays = (int) (homeDiffInMillis / (1000 * 60 * 60 * 24));
 
             daysName.setText(homeBucketListItemName);
-            daysTime.setText("" + homeDiffInDays);
-        } else {
-            daysName.setText("No Items in Database");
-            daysTime.setText("Invalid");
+
+            if(homeDiffInDays == 1) {
+                daysTime.setText(homeDiffInDays + " day");
+            } else {
+                daysTime.setText(homeDiffInDays + " days");
+            }
+
+            if (homeDiffInDays <= 7) {
+                daysTime.setTextColor(Color.RED);
+            } else if (homeDiffInDays <= 30) {
+                daysTime.setTextColor(Color.YELLOW);
+            } else {
+                daysTime.setTextColor(Color.parseColor("#60be6a"));
+            }
+
         }
 
         LocationText = (TextView) view.findViewById(R.id.locationText);
