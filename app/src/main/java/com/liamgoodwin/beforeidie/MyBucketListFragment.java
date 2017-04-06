@@ -30,6 +30,9 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 import java.util.ArrayList;
 
+import static android.R.color.darker_gray;
+import static com.liamgoodwin.beforeidie.R.attr.colorButtonNormal;
+
 public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
@@ -67,11 +70,16 @@ public class MyBucketListFragment extends Fragment {
         db.closeDB();
 
         current = (Button) view.findViewById(R.id.currentBucketlist);
+        current.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
+
         completed = (Button) view.findViewById(R.id.completedBucketlist);
 
         current.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                current.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
+                completed.setBackgroundColor(getResources().getColor(R.color.buttonUnclicked));
 
                 Database db = new Database(getContext());
                 bucketList = db.getAllBucketlist();
@@ -97,7 +105,6 @@ public class MyBucketListFragment extends Fragment {
                         delete = (ImageView) view.findViewById(R.id.delete);
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
-
 
                         galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
@@ -143,6 +150,9 @@ public class MyBucketListFragment extends Fragment {
         completed.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                current.setBackgroundColor(getResources().getColor(R.color.buttonUnclicked));
+                completed.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
 
                 Database db = new Database(getContext());
                 bucketList = db.getAllBucketlistCompleted();

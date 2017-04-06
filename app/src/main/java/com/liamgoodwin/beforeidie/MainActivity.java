@@ -17,8 +17,7 @@ import it.neokree.materialtabs.MaterialTabListener;
 
 public class MainActivity extends ActionBarActivity implements MaterialTabListener,
     ImageFragment.OnFragmentInteractionListener,
-    AddPhotoFragment.OnFragmentInteractionListener,
-    MyCompletedBucketListFragment.OnFragmentInteractionListener {
+    AddPhotoFragment.OnFragmentInteractionListener {
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
