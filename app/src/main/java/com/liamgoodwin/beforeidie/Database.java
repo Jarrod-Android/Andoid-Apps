@@ -188,7 +188,27 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<Bucketlist> getAllBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST;
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Bucketlist bl = new Bucketlist();
+                bl.setId(Integer.parseInt(cursor.getString(0)));
+                bl.setName(cursor.getString(1));
+                bl.setDescription(cursor.getString(2));
+                bl.setTime(cursor.getLong(3));
+                bl.setCompleted(cursor.getInt(4));
+                bucketList.add(bl);
+            } while (cursor.moveToNext());
+        }
+        return bucketList;
+    }
+
+    public ArrayList<Bucketlist> getAllBucketlistCompleted() {
+        ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 1";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

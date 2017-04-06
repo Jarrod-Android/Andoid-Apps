@@ -72,6 +72,8 @@ public class MyBucketListFragment extends Fragment {
     ImageView email;
     ImageView twitter;
     String companyEmail = "beforeidie@gmail.com";
+    Button current;
+    Button completed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,6 +88,145 @@ public class MyBucketListFragment extends Fragment {
         Database db = new Database(getContext());
         bucketList = db.getAllBucketlist();
         db.closeDB();
+
+        current = (Button) view.findViewById(R.id.currentBucketlist);
+        completed = (Button) view.findViewById(R.id.completedBucketlist);
+
+        current.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                Database db = new Database(getContext());
+                bucketList = db.getAllBucketlist();
+                db.closeDB();
+
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.addToBackStack(null);
+
+                adapter = new CustomAdapter(getContext(), bucketList);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
+
+                        details = (TextView) view.findViewById(R.id.details);
+                        chevron = (ImageView) view.findViewById(R.id.chevron);
+                        additem = (ImageView) view.findViewById(R.id.additem);
+                        addPhoto = (ImageView) view.findViewById(R.id.addphoto);
+                        edit = (ImageView) view.findViewById(R.id.edit);
+                        delete = (ImageView) view.findViewById(R.id.delete);
+                        email = (ImageView) view.findViewById(R.id.email);
+                        twitter = (ImageView) view.findViewById(R.id.twitter);
+
+                        additem.setImageResource(R.drawable.checkmark);
+                        additem.setVisibility(View.GONE);
+                        addPhoto.setImageResource(R.drawable.camerabutton);
+                        addPhoto.setVisibility(View.GONE);
+                        edit.setImageResource(R.drawable.editimage);
+                        edit.setVisibility(View.GONE);
+                        delete.setImageResource(R.drawable.deleteimage);
+                        delete.setVisibility(View.GONE);
+                        email.setImageResource(R.drawable.emailicon);
+                        email.setVisibility(View.GONE);
+                        twitter.setImageResource(R.drawable.twittericon);
+                        twitter.setVisibility(View.GONE);
+
+                        if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
+                            //Update the text of the description
+                            BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
+
+                            //update the text of the show more
+                            details.setText("Click to show less");
+                            //update the chevron image
+                            chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                            additem.setVisibility(View.VISIBLE);
+                            addPhoto.setVisibility(View.VISIBLE);
+                            edit.setVisibility(View.VISIBLE);
+                            delete.setVisibility(View.VISIBLE);
+                            email.setVisibility(View.VISIBLE);
+                            twitter.setVisibility(View.VISIBLE);
+                        } else {
+                            BucketlistDescriptionTextView.setText("");
+                            //update the text of the show more
+                            details.setText("Click to show more");
+                            //update the chevron image
+                            chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
+                        }
+                    }
+                });
+            }
+        });
+
+        completed.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                Database db = new Database(getContext());
+                bucketList = db.getAllBucketlistCompleted();
+                db.closeDB();
+
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.addToBackStack(null);
+                adapter = new CustomAdapter(getContext(), bucketList);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
+
+                        details = (TextView) view.findViewById(R.id.details);
+                        chevron = (ImageView) view.findViewById(R.id.chevron);
+                        additem = (ImageView) view.findViewById(R.id.additem);
+                        addPhoto = (ImageView) view.findViewById(R.id.addphoto);
+                        edit = (ImageView) view.findViewById(R.id.edit);
+                        delete = (ImageView) view.findViewById(R.id.delete);
+                        email = (ImageView) view.findViewById(R.id.email);
+                        twitter = (ImageView) view.findViewById(R.id.twitter);
+
+                        additem.setImageResource(R.drawable.checkmark);
+                        additem.setVisibility(View.GONE);
+                        addPhoto.setImageResource(R.drawable.camerabutton);
+                        addPhoto.setVisibility(View.GONE);
+                        edit.setImageResource(R.drawable.editimage);
+                        edit.setVisibility(View.GONE);
+                        delete.setImageResource(R.drawable.deleteimage);
+                        delete.setVisibility(View.GONE);
+                        email.setImageResource(R.drawable.emailicon);
+                        email.setVisibility(View.GONE);
+                        twitter.setImageResource(R.drawable.twittericon);
+                        twitter.setVisibility(View.GONE);
+
+                        if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
+                            //Update the text of the description
+                            BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
+
+                            //update the text of the show more
+                            details.setText("Click to show less");
+                            //update the chevron image
+                            chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                            additem.setVisibility(View.VISIBLE);
+                            addPhoto.setVisibility(View.VISIBLE);
+                            edit.setVisibility(View.VISIBLE);
+                            delete.setVisibility(View.VISIBLE);
+                            email.setVisibility(View.VISIBLE);
+                            twitter.setVisibility(View.VISIBLE);
+                        } else {
+                            BucketlistDescriptionTextView.setText("");
+                            //update the text of the show more
+                            details.setText("Click to show more");
+                            //update the chevron image
+                            chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
+                        }
+                    }
+                });
+
+            }
+        });
 
         adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
@@ -281,7 +422,32 @@ public class MyBucketListFragment extends Fragment {
                     transaction.addToBackStack(null);
                     transaction.replace(R.id.mainActivity, editFrag);
                     transaction.commit();
+                }
+            });
 
+            additem = (ImageView) convertView.findViewById(R.id.additem);
+            additem.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+
+                    int completedID = item.getId();
+                    String completedName = item.getName();
+                    String completedDescription = item.getDescription();
+                    Long completedmillis = item.getTime();
+                    int completedField = 1;
+
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+
+                    Bucketlist bucketlist = new Bucketlist(completedID, completedName,
+                            completedDescription, completedmillis, completedField);
+
+                    Database db = new Database(getContext());
+                    db.updateBucketlist(bucketlist);
+                    db.closeDB();
+
+                    Toast.makeText(getActivity(), "'" + completedName + "' was added to the Completed tab",
+                            Toast.LENGTH_LONG).show();
                 }
             });
 
