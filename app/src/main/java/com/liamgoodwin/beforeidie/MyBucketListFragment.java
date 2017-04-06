@@ -103,8 +103,6 @@ public class MyBucketListFragment extends Fragment {
                 delete = (ImageView) view.findViewById(R.id.delete);
                 email = (ImageView) view.findViewById(R.id.email);
                 twitter = (ImageView) view.findViewById(R.id.twitter);
-                current = (Button) view.findViewById(R.id.currentBucketlist);
-                completed = (Button) view.findViewById(R.id.completedBucketlist);
 
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
@@ -288,7 +286,30 @@ public class MyBucketListFragment extends Fragment {
                     db.closeDB();
                 }
             });
-            
+
+            current = (Button) convertView.findViewById(R.id.currentBucketlist);
+            completed = (Button) convertView.findViewById(R.id.completedBucketlist);
+            current.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+
+                    int completedID = item.getId();
+                    String completedName = item.getName();
+                    String completedDescription = item.getDescription();
+                    Long completedmillis = item.getTime();
+                    int completedField = 1;
+
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+
+                    Bucketlist bucketlist = new Bucketlist(completedID, completedName,
+                            completedDescription, completedmillis, completedField);
+
+                    Database db = new Database(getContext());
+                    db.updateBucketlist(bucketlist);
+                    db.closeDB();
+                }
+            });
 
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
