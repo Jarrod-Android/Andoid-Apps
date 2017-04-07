@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
@@ -86,10 +87,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         tabHost = (MaterialTabHost) this.findViewById(R.id.tabHost);
         viewPager = (ViewPager) this.findViewById(R.id.viewPager);
 
+
+
         //adapter view
         androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(androidAdapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        viewPager.setCurrentItem(2);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int tabposition) {
