@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         //adapter view
         androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(androidA dapter);
+        viewPager.setAdapter(androidAdapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
