@@ -1,5 +1,6 @@
 package com.liamgoodwin.beforeidie;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -39,7 +40,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         //adapter view
         androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(androidAdapter);
+        viewPager.setAdapter(androidA dapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -52,7 +53,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         for (int i = 1; i <= androidAdapter.getCount(); i++) {
             tabHost.addTab(
                     tabHost.newTab()
-                            //.setIcon(getDrawable(R.drawable.camerabutton))
+//                            .setIcon(getDrawable(R.drawable.camerabutton))
                             .setText(androidAdapter.getPageTitle(i))
                             .setTabListener(this)
             );
@@ -92,8 +93,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         public Fragment getItem(int num) {
 
-//            return new MainFragment();
-
             switch(num) {
                 case 0:
                     return new MyBucketListFragment();
@@ -129,6 +128,22 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                     return "Settings";
                 default:
                     return "Home";
+            }
+        }
+
+        public Drawable getIcon (int pos) {
+
+            switch(pos) {
+                case 1:
+                    return getDrawable(R.drawable.deleteimage);
+                case 2:
+                    return getDrawable(R.drawable.editimage);
+                case 3:
+                    return getDrawable(R.drawable.twittericon);
+                case 4:
+                    return getDrawable(R.drawable.facebookicon);
+                default:
+                    return getDrawable(R.drawable.checkmark);
             }
         }
     }
