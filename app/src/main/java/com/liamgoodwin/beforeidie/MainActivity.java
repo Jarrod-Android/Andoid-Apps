@@ -11,7 +11,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
@@ -43,6 +49,8 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     Toolbar toolBar;
     private TwitterLoginButton loginButton;
     TwitterAuthConfig authConfig;
+    Button accountLogin;
+    AdapterView adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +58,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
+
+//        accountLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
         Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
@@ -85,10 +100,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         tabHost = (MaterialTabHost) this.findViewById(R.id.tabHost);
         viewPager = (ViewPager) this.findViewById(R.id.viewPager);
 
+
+
         //adapter view
         androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(androidAdapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        viewPager.setCurrentItem(2);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int tabposition) {
