@@ -26,12 +26,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.io.File;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 import static android.R.color.darker_gray;
 import static com.liamgoodwin.beforeidie.R.attr.colorButtonNormal;
+=======
+import io.fabric.sdk.android.Fabric;
+>>>>>>> staging
 
 public class MyBucketListFragment extends Fragment {
 
@@ -55,12 +62,14 @@ public class MyBucketListFragment extends Fragment {
     Button current;
     Button completed;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
+
 
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
@@ -468,9 +477,22 @@ public class MyBucketListFragment extends Fragment {
                 }
             });
 
+
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
             name.setText(item.getName());
+
+            final String tweetName = item.getName();
+
+            twitter = (ImageView) convertView.findViewById(R.id.twitter);
+            twitter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TweetComposer.Builder builder = new TweetComposer.Builder(getActivity())
+                            .text("I just added " + tweetName + " to my Bucketlist! Download BeforeIDie to make your own Bucketlist");
+                    builder.show();
+                }
+            });
 
             long databaseTime = item.getTime();
 
