@@ -10,7 +10,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -45,6 +50,8 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     Toolbar toolBar;
     private TwitterLoginButton loginButton;
     TwitterAuthConfig authConfig;
+    Button accountLogin;
+    AdapterView adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,13 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
+
+//        accountLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
         Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
