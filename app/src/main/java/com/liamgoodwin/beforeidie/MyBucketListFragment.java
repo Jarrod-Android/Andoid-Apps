@@ -33,6 +33,10 @@ import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 import java.io.File;
 import java.util.ArrayList;
 
+import static android.R.color.darker_gray;
+import static com.liamgoodwin.beforeidie.R.attr.colorButtonNormal;
+import io.fabric.sdk.android.Fabric;
+
 public class MyBucketListFragment extends Fragment {
 
     FragmentManager fm;
