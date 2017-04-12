@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liamgoodwin on 2017-03-27.
@@ -39,7 +40,9 @@ public class AddToMyBucketListFragment extends Fragment {
     TextView sub;
     EditText subEdit;
     EditText subItemEditText;
-    ArrayList subItems;
+    List<EditText> holdEdit = new ArrayList<EditText>();
+    List<String> subItems = new ArrayList<String>();
+    ArrayList<String> subItemExtra = new ArrayList<String>();
 
     public AddToMyBucketListFragment() {
         // Required empty public constructor
@@ -66,12 +69,14 @@ public class AddToMyBucketListFragment extends Fragment {
                 subEditLayout = new LinearLayout(getActivity().getApplicationContext());
                 subEditLayout.setOrientation(LinearLayout.HORIZONTAL);
                 sub = new TextView(getActivity().getApplicationContext());
-                subItems.add(subItemEditText.getText());
                 subEdit = new EditText(getActivity().getApplicationContext());
-                subItems.add(subEdit.getText());
                 subEdit.setPadding(30, 0, 0, 0);
                 subEdit.setEms(10);
                 subEdit.setTextColor(Color.BLACK);
+                holdEdit.add(subEdit);
+//                for (int i = 0; i < subItemExtra.size(); i++) {
+//                    subItemExtra.add(subEdit.getText().toString());
+//                }
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 sub.setText("Sub Item");
                 sub.setTextSize(14);
@@ -80,7 +85,6 @@ public class AddToMyBucketListFragment extends Fragment {
                 subEditLayout.addView(sub);
                 subEditLayout.addView(subEdit);
                 bucketList.addView(subEditLayout, layoutParams);
-
             }
         });
 
@@ -92,13 +96,35 @@ public class AddToMyBucketListFragment extends Fragment {
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(date.getYear(), date.getMonth(), date.getDayOfMonth());
-                long millis = calendar.getTimeInMillis();
+                              long millis = calendar.getTimeInMillis();
                 int completed = 0;
 
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
                         description.getText().toString(), millis, completed);
-                String test = String.valueOf(subEdit.getText());
-                Log.d(test, "");
+
+//                subItems.add(subItemEditText.getText().toString());
+//                //subItems.add(subEdit.getText().toString());
+//
+//                int listSize = subItems.size();
+//
+//                for (int i = 0; i<listSize; i++){
+//                    Log.i("Member name: ", subItems.get(i));
+//                }
+
+                subItems.add(subItemEditText.getText().toString());
+
+                for (EditText e : holdEdit) {
+                    String test = e.getText().toString();
+                    subItems.add(test);
+                }
+
+
+
+                int listSize = subItems.size();
+
+                for (int i = 0; i < listSize; i ++) {
+                    Log.d("TESTING :", subItems.get(i));
+                }
 
                 Database db = new Database(getContext());
                 db.addBucketlist(bucketlist);
