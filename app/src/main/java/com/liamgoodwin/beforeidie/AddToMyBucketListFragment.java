@@ -2,19 +2,26 @@ package com.liamgoodwin.beforeidie;
 
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by liamgoodwin on 2017-03-27.
@@ -23,8 +30,16 @@ public class AddToMyBucketListFragment extends Fragment {
 
     EditText name;
     EditText description;
+    EditText subItem;
     DatePicker date;
     FragmentManager fm;
+    ImageView plusButton;
+    LinearLayout bucketList;
+    LinearLayout subEditLayout;
+    TextView sub;
+    EditText subEdit;
+    EditText subItemEditText;
+    ArrayList subItems;
 
     public AddToMyBucketListFragment() {
         // Required empty public constructor
@@ -39,9 +54,35 @@ public class AddToMyBucketListFragment extends Fragment {
                 new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"},
                 1);
 
+        subItemEditText = (EditText) view.findViewById(R.id.subItemEditText);
         name = (EditText) view.findViewById(R.id.nameEditText);
         description = (EditText) view.findViewById(R.id.descriptionEditText);
         date = (DatePicker) view.findViewById(R.id.datePicker);
+        bucketList = (LinearLayout) view.findViewById(R.id.bucketlist);
+        plusButton = (ImageView) view.findViewById(R.id.plusButton);
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                subEditLayout = new LinearLayout(getActivity().getApplicationContext());
+                subEditLayout.setOrientation(LinearLayout.HORIZONTAL);
+                sub = new TextView(getActivity().getApplicationContext());
+                subItems.add(subItemEditText.getText());
+                subEdit = new EditText(getActivity().getApplicationContext());
+                subItems.add(subEdit.getText());
+                subEdit.setPadding(30, 0, 0, 0);
+                subEdit.setEms(10);
+                subEdit.setTextColor(Color.BLACK);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                sub.setText("Sub Item");
+                sub.setTextSize(14);
+                sub.setTextColor(Color.BLACK);
+                sub.setPadding(90, 40, 0, 0);
+                subEditLayout.addView(sub);
+                subEditLayout.addView(subEdit);
+                bucketList.addView(subEditLayout, layoutParams);
+
+            }
+        });
 
         Button submit = (Button) view.findViewById(R.id.submitButton);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +97,8 @@ public class AddToMyBucketListFragment extends Fragment {
 
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
                         description.getText().toString(), millis, completed);
+                String test = String.valueOf(subEdit.getText());
+                Log.d(test, "");
 
                 Database db = new Database(getContext());
                 db.addBucketlist(bucketlist);
