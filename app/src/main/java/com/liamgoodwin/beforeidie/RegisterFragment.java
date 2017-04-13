@@ -33,6 +33,8 @@ public class RegisterFragment extends Fragment {
         password = (EditText) view.findViewById(R.id.password);
         addAccount = (Button) view.findViewById(R.id.addAccount);
 
+
+
         return view;
     }
 

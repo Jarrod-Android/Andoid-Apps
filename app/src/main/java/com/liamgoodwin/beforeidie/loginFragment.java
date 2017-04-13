@@ -27,36 +27,42 @@ public class loginFragment extends Fragment {
 
         login = (Button) view.findViewById(R.id.login);
         register = (Button) view.findViewById(R.id.register);
+        username = (EditText) view.findViewById(R.id.username);
+        password = (EditText) view.findViewById(R.id.password);
+        errorMessage = (TextView) view.findViewById(R.id.errorMessage);
+
+        username.setText(null);
+        password.setText(null);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = (EditText) view.findViewById(R.id.username);
-                password = (EditText) view.findViewById(R.id.password);
-                errorMessage = (TextView) view.findViewById(R.id.errorMessage);
 
-                String usernameText = "";
-                String passwordText = "";
+                String usernameText = null;
+                String passwordText = null;
 
+                //If username is empty set the text to "", else if it is not empty then set it to whatever the user entered
                 if(username.getText().toString().equals(null)) {
                     usernameText = "";
                 } else if (!username.getText().toString().equals(null)) {
                     usernameText = username.getText().toString();
                 }
 
+                //If password is empty set the text to "", else if it is not empty then set it to whatever the user entered
                 if (password.getText().toString().equals(null)) {
                     passwordText = "";
                 } else if (!password.getText().toString().equals(null)) {
                     passwordText = username.getText().toString();
                 }
 
-                if(usernameText.equals("")) {
-                    errorMessage.setText("Please enter a username");
-                } else if (passwordText.equals("")) {
-                    errorMessage.setText("Please enter a password");
-                } else if (usernameText.equals("") && passwordText.equals("")) {
+                //Error code to determine if the username, password or both are empty still, it will alert the user with an error message
+                if((usernameText.equals("") || usernameText.equals(null)) && (passwordText.equals("") || passwordText.equals(null))) {
                     errorMessage.setText("Please enter a username & password");
-                } else if(!usernameText.equals("") && !passwordText.equals("")) {
+                } else if ((usernameText.equals("") || usernameText.equals(null)) && (!passwordText.equals("") || !passwordText.equals(null))) {
+                    errorMessage.setText("Please enter a username");
+                } else if ((passwordText.equals("") || passwordText.equals(null)) && (!usernameText.equals("") || !usernameText.equals(null))) {
+                    errorMessage.setText("Please enter a password");
+                } else if((!usernameText.equals("") || !usernameText.equals(null)) && (!passwordText.equals("") || !passwordText.equals(null))) {
                     errorMessage.setText("Valid Entry");
                 } else {
                     errorMessage.setText("Balls");
@@ -64,7 +70,7 @@ public class loginFragment extends Fragment {
             }
         });
 
-        // Inflate the layout for this fragment
+        //Return the view
         return view;
     }
 }

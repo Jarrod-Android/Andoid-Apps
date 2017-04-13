@@ -112,7 +112,7 @@
 
     <TextView
         android:text="Privacy"
-        android:id="@+id/private"
+        android:id="@+id/privacy"
         android:textSize="18sp"
         android:background="@color/buttonUnclicked"
         android:textColor="@color/cardview_dark_background"
