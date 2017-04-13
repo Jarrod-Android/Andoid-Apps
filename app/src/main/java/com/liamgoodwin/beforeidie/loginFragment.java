@@ -52,8 +52,11 @@ public class loginFragment extends Fragment {
                 } else if ((username.getText().toString().equals("")) && (password.getText().toString().equals(""))) {
                     errorMessage.setText("Please enter a username & password");
                 } else {
+
+                    String usernameForDb = username.getText().toString();
+
                     Database db = new Database(getContext());
-                    user = db.findUser(username.getText().toString());
+                    user = db.findUser(usernameForDb);
                     db.closeDB();
 
                     //If the username is returned as null from the database

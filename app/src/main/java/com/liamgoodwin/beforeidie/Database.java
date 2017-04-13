@@ -45,7 +45,7 @@ public class Database extends SQLiteOpenHelper {
     /**
      * Bucket List Table Column Names
      */
-    private static final String COLUMN_USERNAME = "name";
+    private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "description";
     private static final String COLUMN_PRIVATE = "time";
 
@@ -387,7 +387,7 @@ public class Database extends SQLiteOpenHelper {
     //This is used to see if an account is registered under the provided username in the login section
     public User findUser(String username) {
         User user = null;
-        String findUserInDb = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " LIKE %" + username + "%";
+        String findUserInDb = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " LIKE '%" + username + "%'";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(findUserInDb, null);
