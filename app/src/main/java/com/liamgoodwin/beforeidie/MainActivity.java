@@ -111,11 +111,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                             .setTabListener(this)
             );
         }
-
-        android.app.FragmentManager fm = getFragmentManager();
-        android.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.mainActivity, new loginFragment());
-        fragmentTransaction.commit();
     }
 
     @Override
@@ -253,4 +248,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
             }
         }
     }
+
+    @Override
+    public void onBackPressed() { }
 }

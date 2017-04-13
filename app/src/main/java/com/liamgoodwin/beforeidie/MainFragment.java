@@ -45,12 +45,12 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-//        FragmentManager fm = getFragmentManager();
-//        FragmentTransaction transaction = fm.beginTransaction();
-//
-//        transaction.addToBackStack(null);
-//        transaction.replace(R.id.mainActivity, new loginFragment());
-//        transaction.commit();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.mainActivity, new loginFragment());
+        transaction.commit();
 
         Database db = new Database(getContext());
         Bucketlist bucketListSmallestTime = db.getSmallestTime();

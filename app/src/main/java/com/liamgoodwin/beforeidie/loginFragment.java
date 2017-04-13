@@ -100,4 +100,5 @@ public class loginFragment extends Fragment {
         //Return the view
         return view;
     }
+
 }
