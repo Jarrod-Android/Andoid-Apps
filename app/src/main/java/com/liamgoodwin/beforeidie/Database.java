@@ -349,6 +349,23 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
+    /*
+    *
+    * USER FUNCTIONS
+    *
+    * */
+
+    public void addUser(Bucketlist bucketlist) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, bucketlist.getName());
+        values.put(COLUMN_DESCRIPTION, bucketlist.getDescription());
+        values.put(COLUMN_TIME, String.valueOf(bucketlist.getTime()));
+        values.put(COLUMN_COMPLETED, bucketlist.getCompleted());
+        db.insert(TABLE_BUCKET_LIST, null, values);
+        db.close();
+    }
+
     /**
      * The second getAllPictures is used to grab all images associated with an location
      *
