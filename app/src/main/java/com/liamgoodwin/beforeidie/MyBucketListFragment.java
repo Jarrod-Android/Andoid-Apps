@@ -61,12 +61,11 @@ public class MyBucketListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-
 
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
@@ -135,7 +134,6 @@ public class MyBucketListFragment extends Fragment {
                             //update the chevron image
                             chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
                             galleryLayout.setVisibility(View.VISIBLE);
-                            additem.setVisibility(View.VISIBLE);
                             addPhoto.setVisibility(View.VISIBLE);
                             edit.setVisibility(View.VISIBLE);
                             delete.setVisibility(View.VISIBLE);
