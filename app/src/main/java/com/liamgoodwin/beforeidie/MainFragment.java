@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -106,7 +108,7 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    public void showPopup(LayoutInflater inflater, View anchorView, String name, String description, Integer image) {
+    public void showPopup(LayoutInflater inflater, View anchorView, final String name, final String description, Integer image) {
 
         View popupView = inflater.inflate(R.layout.popup_layout, null);
 
@@ -117,6 +119,7 @@ public class MainFragment extends Fragment {
         TextView popupName = (TextView) popupView.findViewById(R.id.popupName);
         ImageView popupImage = (ImageView) popupView.findViewById(R.id.popupImage);
         TextView popupDescription = (TextView) popupView.findViewById(R.id.popupDescription);
+        Button add = (Button) popupView.findViewById(R.id.add);
 
         popupName.setText(name);
         popupImage.setImageResource(image.intValue());
@@ -138,6 +141,23 @@ public class MainFragment extends Fragment {
 
         //For exit button
         //popupwindow.dismiss();
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @android.support.annotation.RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+
+                long millis = 1314873000;
+                int completed = 0;
+
+                Bucketlist bucketlist = new Bucketlist(name,
+                        description, millis, completed);
+
+                Database db = new Database(getContext());
+                db.addBucketlist(bucketlist);
+                db.closeDB();
+            }
+        });
     }
 
 }
