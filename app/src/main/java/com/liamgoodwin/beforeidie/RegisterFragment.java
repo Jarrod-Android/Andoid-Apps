@@ -51,12 +51,20 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                if (!username.getText().toString().equals(null) && !password.getText().toString().equals(null) && password.getText().toString().equals(password2.getText().toString())) {
+                if((username.getText().toString().equals(null)) || (username.getText().toString().equals(""))) {
+                    errorMessage.setText("Please enter a Username");
+                } else if((password.getText().toString().equals(null)) || (password.getText().toString().equals(""))) {
+                    errorMessage.setText("Please enter a Password");
+                } else if((password2.getText().toString().equals(null)) || (password2.getText().toString().equals(""))) {
+                    errorMessage.setText("Please enter a 2nd Password");
+                } else if (!password.getText().toString().equals(password2.getText().toString())) {
+                    errorMessage.setText("Passwords do not match");
+                } else if ((!username.getText().toString().equals(null) || !username.getText().equals("")) && (!password.getText().toString().equals(null) || !password.getText().toString().equals("")) && (password.getText().toString().equals(password2.getText().toString()))) {
                     User user = new User(regUsername,
                             regPassword, regPrivacy);
 
                     Database db = new Database(getContext());
-                    db.addUser(user);
+                    //db.addUser(user);
                     db.closeDB();
 
                     Toast.makeText(getActivity(), "The username '" + user.getUsername() + "' has been registered",
