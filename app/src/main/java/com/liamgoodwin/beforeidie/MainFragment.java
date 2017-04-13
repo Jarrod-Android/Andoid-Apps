@@ -44,14 +44,15 @@ public class MainFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+        
+        if(savedInstanceState == null) {
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
 
-
-  FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-
-        transaction.addToBackStack(null);
-        transaction.replace(R.id.mainActivity, new loginFragment());
-        transaction.commit();
+            transaction.addToBackStack(null);
+            transaction.replace(R.id.mainActivity, new loginFragment());
+            transaction.commit();
+        }
 
         Database db = new Database(getContext());
         Bucketlist bucketListSmallestTime = db.getSmallestTime();
