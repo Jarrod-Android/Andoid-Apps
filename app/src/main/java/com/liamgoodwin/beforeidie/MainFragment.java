@@ -45,12 +45,13 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-
-        transaction.addToBackStack(null);
-        transaction.replace(R.id.mainActivity, new loginFragment());
-        transaction.commit();
+//
+//  FragmentManager fm = getFragmentManager();
+//        FragmentTransaction transaction = fm.beginTransaction();
+//
+//        transaction.addToBackStack(null);
+//        transaction.replace(R.id.mainActivity, new loginFragment());
+//        transaction.commit();
 
         Database db = new Database(getContext());
         Bucketlist bucketListSmallestTime = db.getSmallestTime();
@@ -148,25 +149,6 @@ public class MainFragment extends Fragment {
         // Using location, the PopupWindow will be displayed right under anchorView
         popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, location[0], location[1] + anchorView.getHeight());
 
-        //For exit button
-        //popupwindow.dismiss();
-
-//        add.setOnClickListener(new View.OnClickListener() {
-//            @android.support.annotation.RequiresApi(api = Build.VERSION_CODES.N)
-//            @Override
-//            public void onClick(View v) {
-//
-//                long millis = 1314873000;
-//                int completed = 0;
-//
-//                Bucketlist bucketlist = new Bucketlist(name,
-//                        description, millis, completed);
-//
-//                Database db = new Database(getContext());
-//                db.addBucketlist(bucketlist);
-//                db.closeDB();
-//            }
-//        });
     }
 
 }

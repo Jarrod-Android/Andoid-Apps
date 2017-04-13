@@ -11,8 +11,17 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
         android:layout_width="200dp"
-        android:layout_height="250dp"
-        android:layout_marginBottom="25dp" />
+        android:layout_marginBottom="25dp"
+        android:layout_height="125dp" />
+
+    <TextView
+        android:text="Login To Your Bucket List!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp"
+        android:textColor="@android:color/black" />
 
     <TextView
         android:layout_width="match_parent"
@@ -27,7 +36,6 @@
         android:id="@+id/loginUsername"
         android:gravity="center"
         android:textSize="18sp"
-        android:background="@color/buttonUnclicked"
         android:textColor="@color/cardview_dark_background"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
@@ -55,7 +63,6 @@
         android:text="Password"
         android:id="@+id/loginPassword"
         android:textSize="18sp"
-        android:background="@color/buttonUnclicked"
         android:textColor="@color/cardview_dark_background"
         android:textAlignment="center"
         android:gravity="center"
@@ -78,8 +85,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="null" />
+        android:layout_marginRight="20dp" />
 
     <Button
         android:text="Login"
