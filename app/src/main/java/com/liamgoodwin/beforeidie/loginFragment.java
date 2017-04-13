@@ -7,8 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class loginFragment extends Fragment {
+
+    EditText username;
+    EditText password;
+    TextView errorMessage;
+    Button login;
+    Button register;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -16,19 +25,46 @@ public class loginFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        EditText username = (EditText) view.findViewById(R.id.username);
-        EditText password = (EditText) view.findViewById(R.id.password);
-        Button daysName = (Button) view.findViewById(R.id.login);
-        Button daysTime = (Button) view.findViewById(R.id.register);
+        login = (Button) view.findViewById(R.id.login);
+        register = (Button) view.findViewById(R.id.register);
 
-        String usernameText = String.valueOf(username.getText());
-        String passwordText = String.valueOf(password.getText());
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                username = (EditText) view.findViewById(R.id.username);
+                password = (EditText) view.findViewById(R.id.password);
+                errorMessage = (TextView) view.findViewById(R.id.errorMessage);
 
-        if(usernameText != "" && passwordText != "") {
+                String usernameText = "";
+                String passwordText = "";
 
-        }
+                if(username.getText().toString().equals(null)) {
+                    usernameText = "";
+                } else if (!username.getText().toString().equals(null)) {
+                    usernameText = username.getText().toString();
+                }
+
+                if (password.getText().toString().equals(null)) {
+                    passwordText = "";
+                } else if (!password.getText().toString().equals(null)) {
+                    passwordText = username.getText().toString();
+                }
+
+                if(usernameText.equals("")) {
+                    errorMessage.setText("Please enter a username");
+                } else if (passwordText.equals("")) {
+                    errorMessage.setText("Please enter a password");
+                } else if (usernameText.equals("") && passwordText.equals("")) {
+                    errorMessage.setText("Please enter a username & password");
+                } else if(!usernameText.equals("") && !passwordText.equals("")) {
+                    errorMessage.setText("Valid Entry");
+                } else {
+                    errorMessage.setText("Balls");
+                }
+            }
+        });
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return view;
     }
 }
