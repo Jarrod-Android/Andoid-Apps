@@ -58,24 +58,24 @@ public class loginFragment extends Fragment {
                     user = db.findUser(username.getText().toString());
                     db.closeDB();
 
-                    String DBUsername = user.getUsername();
-                    String DBPassword = user.getPassword();
+//                    String DBUsername = user.getUsername();
+//                    String DBPassword = user.getPassword();
 
                     //If the username is returned as null from the database
-                    if(DBUsername.equals(null)) {
+                    if(user.getUsername().equals(null)) {
                         errorMessage.setText("Username not found");
                     }
 
                     //If the username is not null, it means we returned something and we can check if the password is correct
-                    else if(!DBUsername.equals(null)) {
+                    else if(!user.getUsername().equals(null)) {
 
                         //If the password in the DB and the password field do not match display an error
-                        if(!DBPassword.equals(password)) {
+                        if(!user.getPassword().equals(password)) {
                             errorMessage.setText("Incorrect password");
                         }
 
                         //If the password in the DB and the password field to match display a success
-                        else if(DBPassword.equals(password)) {
+                        else {
                             errorMessage.setText("Login Successful");
                         }
                     }

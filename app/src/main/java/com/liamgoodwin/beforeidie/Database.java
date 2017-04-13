@@ -387,7 +387,7 @@ public class Database extends SQLiteOpenHelper {
     //This is used to see if an account is registered under the provided username in the login section
     public User findUser(String username) {
         User user = null;
-        String findUserInDb = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " LIKE '%" + username + "%'";
+        String findUserInDb = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " ='" + username + "'";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(findUserInDb, null);

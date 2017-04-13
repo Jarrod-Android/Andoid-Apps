@@ -41,16 +41,6 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         addAccount = (Button) view.findViewById(R.id.addAccount);
         backToLogin = (Button) view.findViewById(R.id.backToLogin);
 
-        final String regUsername = username.getText().toString();
-        final String regPassword = password.getText().toString();
-        final int regPrivacy;
-
-        if(privacy.isChecked()) {
-            regPrivacy = 1;
-        } else {
-            regPrivacy = 0;
-        }
-
         addAccount.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -64,8 +54,17 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                 } else if (!password.getText().toString().equals(password2.getText().toString())) {
                     errorMessage.setText("Passwords do not match");
                 } else if ((!username.getText().toString().equals(null) || !username.getText().equals("")) && (!password.getText().toString().equals(null) || !password.getText().toString().equals("")) && (password.getText().toString().equals(password2.getText().toString()))) {
-                    User user = new User(regUsername,
-                            regPassword, regPrivacy);
+                    final String regUsername = username.getText().toString();
+                    final String regPassword = password.getText().toString();
+                    final int regPrivacy;
+
+                    if(privacy.isChecked()) {
+                        regPrivacy = 1;
+                    } else {
+                        regPrivacy = 0;
+                    }
+
+                    User user = new User(regUsername, regPassword, regPrivacy);
 
                     Database db = new Database(getContext());
                     db.addUser(user);
