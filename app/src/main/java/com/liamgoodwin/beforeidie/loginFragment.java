@@ -72,6 +72,20 @@ public class loginFragment extends Fragment {
             }
         });
 
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+
+                transaction.addToBackStack(null);
+                transaction.replace(R.id.mainActivity, new RegisterFragment());
+                transaction.commit();
+
+            }
+        });
+
         //Return the view
         return view;
     }

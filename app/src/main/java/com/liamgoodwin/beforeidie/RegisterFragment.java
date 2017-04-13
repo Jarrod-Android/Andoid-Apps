@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
     EditText password2;
     CheckBox privacy;
     Button addAccount;
+    Button backToLogin;
+    FragmentManager fm;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,10 +39,10 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         privacy = (CheckBox) view.findViewById(R.id.privacy);
         password = (EditText) view.findViewById(R.id.password);
         addAccount = (Button) view.findViewById(R.id.addAccount);
+        backToLogin = (Button) view.findViewById(R.id.backToLogin);
 
         final String regUsername = username.getText().toString();
         final String regPassword = password.getText().toString();
-        String regPassword2 = password2.getText().toString();
         final int regPrivacy;
 
         if(privacy.isChecked()) {
@@ -70,6 +74,16 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                     Toast.makeText(getActivity(), "The username '" + user.getUsername() + "' has been registered",
                             Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        backToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
+
             }
         });
 

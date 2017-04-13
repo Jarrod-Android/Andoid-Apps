@@ -49,7 +49,7 @@ public class MainFragment extends Fragment {
         FragmentTransaction transaction = fm.beginTransaction();
 
         transaction.addToBackStack(null);
-        transaction.replace(R.id.mainActivity, new RegisterFragment());
+        transaction.replace(R.id.mainActivity, new loginFragment());
         transaction.commit();
 
         Database db = new Database(getContext());

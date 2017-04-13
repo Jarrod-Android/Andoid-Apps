@@ -134,9 +134,15 @@
         android:layout_marginTop="10dp" />
 
     <Button
-        android:text="Create Account"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/addAccount" />
+    android:text="Create Account"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/addAccount" />
+
+    <Button
+    android:text="Back to Login"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/backToLogin" />
 
 </LinearLayout>
