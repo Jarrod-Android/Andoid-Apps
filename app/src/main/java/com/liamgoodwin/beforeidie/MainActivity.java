@@ -7,17 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
@@ -93,8 +90,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         tabHost = (MaterialTabHost) this.findViewById(R.id.tabHost);
         viewPager = (ViewPager) this.findViewById(R.id.viewPager);
 
-
-
         //adapter view
         androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(androidAdapter);
@@ -116,6 +111,11 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                             .setTabListener(this)
             );
         }
+
+        android.app.FragmentManager fm = getFragmentManager();
+        android.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        fragmentTransaction.replace(R.id.mainActivity, new loginFragment());
+        fragmentTransaction.commit();
     }
 
     @Override
