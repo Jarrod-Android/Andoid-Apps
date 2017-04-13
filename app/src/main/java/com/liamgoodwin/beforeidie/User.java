@@ -17,6 +17,12 @@ public class User {
         this.privacy = privacy;
     }
 
+    public User(String username, String password, int privacy){
+        this.username = username;
+        this.password = password;
+        this.privacy = privacy;
+    }
+
     public User(){
 
     }

@@ -1,7 +1,9 @@
 package com.liamgoodwin.beforeidie;
 
 import android.app.Fragment;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends android.support.v4.app.Fragment {
 
     TextView errorMessage;
     EditText username;
@@ -33,7 +36,34 @@ public class RegisterFragment extends Fragment {
         password = (EditText) view.findViewById(R.id.password);
         addAccount = (Button) view.findViewById(R.id.addAccount);
 
+        final String regUsername = username.getText().toString();
+        final String regPassword = password.getText().toString();
+        String regPassword2 = password2.getText().toString();
+        final int regPrivacy;
 
+        if(privacy.isChecked()) {
+            regPrivacy = 1;
+        } else {
+            regPrivacy = 0;
+        }
+
+        addAccount.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) {
+                if (!username.getText().toString().equals(null) && !password.getText().toString().equals(null) && password.getText().toString().equals(password2.getText().toString())) {
+                    User user = new User(regUsername,
+                            regPassword, regPrivacy);
+
+                    Database db = new Database(getContext());
+                    db.addUser(user);
+                    db.closeDB();
+
+                    Toast.makeText(getActivity(), "The username '" + user.getUsername() + "' has been registered",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         return view;
     }

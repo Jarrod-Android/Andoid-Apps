@@ -47,8 +47,9 @@ public class MainFragment extends Fragment {
 
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
+
         transaction.addToBackStack(null);
-        transaction.replace(R.id.mainActivity, new loginFragment());
+        transaction.replace(R.id.mainActivity, new RegisterFragment());
         transaction.commit();
 
         Database db = new Database(getContext());
