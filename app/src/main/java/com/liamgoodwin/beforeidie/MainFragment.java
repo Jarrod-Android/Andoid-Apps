@@ -142,22 +142,21 @@ public class MainFragment extends Fragment {
         //For exit button
         //popupwindow.dismiss();
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @android.support.annotation.RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-
-                long millis = 1314873000;
-                int completed = 0;
-
-                Bucketlist bucketlist = new Bucketlist(name,
-                        description, millis, completed);
-
-                Database db = new Database(getContext());
-                db.addBucketlist(bucketlist);
-                db.closeDB();
-            }
-        });
+//        add.setOnClickListener(new View.OnClickListener()
+//        {
+//            public void onClick(View v) {
+//
+//                long millis = 1314873000;
+//                int completed = 0;
+//
+//                Bucketlist bucketlist = new Bucketlist(name,
+//                        description, millis, completed);
+//
+//                Database db = new Database(getContext());
+//                db.addBucketlist(bucketlist);
+//                db.closeDB();
+//            }
+//        });
     }
 
 }

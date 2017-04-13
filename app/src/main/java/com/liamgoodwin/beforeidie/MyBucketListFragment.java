@@ -227,9 +227,6 @@ public class MyBucketListFragment extends Fragment {
             }
         });
 
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.swing_up_left);
-        view.startAnimation(animation);
-
         adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
