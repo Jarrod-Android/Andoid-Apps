@@ -15,6 +15,14 @@
         android:layout_marginBottom="25dp" />
 
     <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/erorrMessage"
+        android:gravity="center_horizontal"
+        android:textStyle="normal|bold" />
+
+    <TextView
         android:text="Username"
         android:id="@+id/loginUsername"
         android:gravity="center"

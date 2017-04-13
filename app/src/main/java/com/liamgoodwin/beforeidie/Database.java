@@ -231,7 +231,7 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<Bucketlist> getAllBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
+        String selectQuery = "SELECT * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -355,15 +355,40 @@ public class Database extends SQLiteOpenHelper {
     *
     * */
 
-    public void addUser(Bucketlist bucketlist) {
+    public void addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, bucketlist.getName());
-        values.put(COLUMN_DESCRIPTION, bucketlist.getDescription());
-        values.put(COLUMN_TIME, String.valueOf(bucketlist.getTime()));
-        values.put(COLUMN_COMPLETED, bucketlist.getCompleted());
+        values.put(COLUMN_USERNAME, user.getUsername());
+        values.put(COLUMN_PASSWORD, user.getPassword());
+        values.put(COLUMN_PRIVATE, user.getPrivacy());
         db.insert(TABLE_BUCKET_LIST, null, values);
         db.close();
+    }
+
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> usersList = new ArrayList<User>();
+        String selectQuery = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_PRIVATE + " = 0";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(Integer.parseInt(cursor.getString(0)));
+                user.setUsername(cursor.getString(1));
+                user.setPassword(cursor.getString(2));
+                user.setPrivacy(cursor.getInt(3));
+                usersList.add(user);
+            } while (cursor.moveToNext());
+        }
+        return usersList;
+    }
+
+    public int updateUserPrivacy(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRIVATE, user.getPrivacy());
+        return db.update(TABLE_USERS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(user.getId())});
     }
 
     /**
