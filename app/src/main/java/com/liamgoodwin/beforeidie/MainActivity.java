@@ -59,13 +59,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
 
-//        accountLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-
         authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
         Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
 
