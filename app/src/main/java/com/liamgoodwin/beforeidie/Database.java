@@ -27,6 +27,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String TABLE_IMAGE = "image";
     private static final String TABLE_IMAGELOCATION = "image_location";
     private static final String TABLE_RECOMMENDATIONS = "recommendations";
+    private static final String TABLE_USERS = "users";
 
     /**
      * Common column names
@@ -40,6 +41,13 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_TIME = "time";
     private static final String COLUMN_COMPLETED = "completed";
+
+    /**
+     * Bucket List Table Column Names
+     */
+    private static final String COLUMN_USERNAME = "username";
+    private static final String COLUMN_PASSWORD = "description";
+    private static final String COLUMN_PRIVATE = "time";
 
     /**
      * Image Table Column Names
@@ -70,6 +78,10 @@ public class Database extends SQLiteOpenHelper {
     private static final String CREATE_RECOMMENDATIONS_TABLE = "CREATE TABLE " + TABLE_RECOMMENDATIONS + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
             + COLUMN_PICTURE + " INT" + ")";
+
+    private static final String CREATE_USERS = "CREATE TABLE " + TABLE_USERS + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_USERNAME + " TEXT," + COLUMN_PASSWORD + " TEXT,"
+            + COLUMN_PRIVATE + " SMALLINT" + ")";
 
     private static final String ADD_PARIS = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
             + "'Paris France', " + "'Paris Frances capital is a major European city and a global center for art fashion gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century Gothic Notre-Dame cathedral the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.', "
@@ -106,6 +118,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(CREATE_IMAGE_TABLE);
         db.execSQL(CREATE_IMAGE_LOCATION_TABLE);
         db.execSQL(CREATE_RECOMMENDATIONS_TABLE);
+        db.execSQL(CREATE_USERS);
         db.execSQL(ADD_PARIS);
         db.execSQL(ADD_ZEALAND);
         db.execSQL(ADD_NEWYORK);
@@ -122,6 +135,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGELOCATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECOMMENDATIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
 
@@ -217,7 +231,7 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<Bucketlist> getAllBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
+        String selectQuery = "SELECT * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -333,6 +347,63 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_PICTURE, String.valueOf(recommendation.getImage()));
         db.insert(TABLE_RECOMMENDATIONS, null, values);
         db.close();
+    }
+
+    /*
+    *
+    * USER FUNCTIONS
+    *
+    * */
+
+    public void addUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, user.getUsername());
+        values.put(COLUMN_PASSWORD, user.getPassword());
+        values.put(COLUMN_PRIVATE, user.getPrivacy());
+        db.insert(TABLE_USERS, null, values);
+        db.close();
+    }
+
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> usersList = new ArrayList<User>();
+        String selectQuery = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_PRIVATE + " = 0";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(Integer.parseInt(cursor.getString(0)));
+                user.setUsername(cursor.getString(1));
+                user.setPassword(cursor.getString(2));
+                user.setPrivacy(cursor.getInt(3));
+                usersList.add(user);
+            } while (cursor.moveToNext());
+        }
+        return usersList;
+    }
+
+    //This is used to see if an account is registered under the provided username in the login section
+    public User findUser(String username) {
+        User user = null;
+        String findUserInDb = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " ='" + username + "'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(findUserInDb, null);
+        if (cursor.moveToFirst()) {
+            user = new User();
+            user.setUsername(cursor.getString(1));
+            user.setPassword(cursor.getString(2));
+        }
+        return user;
+    }
+
+    public int updateUserPrivacy(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRIVATE, user.getPrivacy());
+        return db.update(TABLE_USERS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(user.getId())});
     }
 
     /**

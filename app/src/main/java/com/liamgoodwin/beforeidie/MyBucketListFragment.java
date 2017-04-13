@@ -61,12 +61,11 @@ public class MyBucketListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-
 
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
@@ -208,7 +207,6 @@ public class MyBucketListFragment extends Fragment {
                             //update the chevron image
                             chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
                             galleryLayout.setVisibility(View.VISIBLE);
-                            additem.setVisibility(View.VISIBLE);
                             addPhoto.setVisibility(View.VISIBLE);
                             edit.setVisibility(View.VISIBLE);
                             delete.setVisibility(View.VISIBLE);
@@ -226,9 +224,6 @@ public class MyBucketListFragment extends Fragment {
 
             }
         });
-
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.swing_up_left);
-        view.startAnimation(animation);
 
         adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
@@ -336,6 +331,8 @@ public class MyBucketListFragment extends Fragment {
                                     Bucketlist location = bucketList.get(pos);
                                     db.deleteBucketlist(location.getId());
                                     db.closeDB();
+                                    Toast.makeText(getActivity(), "'" + location.getName() + "' has been deleted",
+                                            Toast.LENGTH_LONG).show();
                                     bucketList.remove(pos);
                                     adapter.notifyDataSetChanged();
                                     break;
@@ -382,30 +379,6 @@ public class MyBucketListFragment extends Fragment {
             tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
             tweetIntent.setType("text/plain");
 
-            //PackageManager packManager = getPackageManager();
-           // List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent,  PackageManager.MATCH_DEFAULT_ONLY);
-
-//            boolean resolved = false;
-//            for(ResolveInfo resolveInfo: resolvedInfoList){
-//                if(resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")){
-//                    tweetIntent.setClassName(
-//                            resolveInfo.activityInfo.packageName,
-//                            resolveInfo.activityInfo.name );
-//                    resolved = true;
-//                    break;
-//                }
-//            }
-//            if(resolved){
-//                startActivity(tweetIntent);
-//            }else{
-//                Intent i = new Intent();
-//                i.putExtra(Intent.EXTRA_TEXT, "Hello Download our app");
-//                i.setAction(Intent.ACTION_VIEW);
-//                i.setData(Uri.parse("https://twitter.com/intent/tweet?text=" + (message));
-//                startActivity(i);
-//               // Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
-//            }
-//
             final String emailItem = item.getName();
 
             email = (ImageView) convertView.findViewById(R.id.email);
