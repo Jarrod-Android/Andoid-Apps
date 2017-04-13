@@ -11,8 +11,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"
-        android:layout_height="100dp"
-        android:layout_width="100dp" />
+        android:layout_width="100dp"
+        android:layout_height="50dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -20,8 +20,7 @@
         android:id="@+id/errorMessage"
         android:gravity="center_horizontal"
         android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_red_dark"
-        android:text="Error" />
+        android:textColor="@android:color/holo_red_dark" />
 
     <TextView
         android:text="Username"

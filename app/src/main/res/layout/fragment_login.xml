@@ -20,8 +20,7 @@
         android:id="@+id/errorMessage"
         android:gravity="center_horizontal"
         android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_red_dark"
-        android:text="Error" />
+        android:textColor="@android:color/holo_red_dark" />
 
     <TextView
         android:text="Username"
