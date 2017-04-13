@@ -81,7 +81,7 @@ public class Database extends SQLiteOpenHelper {
 
     private static final String CREATE_USERS = "CREATE TABLE " + TABLE_USERS + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_USERNAME + " TEXT," + COLUMN_PASSWORD + " TEXT,"
-            + COLUMN_PRIVATE + " SMALLINT," + ")";
+            + COLUMN_PRIVATE + " SMALLINT" + ")";
 
     private static final String ADD_PARIS = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
             + "'Paris France', " + "'Paris Frances capital is a major European city and a global center for art fashion gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century Gothic Notre-Dame cathedral the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.', "
@@ -361,7 +361,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_USERNAME, user.getUsername());
         values.put(COLUMN_PASSWORD, user.getPassword());
         values.put(COLUMN_PRIVATE, user.getPrivacy());
-        db.insert(TABLE_BUCKET_LIST, null, values);
+        db.insert(TABLE_USERS, null, values);
         db.close();
     }
 
