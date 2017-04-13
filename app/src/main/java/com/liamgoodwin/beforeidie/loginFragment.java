@@ -40,23 +40,6 @@ public class loginFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String usernameText = null;
-                String passwordText = null;
-
-                //If username is empty set the text to "", else if it is not empty then set it to whatever the user entered
-                if(username.getText().toString().equals(null)) {
-                    usernameText = "";
-                } else if (!username.getText().toString().equals(null)) {
-                    usernameText = username.getText().toString();
-                }
-
-                //If password is empty set the text to "", else if it is not empty then set it to whatever the user entered
-                if (password.getText().toString().equals(null)) {
-                    passwordText = "";
-                } else if (!password.getText().toString().equals(null)) {
-                    passwordText = username.getText().toString();
-                }
-
                 //Error Codes
                 if(username.getText().toString().equals("")) {
                     errorMessage.setText("Please enter a Username");
