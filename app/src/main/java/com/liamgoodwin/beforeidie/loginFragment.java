@@ -57,18 +57,17 @@ public class loginFragment extends Fragment {
                     passwordText = username.getText().toString();
                 }
 
-                //Error code to determine if the username, password or both are empty still, it will alert the user with an error message
-                if((usernameText.equals("") || usernameText.equals(null)) && (passwordText.equals("") || passwordText.equals(null))) {
+                //Error Codes
+                if(username.getText().toString().equals("")) {
+                    errorMessage.setText("Please enter a Username");
+                } else if(password.getText().toString().equals("")) {
+                    errorMessage.setText("Please enter a Password");
+                } else if ((username.getText().toString().equals("")) && (password.getText().toString().equals(""))) {
                     errorMessage.setText("Please enter a username & password");
-                } else if ((usernameText.equals("") || usernameText.equals(null)) && (!passwordText.equals("") || !passwordText.equals(null))) {
-                    errorMessage.setText("Please enter a username");
-                } else if ((passwordText.equals("") || passwordText.equals(null)) && (!usernameText.equals("") || !usernameText.equals(null))) {
-                    errorMessage.setText("Please enter a password");
-                } else if((!usernameText.equals("") || !usernameText.equals(null)) && (!passwordText.equals("") || !passwordText.equals(null))) {
-                    errorMessage.setText("Valid Entry");
                 } else {
-                    errorMessage.setText("Balls");
+                    errorMessage.setText("Success");
                 }
+
             }
         });
 
