@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,6 +152,26 @@ public class MainFragment extends Fragment {
         // Using location, the PopupWindow will be displayed right under anchorView
         popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, location[0], location[1] + anchorView.getHeight());
 
+        //For exit button
+        //popupwindow.dismiss();
+
+        add.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v) {
+
+                int completed = 0;
+
+                long time = System.currentTimeMillis();
+                long millis = time + 909999999 ;
+
+                Bucketlist bucketlist = new Bucketlist(name,
+                        description, millis, completed);
+
+                Database db = new Database(getContext());
+                db.addBucketlist(bucketlist);
+                db.closeDB();
+            }
+        });
     }
 
 }
