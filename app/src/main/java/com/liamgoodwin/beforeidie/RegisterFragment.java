@@ -68,10 +68,10 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                             regPassword, regPrivacy);
 
                     Database db = new Database(getContext());
-                    //db.addUser(user);
+                    db.addUser(user);
                     db.closeDB();
 
-                    Toast.makeText(getActivity(), "The username '" + user.getUsername() + "' has been registered",
+                    Toast.makeText(getActivity(), "The username '" + regUsername + "' has been registered",
                             Toast.LENGTH_LONG).show();
                 }
             }

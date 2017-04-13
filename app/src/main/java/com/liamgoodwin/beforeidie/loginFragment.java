@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class loginFragment extends Fragment {
 
     EditText username;
@@ -20,6 +22,8 @@ public class loginFragment extends Fragment {
     TextView errorMessage;
     Button login;
     Button register;
+    User user;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +52,28 @@ public class loginFragment extends Fragment {
                 } else if ((username.getText().toString().equals("")) && (password.getText().toString().equals(""))) {
                     errorMessage.setText("Please enter a username & password");
                 } else {
-                    errorMessage.setText("Success");
+                    Database db = new Database(getContext());
+                    user = db.findUser(username.getText().toString());
+                    db.closeDB();
+
+                    //If the username is returned as null from the database
+                    if(user.equals(null)) {
+                        errorMessage.setText("Username not found");
+                    }
+
+                    //If the username is not null, it means we returned something and we can check if the password is correct
+                    else if(!user.equals(null)) {
+
+                        //If the password in the DB and the password field do not match display an error
+                        if(!user.getPassword().equals(password)) {
+                            errorMessage.setText("Incorrect password");
+                        }
+
+                        //If the password in the DB and the password field to match display a success
+                        else if(user.getPassword().equals(password)) {
+                            errorMessage.setText("Login Successful");
+                        }
+                    }
                 }
 
             }
