@@ -27,6 +27,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String TABLE_IMAGE = "image";
     private static final String TABLE_IMAGELOCATION = "image_location";
     private static final String TABLE_RECOMMENDATIONS = "recommendations";
+    private static final String TABLE_USERS = "users";
 
     /**
      * Common column names
@@ -40,6 +41,13 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_TIME = "time";
     private static final String COLUMN_COMPLETED = "completed";
+
+    /**
+     * Bucket List Table Column Names
+     */
+    private static final String COLUMN_USERNAME = "name";
+    private static final String COLUMN_PASSWORD = "description";
+    private static final String COLUMN_PRIVATE = "time";
 
     /**
      * Image Table Column Names
@@ -70,6 +78,10 @@ public class Database extends SQLiteOpenHelper {
     private static final String CREATE_RECOMMENDATIONS_TABLE = "CREATE TABLE " + TABLE_RECOMMENDATIONS + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
             + COLUMN_PICTURE + " INT" + ")";
+
+    private static final String CREATE_USERS = "CREATE TABLE " + TABLE_USERS + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_USERNAME + " TEXT," + COLUMN_PASSWORD + " TEXT,"
+            + COLUMN_PRIVATE + " SMALLINT," + ")";
 
     private static final String ADD_PARIS = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
             + "'Paris France', " + "'Paris Frances capital is a major European city and a global center for art fashion gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century Gothic Notre-Dame cathedral the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.', "
@@ -106,6 +118,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(CREATE_IMAGE_TABLE);
         db.execSQL(CREATE_IMAGE_LOCATION_TABLE);
         db.execSQL(CREATE_RECOMMENDATIONS_TABLE);
+        db.execSQL(CREATE_USERS);
         db.execSQL(ADD_PARIS);
         db.execSQL(ADD_ZEALAND);
         db.execSQL(ADD_NEWYORK);
@@ -122,6 +135,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGELOCATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECOMMENDATIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
 
