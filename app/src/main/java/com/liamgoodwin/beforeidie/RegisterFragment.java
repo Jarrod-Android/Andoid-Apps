@@ -25,7 +25,6 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
     Button backToLogin;
     FragmentManager fm;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

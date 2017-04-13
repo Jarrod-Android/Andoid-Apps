@@ -23,7 +23,7 @@ public class loginFragment extends Fragment {
     Button login;
     Button register;
     User user;
-
+    FragmentManager fm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,29 +58,29 @@ public class loginFragment extends Fragment {
                     user = db.findUser(username.getText().toString());
                     db.closeDB();
 
-//                    String DBUsername = user.getUsername();
-//                    String DBPassword = user.getPassword();
+                    String DBUsername = user.getUsername();
+                    String DBPassword = user.getPassword();
 
                     //If the username is returned as null from the database
-                    if(user.getUsername().equals(null)) {
+                    if(DBUsername.equals(null)) {
                         errorMessage.setText("Username not found");
                     }
 
                     //If the username is not null, it means we returned something and we can check if the password is correct
-                    else if(!user.getUsername().equals(null)) {
+                    else if(!DBUsername.equals(null)) {
 
                         //If the password in the DB and the password field do not match display an error
-                        if(!user.getPassword().equals(password)) {
+                        if(!DBPassword.equals(password.getText().toString())) {
                             errorMessage.setText("Incorrect password");
                         }
 
                         //If the password in the DB and the password field to match display a success
-                        else {
-                            errorMessage.setText("Login Successful");
+                        else if(DBPassword.equals(password.getText().toString())) {
+                            fm = getActivity().getSupportFragmentManager();
+                            fm.popBackStack();
                         }
                     }
                 }
-
             }
         });
 
