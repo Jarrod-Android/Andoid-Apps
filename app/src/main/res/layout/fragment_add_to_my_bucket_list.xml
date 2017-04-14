@@ -122,6 +122,14 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <TextView
+                android:text="Learn More"
+                android:layout_height="wrap_content"
+                android:id="@+id/learnMore"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:textAlignment="center" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

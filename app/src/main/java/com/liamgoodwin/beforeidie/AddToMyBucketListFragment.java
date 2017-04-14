@@ -3,6 +3,7 @@ package com.liamgoodwin.beforeidie;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +20,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +49,14 @@ public class AddToMyBucketListFragment extends Fragment {
     List<EditText> holdEdit = new ArrayList<EditText>();
     List<String> subItems = new ArrayList<String>();
     ArrayList<String> subItemExtra = new ArrayList<String>();
+    TextView learnMore;
 
     public AddToMyBucketListFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_add_to_my_bucket_list, container, false);
 
@@ -57,6 +64,14 @@ public class AddToMyBucketListFragment extends Fragment {
                 new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"},
                 1);
 
+        learnMore = (TextView) view.findViewById(R.id.learnMore);
+
+        learnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopup(inflater, view);
+            }
+        });
         subItemEditText = (EditText) view.findViewById(R.id.subItemEditText);
         name = (EditText) view.findViewById(R.id.nameEditText);
         description = (EditText) view.findViewById(R.id.descriptionEditText);
@@ -113,21 +128,32 @@ public class AddToMyBucketListFragment extends Fragment {
 
                 subItems.add(subItemEditText.getText().toString());
 
+                String test = "";
+
                 for (EditText e : holdEdit) {
-                    String test = e.getText().toString();
+                    test = e.getText().toString();
                     subItems.add(test);
                 }
 
-
+                int id = 0;
+                //SubItems subItemObj = new SubItems(id);
 
                 int listSize = subItems.size();
 
-                for (int i = 0; i < listSize; i ++) {
-                    Log.d("TESTING :", subItems.get(i));
-                }
+                //Database db = new Database(getContext());
+
+
+
+                int ii = 1;
 
                 Database db = new Database(getContext());
                 db.addBucketlist(bucketlist);
+                int blid = bucketlist.getId();
+                for (int i = 0; i < listSize; i ++) {
+                    Log.d("TESTING :", subItems.get(i));
+                    SubItems subItemObj = new SubItems(blid, subItems.get(i));
+                    db.addSubItems(subItemObj);
+                }
                 db.closeDB();
 
                 fm = getActivity().getSupportFragmentManager();
@@ -136,6 +162,31 @@ public class AddToMyBucketListFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void showPopup(LayoutInflater inflater, View anchorView) {
+
+        View popupView = inflater.inflate(R.layout.learn_more_layout, null);
+
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+
+        // If the PopupWindow should be focusable
+        popupWindow.setFocusable(true);
+
+        // If you need the PopupWindow to dismiss when when touched outside
+        popupWindow.setBackgroundDrawable(new ColorDrawable());
+
+        int location[] = new int[2];
+
+        // Get the View's(the one that was clicked in the Fragment) location
+        anchorView.getLocationOnScreen(location);
+
+        // Using location, the PopupWindow will be displayed right under anchorView
+        popupWindow.showAtLocation(anchorView, Gravity.NO_GRAVITY, location[0], location[1] + anchorView.getHeight());
+
+        //For exit button
+        //popupwindow.dismiss();
     }
 
     public void onRequestPermissionsResult(int requestCode,

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -27,6 +29,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String TABLE_IMAGE = "image";
     private static final String TABLE_IMAGELOCATION = "image_location";
     private static final String TABLE_RECOMMENDATIONS = "recommendations";
+    private static final String TABLE_SUBITEMS = "sub_items";
 
     /**
      * Common column names
@@ -53,12 +56,22 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_LOCATION = "id_location";
 
     /**
+     * Sub Item Table Column Names
+     */
+
+    private static final String ITEM_ID = "id_item";
+    private static final String ITEM_NAME = "name_item";
+
+    /**
      * Create statements for all of our tables
      */
 
     private static final String CREATE_BUCKET_LIST_TABLE = "CREATE TABLE " + TABLE_BUCKET_LIST + "("
-            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
             + COLUMN_TIME + " BIGINT," + COLUMN_COMPLETED + " INT" + ")";
+
+    private static final String CREATE_SUBITEMS_TABLE = "CREATE TABLE " + TABLE_SUBITEMS + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ITEM_NAME + " TEXT, "
+            + ITEM_ID + " INT,  CONSTRAINT subConstraint FOREIGN KEY (" + ITEM_ID + ") REFERENCES " + TABLE_BUCKET_LIST + "(" + COLUMN_ID + ") " + ")";
 
     private static final String CREATE_IMAGE_TABLE = "CREATE TABLE " + TABLE_IMAGE + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_RESOURCE + " TEXT" + ")";
@@ -106,6 +119,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(CREATE_IMAGE_TABLE);
         db.execSQL(CREATE_IMAGE_LOCATION_TABLE);
         db.execSQL(CREATE_RECOMMENDATIONS_TABLE);
+        db.execSQL(CREATE_SUBITEMS_TABLE);
         db.execSQL(ADD_PARIS);
         db.execSQL(ADD_ZEALAND);
         db.execSQL(ADD_NEWYORK);
@@ -122,6 +136,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGELOCATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECOMMENDATIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBITEMS);
         onCreate(db);
     }
 
@@ -132,7 +147,7 @@ public class Database extends SQLiteOpenHelper {
     /**
      * CREATE new objects for the tables
      */
-    public void addBucketlist(Bucketlist bucketlist) {
+    public int addBucketlist(Bucketlist bucketlist) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, bucketlist.getName());
@@ -141,6 +156,15 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_COMPLETED, bucketlist.getCompleted());
         db.insert(TABLE_BUCKET_LIST, null, values);
         db.close();
+        db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT last_insert_rowid()", null);
+        if(cursor.moveToFirst()) {
+            int subId = Integer.parseInt(cursor.getString(0));
+            System.out.println("Record ID " + subId);
+            db.close();
+            return subId;
+        }
+        return -1;
     }
 
     //We modified addPicture to return the rowNumber it was added into
@@ -168,6 +192,17 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_PICTURE, image);
         db.insert(TABLE_IMAGELOCATION, null, values);
         db.close();
+    }
+
+    public void addSubItems(SubItems sub) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ITEM_NAME, sub.getItem_name());
+        values.put(ITEM_ID, sub.getItem_id());
+        db.insert(TABLE_SUBITEMS, null, values);
+        Log.d("Name:", sub.getItem_name());
+        db.close();
+
     }
 
     /**
@@ -235,6 +270,24 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
+    public ArrayList<SubItems> getAllSubItems(int blid) {
+        ArrayList<SubItems> subItems = new ArrayList<SubItems>();
+        String selectQuery = "SELECT * FROM " + TABLE_SUBITEMS + " WHERE " + ITEM_ID + "=" + blid;
+        Log.d("Hello", "" + blid);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.d("Yes", cursor.moveToFirst() + "");
+        if (cursor.moveToFirst()) {
+            do {
+                SubItems subs = new SubItems();
+                subs.setItem_name(cursor.getString(1));
+                subItems.add(subs);
+            } while(cursor.moveToNext());
+        }
+        return subItems;
+    }
+
     public ArrayList<Picture> getAllPictures() {
         ArrayList<Picture> pictureList = new ArrayList<Picture>();
         String selectQuery = "SELECT  * FROM " + TABLE_IMAGE;
@@ -252,6 +305,7 @@ public class Database extends SQLiteOpenHelper {
         }
         return pictureList;
     }
+
 
     public ArrayList<Bucketlist> getAllBucketlistCompleted() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();

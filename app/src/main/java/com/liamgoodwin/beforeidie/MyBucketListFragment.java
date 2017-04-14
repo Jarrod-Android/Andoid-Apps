@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class MyBucketListFragment extends Fragment {
     String companyEmail = "beforeidie@gmail.com";
     Button current;
     Button completed;
+    TextView subItemTextView;
 
 
     @Override
@@ -311,6 +313,15 @@ public class MyBucketListFragment extends Fragment {
                     galleryLayout.addView(imageView);
                 }
             }
+
+            Database db = new Database(getContext());
+            ArrayList<SubItems> subItems = db.getAllSubItems(1);
+            for(int i = 0; i < subItems.size(); i++) {
+                subItemTextView = (TextView) convertView.findViewById(R.id.subItemTextView);
+                subItemTextView.setText(subItems.get(i).getItem_name());
+                Log.d("Hi", subItems.get(i).getItem_name());
+            }
+            db.closeDB();
 
             delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener() {
