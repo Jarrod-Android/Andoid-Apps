@@ -40,6 +40,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static android.R.color.darker_gray;
+import static com.liamgoodwin.beforeidie.R.attr.colorButtonNormal;
 import io.fabric.sdk.android.Fabric;
 
 public class MyBucketListFragment extends Fragment {
@@ -69,12 +71,11 @@ public class MyBucketListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
-
 
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
@@ -95,81 +96,19 @@ public class MyBucketListFragment extends Fragment {
         }
 
         current = (Button) view.findViewById(R.id.currentBucketlist);
+        current.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
+
         completed = (Button) view.findViewById(R.id.completedBucketlist);
 
         current.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                transaction.addToBackStack(null);
-
-                adapter = new CustomAdapter(getContext(), bucketList);
-                list.setAdapter(adapter);
-                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
-
-                        details = (TextView) view.findViewById(R.id.details);
-                        chevron = (ImageView) view.findViewById(R.id.chevron);
-                        additem = (ImageView) view.findViewById(R.id.additem);
-                        addPhoto = (ImageView) view.findViewById(R.id.addphoto);
-                        edit = (ImageView) view.findViewById(R.id.edit);
-                        delete = (ImageView) view.findViewById(R.id.delete);
-                        email = (ImageView) view.findViewById(R.id.email);
-                        twitter = (ImageView) view.findViewById(R.id.twitter);
-
-
-                        galleryLayout.setVisibility(View.GONE);
-                        additem.setImageResource(R.drawable.checkmark);
-                        additem.setVisibility(View.GONE);
-                        addPhoto.setImageResource(R.drawable.camerabutton);
-                        addPhoto.setVisibility(View.GONE);
-                        edit.setImageResource(R.drawable.editimage);
-                        edit.setVisibility(View.GONE);
-                        delete.setImageResource(R.drawable.deleteimage);
-                        delete.setVisibility(View.GONE);
-                        email.setImageResource(R.drawable.emailicon);
-                        email.setVisibility(View.GONE);
-                        twitter.setImageResource(R.drawable.twittericon);
-                        twitter.setVisibility(View.GONE);
-
-                        if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
-                            //Update the text of the description
-                            BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
-
-                            //update the text of the show more
-                            details.setText("Click to show less");
-                            //update the chevron image
-                            chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
-                            galleryLayout.setVisibility(View.VISIBLE);
-                            additem.setVisibility(View.VISIBLE);
-                            addPhoto.setVisibility(View.VISIBLE);
-                            edit.setVisibility(View.VISIBLE);
-                            delete.setVisibility(View.VISIBLE);
-                            email.setVisibility(View.VISIBLE);
-                            twitter.setVisibility(View.VISIBLE);
-                        } else {
-                            BucketlistDescriptionTextView.setText("");
-                            //update the text of the show more
-                            details.setText("Click to show more");
-                            //update the chevron image
-                            chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
-                        }
-                    }
-                });
-            }
-        });
-
-        completed.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
+                current.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
+                completed.setBackgroundColor(getResources().getColor(R.color.buttonUnclicked));
 
                 Database db = new Database(getContext());
-                bucketList = db.getAllBucketlistCompleted();
+                bucketList = db.getAllBucketlist();
                 db.closeDB();
 
                 FragmentManager fm = getFragmentManager();
@@ -231,12 +170,81 @@ public class MyBucketListFragment extends Fragment {
                         }
                     }
                 });
-
             }
         });
 
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.swing_up_left);
-        view.startAnimation(animation);
+        completed.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                current.setBackgroundColor(getResources().getColor(R.color.buttonUnclicked));
+                completed.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
+
+                Database db = new Database(getContext());
+                bucketList = db.getAllBucketlistCompleted();
+                db.closeDB();
+
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.addToBackStack(null);
+
+                adapter = new CustomAdapter(getContext(), bucketList);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        BucketlistDescriptionTextView = (TextView) view.findViewById(R.id.bucketlistDescription);
+
+                        details = (TextView) view.findViewById(R.id.details);
+                        chevron = (ImageView) view.findViewById(R.id.chevron);
+                        additem = (ImageView) view.findViewById(R.id.additem);
+                        addPhoto = (ImageView) view.findViewById(R.id.addphoto);
+                        edit = (ImageView) view.findViewById(R.id.edit);
+                        delete = (ImageView) view.findViewById(R.id.delete);
+                        email = (ImageView) view.findViewById(R.id.email);
+                        twitter = (ImageView) view.findViewById(R.id.twitter);
+
+                        galleryLayout.setVisibility(View.GONE);
+                        additem.setImageResource(R.drawable.checkmark);
+                        additem.setVisibility(View.GONE);
+                        addPhoto.setImageResource(R.drawable.camerabutton);
+                        addPhoto.setVisibility(View.GONE);
+                        edit.setImageResource(R.drawable.editimage);
+                        edit.setVisibility(View.GONE);
+                        delete.setImageResource(R.drawable.deleteimage);
+                        delete.setVisibility(View.GONE);
+                        email.setImageResource(R.drawable.emailicon);
+                        email.setVisibility(View.GONE);
+                        twitter.setImageResource(R.drawable.twittericon);
+                        twitter.setVisibility(View.GONE);
+
+                        if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
+                            //Update the text of the description
+                            BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
+
+                            //update the text of the show more
+                            details.setText("Click to show less");
+                            //update the chevron image
+                            chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
+                            galleryLayout.setVisibility(View.VISIBLE);
+                            addPhoto.setVisibility(View.VISIBLE);
+                            edit.setVisibility(View.VISIBLE);
+                            delete.setVisibility(View.VISIBLE);
+                            email.setVisibility(View.VISIBLE);
+                            twitter.setVisibility(View.VISIBLE);
+                        } else {
+                            BucketlistDescriptionTextView.setText("");
+                            //update the text of the show more
+                            details.setText("Click to show more");
+                            //update the chevron image
+                            chevron.setImageResource(R.drawable.ic_expand_more_black_24dp);
+                        }
+                    }
+                });
+
+            }
+        });
 
         adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
@@ -353,6 +361,8 @@ public class MyBucketListFragment extends Fragment {
                                     Bucketlist location = bucketList.get(pos);
                                     db.deleteBucketlist(location.getId());
                                     db.closeDB();
+                                    Toast.makeText(getActivity(), "'" + location.getName() + "' has been deleted",
+                                            Toast.LENGTH_LONG).show();
                                     bucketList.remove(pos);
                                     adapter.notifyDataSetChanged();
                                     break;
@@ -399,30 +409,6 @@ public class MyBucketListFragment extends Fragment {
             tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
             tweetIntent.setType("text/plain");
 
-            //PackageManager packManager = getPackageManager();
-           // List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent,  PackageManager.MATCH_DEFAULT_ONLY);
-
-//            boolean resolved = false;
-//            for(ResolveInfo resolveInfo: resolvedInfoList){
-//                if(resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")){
-//                    tweetIntent.setClassName(
-//                            resolveInfo.activityInfo.packageName,
-//                            resolveInfo.activityInfo.name );
-//                    resolved = true;
-//                    break;
-//                }
-//            }
-//            if(resolved){
-//                startActivity(tweetIntent);
-//            }else{
-//                Intent i = new Intent();
-//                i.putExtra(Intent.EXTRA_TEXT, "Hello Download our app");
-//                i.setAction(Intent.ACTION_VIEW);
-//                i.setData(Uri.parse("https://twitter.com/intent/tweet?text=" + (message));
-//                startActivity(i);
-//               // Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
-//            }
-//
             final String emailItem = item.getName();
 
             email = (ImageView) convertView.findViewById(R.id.email);

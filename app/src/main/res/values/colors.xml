@@ -5,4 +5,7 @@
     <color name="colorAccent">#7db0d6</color>
     <color name="colorWhite">#ffffff</color>
     <color name="dayGreen">#60be6a</color>
+    <color name="buttonClicked">#aaa</color>
+    <color name="buttonUnclicked">#d6d7d7</color>
+    <color name="listViewBackground">#c5cae9</color>
 </resources>

@@ -30,6 +30,7 @@ public class Database extends SQLiteOpenHelper {
     private static final String TABLE_IMAGELOCATION = "image_location";
     private static final String TABLE_RECOMMENDATIONS = "recommendations";
     private static final String TABLE_SUBITEMS = "sub_items";
+    private static final String TABLE_USERS = "users";
 
     /**
      * Common column names
@@ -43,6 +44,13 @@ public class Database extends SQLiteOpenHelper {
     private static final String COLUMN_DESCRIPTION = "description";
     private static final String COLUMN_TIME = "time";
     private static final String COLUMN_COMPLETED = "completed";
+
+    /**
+     * Bucket List Table Column Names
+     */
+    private static final String COLUMN_USERNAME = "username";
+    private static final String COLUMN_PASSWORD = "description";
+    private static final String COLUMN_PRIVATE = "time";
 
     /**
      * Image Table Column Names
@@ -84,25 +92,29 @@ public class Database extends SQLiteOpenHelper {
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_NAME + " TEXT," + COLUMN_DESCRIPTION + " TEXT,"
             + COLUMN_PICTURE + " INT" + ")";
 
+    private static final String CREATE_USERS = "CREATE TABLE " + TABLE_USERS + "("
+            + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT ," + COLUMN_USERNAME + " TEXT," + COLUMN_PASSWORD + " TEXT,"
+            + COLUMN_PRIVATE + " SMALLINT" + ")";
+
     private static final String ADD_PARIS = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
             + "'Paris France', " + "'Paris Frances capital is a major European city and a global center for art fashion gastronomy and culture. Its 19th-century cityscape is crisscrossed by wide boulevards and the River Seine. Beyond such landmarks as the Eiffel Tower and the 12th-century Gothic Notre-Dame cathedral the city is known for its cafe culture and designer boutiques along the Rue du Faubourg Saint-Honoré.', "
-            + R.drawable.deleteimage + ")";
+            + R.drawable.parisfrance + ")";
 
     private static final String ADD_ZEALAND = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
             + "'New Zealand', " + "'New Zealand is a country in the southwestern Pacific Ocean consisting of 2 main islands both marked by volcanoes and glaciation. Capital Wellington on the North Island is home to Te Papa Tongarewa the expansive national museum. Wellingtons dramatic Mt. Victoria along with the South Islands Fiordland and Southern Lakes stood in for mythical Middle Earth in Peter Jacksons \"Lord of the Rings\" films.', "
-            + R.drawable.camerabutton + ")";
+            + R.drawable.newzealand + ")";
 
     private static final String ADD_NEWYORK = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
             + "'New York City', " + "'New York City comprises 5 boroughs sitting where the Hudson River meets the Atlantic Ocean. At its core is Manhattan a densely populated borough thats among the worlds major commercial financial and cultural centers. Its iconic sites include skyscrapers such as the Empire State Building and sprawling Central Park. Broadway theater is staged in neon-lit Times Square.', "
-            + R.drawable.checkmark + ")";
+            + R.drawable.newyork + ")";
 
     private static final String ADD_GRANDCANYON = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
             + "'Grand Canyon', " + "'The Grand Canyon in Arizona is a natural formation distinguished by layered bands of red rock revealing millions of years of geological history in cross-section. Vast in scale the canyon averages 10 miles across and a mile deep along its 277-mile length. Much of the area is a national park with Colorado River white-water rapids and sweeping vistas.', "
-            + R.drawable.facebookicon + ")";
+            + R.drawable.grandcanyon + ")";
 
     private static final String ADD_MAUNA = "INSERT INTO " + TABLE_RECOMMENDATIONS + "(" + COLUMN_NAME + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_PICTURE + ") VALUES ("
             + "'Mauna Loa', " + "'Mauna Loa is one of five volcanoes that form the Island of Hawaii in the U.S. state of Hawaii in the Pacific Ocean. The largest subaerial volcano in both mass and volume Mauna Loa has historically been considered the largest volcano on Earth.', "
-            + R.drawable.emailicon + ")";
+            + R.drawable.maunaloa + ")";
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -120,6 +132,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(CREATE_IMAGE_LOCATION_TABLE);
         db.execSQL(CREATE_RECOMMENDATIONS_TABLE);
         db.execSQL(CREATE_SUBITEMS_TABLE);
+        db.execSQL(CREATE_USERS);
         db.execSQL(ADD_PARIS);
         db.execSQL(ADD_ZEALAND);
         db.execSQL(ADD_NEWYORK);
@@ -137,6 +150,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGELOCATION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECOMMENDATIONS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SUBITEMS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         onCreate(db);
     }
 
@@ -252,7 +266,7 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<Bucketlist> getAllBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
+        String selectQuery = "SELECT * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -427,6 +441,63 @@ public class Database extends SQLiteOpenHelper {
         values.put(COLUMN_PICTURE, String.valueOf(recommendation.getImage()));
         db.insert(TABLE_RECOMMENDATIONS, null, values);
         db.close();
+    }
+
+    /*
+    *
+    * USER FUNCTIONS
+    *
+    * */
+
+    public void addUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, user.getUsername());
+        values.put(COLUMN_PASSWORD, user.getPassword());
+        values.put(COLUMN_PRIVATE, user.getPrivacy());
+        db.insert(TABLE_USERS, null, values);
+        db.close();
+    }
+
+    public ArrayList<User> getAllUsers() {
+        ArrayList<User> usersList = new ArrayList<User>();
+        String selectQuery = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_PRIVATE + " = 0";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                User user = new User();
+                user.setId(Integer.parseInt(cursor.getString(0)));
+                user.setUsername(cursor.getString(1));
+                user.setPassword(cursor.getString(2));
+                user.setPrivacy(cursor.getInt(3));
+                usersList.add(user);
+            } while (cursor.moveToNext());
+        }
+        return usersList;
+    }
+
+    //This is used to see if an account is registered under the provided username in the login section
+    public User findUser(String username) {
+        User user = null;
+        String findUserInDb = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " ='" + username + "'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(findUserInDb, null);
+        if (cursor.moveToFirst()) {
+            user = new User();
+            user.setUsername(cursor.getString(1));
+            user.setPassword(cursor.getString(2));
+        }
+        return user;
+    }
+
+    public int updateUserPrivacy(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PRIVATE, user.getPrivacy());
+        return db.update(TABLE_USERS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(user.getId())});
     }
 
     /**

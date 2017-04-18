@@ -1,17 +1,21 @@
 package com.liamgoodwin.beforeidie;
 
+import android.graphics.drawable.Drawable;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
@@ -31,13 +35,11 @@ import it.neokree.materialtabs.MaterialTabListener;
 
 public class MainActivity extends ActionBarActivity implements MaterialTabListener,
     ImageFragment.OnFragmentInteractionListener,
-    AddPhotoFragment.OnFragmentInteractionListener,
-    MyCompletedBucketListFragment.OnFragmentInteractionListener {
+    AddPhotoFragment.OnFragmentInteractionListener {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "cE8s0Za7sXYfczB2rlMg45Xmd";
     private static final String TWITTER_SECRET = "jBhdrlXa1zrnJTULLC1DQzjAF2GA606spCGEJGS7hiyxkZ37Cq";
-
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
@@ -46,6 +48,8 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     ImageView settingsButton;
     private TwitterLoginButton loginButton;
     TwitterAuthConfig authConfig;
+    Button accountLogin;
+    AdapterView adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(androidAdapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        viewPager.setCurrentItem(2);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int tabposition) {
@@ -112,7 +117,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         for (int i = 1; i <= androidAdapter.getCount(); i++) {
             tabHost.addTab(
                     tabHost.newTab()
-                            //.setIcon(getDrawable(R.drawable.camerabutton))
+//                            .setIcon(getDrawable(R.drawable.camerabutton))
                             .setText(androidAdapter.getPageTitle(i))
                             .setTabListener(this)
             );
@@ -161,8 +166,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         public Fragment getItem(int num) {
 
-//            return new MainFragment();
-
             switch(num) {
                 case 0:
                     return new MyBucketListFragment();
@@ -194,6 +197,22 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                     return "Home";
                 default:
                     return "Home";
+            }
+        }
+
+        public Drawable getIcon (int pos) {
+
+            switch(pos) {
+                case 1:
+                    return getDrawable(R.drawable.deleteimage);
+                case 2:
+                    return getDrawable(R.drawable.editimage);
+                case 3:
+                    return getDrawable(R.drawable.twittericon);
+                case 4:
+                    return getDrawable(R.drawable.facebookicon);
+                default:
+                    return getDrawable(R.drawable.checkmark);
             }
         }
     }
@@ -236,4 +255,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
             }
         }
     }
+
+    @Override
+    public void onBackPressed() { }
 }
