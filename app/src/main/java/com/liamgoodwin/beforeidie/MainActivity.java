@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     ViewPager viewPager;
     ViewPagerAdapter androidAdapter;
     Toolbar toolBar;
+    ImageView settingsButton;
     private TwitterLoginButton loginButton;
     TwitterAuthConfig authConfig;
     Button accountLogin;
@@ -58,6 +60,15 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
         Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
+
+        settingsButton = (ImageView) findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(i);
+            }
+        });
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
@@ -163,8 +174,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                 case 2:
                     return new MainFragment();
                 case 3:
-                    return new SettingsFragment();
-                case 4:
                     return new AddPhotoFragment();
                 default:
                     return new MainFragment();
@@ -173,7 +182,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override
@@ -186,8 +195,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                     return "Add";
                 case 3:
                     return "Home";
-                case 4:
-                    return "Settings";
                 default:
                     return "Home";
             }

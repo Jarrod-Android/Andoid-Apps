@@ -3,6 +3,7 @@ package com.liamgoodwin.beforeidie;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +36,9 @@ import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import static android.R.color.darker_gray;
 import static com.liamgoodwin.beforeidie.R.attr.colorButtonNormal;
@@ -58,6 +65,9 @@ public class MyBucketListFragment extends Fragment {
     String companyEmail = "beforeidie@gmail.com";
     Button current;
     Button completed;
+    TextView subItemTextView;
+    ListPreference order;
+    SharedPreferences pref;
 
 
     @Override
@@ -70,9 +80,20 @@ public class MyBucketListFragment extends Fragment {
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
 
-        Database db = new Database(getContext());
-        bucketList = db.getAllBucketlist();
-        db.closeDB();
+        pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String option = pref.getString("order", "1");
+
+        int orderSelected = Integer.parseInt(option);
+
+        if (orderSelected != 2) {
+            Database dbb = new Database(getContext());
+            bucketList = dbb.getAllAscendingBucketlist();
+            dbb.closeDB();
+        } else {
+            Database ab = new Database(getContext());
+            bucketList = ab.getAllDescendingBucketlist();
+            ab.closeDB();
+        }
 
         current = (Button) view.findViewById(R.id.currentBucketlist);
         current.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
@@ -316,6 +337,15 @@ public class MyBucketListFragment extends Fragment {
                 }
             }
 
+            Database db = new Database(getContext());
+            ArrayList<SubItems> subItems = db.getAllSubItems(1);
+            for(int i = 0; i < subItems.size(); i++) {
+                subItemTextView = (TextView) convertView.findViewById(R.id.subItemTextView);
+                subItemTextView.setText(subItems.get(i).getItem_name());
+                Log.d("Hi", subItems.get(i).getItem_name());
+            }
+            db.closeDB();
+
             delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener() {
                 @Override
@@ -473,6 +503,28 @@ public class MyBucketListFragment extends Fragment {
             int diffInDays = (int) (diffInMillis / (1000 * 60 * 60 * 24));
 
             dayCounter.setVisibility(View.VISIBLE);
+
+
+            pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String option = pref.getString("order", "1");
+
+            int orderSelected = Integer.parseInt(option);
+
+            if (orderSelected != 2) {
+                Database dbb = new Database(getContext());
+                bucketList = dbb.getAllAscendingBucketlist();
+                dbb.closeDB();
+            } else {
+                Database ab = new Database(getContext());
+                bucketList = ab.getAllDescendingBucketlist();
+                ab.closeDB();
+            }
+
+
+
+
+
+
 
             if(diffInDays <= 0) {
                 dayCounter.setText("Expired");
