@@ -27,6 +27,7 @@
             android:name="io.fabric.ApiKey"
             android:value="aacd08b4a0c74a6638bfdcea6c9bf228d66c7090" />
 
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

@@ -270,6 +270,46 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
+    public ArrayList<Bucketlist> getAllAscendingBucketlist() {
+        ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0 ORDER BY " + COLUMN_TIME + " ASC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Bucketlist bl = new Bucketlist();
+                bl.setId(Integer.parseInt(cursor.getString(0)));
+                bl.setName(cursor.getString(1));
+                bl.setDescription(cursor.getString(2));
+                bl.setTime(cursor.getLong(3));
+                bl.setCompleted(cursor.getInt(4));
+                bucketList.add(bl);
+            } while (cursor.moveToNext());
+        }
+        return bucketList;
+    }
+
+    public ArrayList<Bucketlist> getAllDescendingBucketlist() {
+        ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0 ORDER BY " + COLUMN_TIME + " DESC";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Bucketlist bl = new Bucketlist();
+                bl.setId(Integer.parseInt(cursor.getString(0)));
+                bl.setName(cursor.getString(1));
+                bl.setDescription(cursor.getString(2));
+                bl.setTime(cursor.getLong(3));
+                bl.setCompleted(cursor.getInt(4));
+                bucketList.add(bl);
+            } while (cursor.moveToNext());
+        }
+        return bucketList;
+    }
+
     public ArrayList<SubItems> getAllSubItems(int blid) {
         ArrayList<SubItems> subItems = new ArrayList<SubItems>();
         String selectQuery = "SELECT * FROM " + TABLE_SUBITEMS + " WHERE " + ITEM_ID + "=" + blid;

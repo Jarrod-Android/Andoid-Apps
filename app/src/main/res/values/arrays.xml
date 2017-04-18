@@ -2,11 +2,11 @@
 <resources>
 
     <string-array name="order">
-    <item name="Ascending"/>
-    <item name="Descending"/>
+    <item>Ascending</item>
+    <item>Descending</item>
     </string-array>
-    <integer-array name="order_value">
+    <string-array name="order_value">
         <item>1</item>
         <item>2</item>
-    </integer-array>
+    </string-array>
 </resources>
