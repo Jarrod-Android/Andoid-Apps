@@ -272,7 +272,7 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<Bucketlist> getAllAscendingBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0 ORDER BY " + COLUMN_TIME + " ASC";
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " ORDER BY " + COLUMN_TIME + " ASC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -292,7 +292,7 @@ public class Database extends SQLiteOpenHelper {
 
     public ArrayList<Bucketlist> getAllDescendingBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
-        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0 ORDER BY " + COLUMN_TIME + " DESC";
+        String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " ORDER BY " + COLUMN_TIME + " DESC";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

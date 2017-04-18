@@ -79,6 +79,20 @@ public class MyBucketListFragment extends Fragment {
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
 
+        pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String option = pref.getString("order", "1");
+
+        int orderSelected = Integer.parseInt(option);
+
+        if (orderSelected != 2) {
+            Database dbb = new Database(getContext());
+            bucketList = dbb.getAllAscendingBucketlist();
+            dbb.closeDB();
+        } else {
+            Database ab = new Database(getContext());
+            bucketList = ab.getAllDescendingBucketlist();
+            ab.closeDB();
+        }
 
         current = (Button) view.findViewById(R.id.currentBucketlist);
         completed = (Button) view.findViewById(R.id.completedBucketlist);
@@ -86,21 +100,6 @@ public class MyBucketListFragment extends Fragment {
         current.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-
-                pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                String option = pref.getString("order", "1");
-
-                int orderSelected = Integer.parseInt(option);
-
-                if (orderSelected != 2) {
-                    Database dbb = new Database(getContext());
-                    bucketList = dbb.getAllAscendingBucketlist();
-                    dbb.closeDB();
-                } else {
-                    Database ab = new Database(getContext());
-                    bucketList = ab.getAllDescendingBucketlist();
-                    ab.closeDB();
-                }
 
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction transaction = fm.beginTransaction();
