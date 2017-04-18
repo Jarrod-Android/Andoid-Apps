@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,13 +46,15 @@ public class MainFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+        
+        if(savedInstanceState == null) {
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
 
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-
-        transaction.addToBackStack(null);
-        transaction.replace(R.id.mainActivity, new loginFragment());
-        transaction.commit();
+            transaction.addToBackStack(null);
+            transaction.replace(R.id.mainActivity, new loginFragment());
+            transaction.commit();
+        }
 
         Database db = new Database(getContext());
         Bucketlist bucketListSmallestTime = db.getSmallestTime();
@@ -151,22 +155,23 @@ public class MainFragment extends Fragment {
         //For exit button
         //popupwindow.dismiss();
 
-//        add.setOnClickListener(new View.OnClickListener() {
-//            @android.support.annotation.RequiresApi(api = Build.VERSION_CODES.N)
-//            @Override
-//            public void onClick(View v) {
-//
-//                long millis = 1314873000;
-//                int completed = 0;
-//
-//                Bucketlist bucketlist = new Bucketlist(name,
-//                        description, millis, completed);
-//
-//                Database db = new Database(getContext());
-//                db.addBucketlist(bucketlist);
-//                db.closeDB();
-//            }
-//        });
+        add.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v) {
+
+                int completed = 0;
+
+                long time = System.currentTimeMillis();
+                long millis = time + 909999999 ;
+
+                Bucketlist bucketlist = new Bucketlist(name,
+                        description, millis, completed);
+
+                Database db = new Database(getContext());
+                db.addBucketlist(bucketlist);
+                db.closeDB();
+            }
+        });
     }
 
 }

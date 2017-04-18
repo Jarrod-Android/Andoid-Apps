@@ -14,6 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class RegisterFragment extends android.support.v4.app.Fragment {
 
     TextView errorMessage;
@@ -54,16 +58,25 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                     errorMessage.setText("Passwords do not match");
                 } else if ((!username.getText().toString().equals(null) || !username.getText().equals("")) && (!password.getText().toString().equals(null) || !password.getText().toString().equals("")) && (password.getText().toString().equals(password2.getText().toString()))) {
                     final String regUsername = username.getText().toString();
-                    final String regPassword = password.getText().toString();
                     final int regPrivacy;
 
-                    if(privacy.isChecked()) {
+                    String encryptedPassword = null;
+
+                    try {
+                        encryptedPassword = SHA1(password.getText().toString());
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (privacy.isChecked()) {
                         regPrivacy = 1;
                     } else {
                         regPrivacy = 0;
                     }
 
-                    User user = new User(regUsername, regPassword, regPrivacy);
+                    User user = new User(regUsername, encryptedPassword, regPrivacy);
 
                     Database db = new Database(getContext());
                     db.addUser(user);
@@ -86,6 +99,32 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         });
 
         return view;
+    }
+
+    private static String convertToHex(byte[] data) {
+        StringBuffer buf = new StringBuffer();
+        int length = data.length;
+        for(int i = 0; i < length; ++i) {
+            int halfbyte = (data[i] >>> 4) & 0x0F;
+            int two_halfs = 0;
+            do {
+                if((0 <= halfbyte) && (halfbyte <= 9))
+                    buf.append((char) ('0' + halfbyte));
+                else
+                    buf.append((char) ('a' + (halfbyte - 10)));
+                halfbyte = data[i] & 0x0F;
+            }
+            while(++two_halfs < 1);
+        }
+        return buf.toString();
+    }
+
+    public static String SHA1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        MessageDigest md = MessageDigest.getInstance("SHA-1");
+        byte[] sha1hash = new byte[40];
+        md.update(text.getBytes("iso-8859-1"), 0, text.length());
+        sha1hash = md.digest();
+        return convertToHex(sha1hash);
     }
 
 }
