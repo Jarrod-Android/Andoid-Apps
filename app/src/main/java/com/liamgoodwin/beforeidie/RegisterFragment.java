@@ -58,7 +58,6 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                     errorMessage.setText("Passwords do not match");
                 } else if ((!username.getText().toString().equals(null) || !username.getText().equals("")) && (!password.getText().toString().equals(null) || !password.getText().toString().equals("")) && (password.getText().toString().equals(password2.getText().toString()))) {
                     final String regUsername = username.getText().toString();
-                    final String regPassword = password.getText().toString();
                     final int regPrivacy;
 
                     String encryptedPassword = null;
@@ -77,13 +76,13 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                         regPrivacy = 0;
                     }
 
-                    User user = new User(regUsername, regPassword, regPrivacy);
+                    User user = new User(regUsername, encryptedPassword, regPrivacy);
 
                     Database db = new Database(getContext());
-                    //db.addUser(user);
+                    db.addUser(user);
                     db.closeDB();
 
-                    Toast.makeText(getActivity(), "The username '" + encryptedPassword + "' has been registered",
+                    Toast.makeText(getActivity(), "The username '" + regUsername + "' has been registered",
                             Toast.LENGTH_LONG).show();
                 }
             }
