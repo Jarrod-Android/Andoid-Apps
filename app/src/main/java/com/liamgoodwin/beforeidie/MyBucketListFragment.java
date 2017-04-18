@@ -3,6 +3,7 @@ package com.liamgoodwin.beforeidie;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.preference.ListPreference;
+import android.support.v7.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +30,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import static android.R.color.darker_gray;
+import static com.liamgoodwin.beforeidie.R.attr.colorButtonNormal;
+import io.fabric.sdk.android.Fabric;
 
 public class MyBucketListFragment extends Fragment {
 
@@ -51,9 +65,13 @@ public class MyBucketListFragment extends Fragment {
     String companyEmail = "beforeidie@gmail.com";
     Button current;
     Button completed;
+    TextView subItemTextView;
+    ListPreference order;
+    SharedPreferences pref;
+
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_bucket_list, container, false);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -62,16 +80,32 @@ public class MyBucketListFragment extends Fragment {
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
 
-        Database db = new Database(getContext());
-        bucketList = db.getAllBucketlist();
-        db.closeDB();
+        pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String option = pref.getString("order", "1");
+
+        int orderSelected = Integer.parseInt(option);
+
+        if (orderSelected != 2) {
+            Database dbb = new Database(getContext());
+            bucketList = dbb.getAllAscendingBucketlist();
+            dbb.closeDB();
+        } else {
+            Database ab = new Database(getContext());
+            bucketList = ab.getAllDescendingBucketlist();
+            ab.closeDB();
+        }
 
         current = (Button) view.findViewById(R.id.currentBucketlist);
+        current.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
+
         completed = (Button) view.findViewById(R.id.completedBucketlist);
 
         current.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                current.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
+                completed.setBackgroundColor(getResources().getColor(R.color.buttonUnclicked));
 
                 Database db = new Database(getContext());
                 bucketList = db.getAllBucketlist();
@@ -97,7 +131,6 @@ public class MyBucketListFragment extends Fragment {
                         delete = (ImageView) view.findViewById(R.id.delete);
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
-
 
                         galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
@@ -143,6 +176,9 @@ public class MyBucketListFragment extends Fragment {
         completed.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                current.setBackgroundColor(getResources().getColor(R.color.buttonUnclicked));
+                completed.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
 
                 Database db = new Database(getContext());
                 bucketList = db.getAllBucketlistCompleted();
@@ -192,7 +228,6 @@ public class MyBucketListFragment extends Fragment {
                             //update the chevron image
                             chevron.setImageResource(R.drawable.ic_expand_less_black_24dp);
                             galleryLayout.setVisibility(View.VISIBLE);
-                            additem.setVisibility(View.VISIBLE);
                             addPhoto.setVisibility(View.VISIBLE);
                             edit.setVisibility(View.VISIBLE);
                             delete.setVisibility(View.VISIBLE);
@@ -210,9 +245,6 @@ public class MyBucketListFragment extends Fragment {
 
             }
         });
-
-        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.swing_up_left);
-        view.startAnimation(animation);
 
         adapter = new CustomAdapter(getContext(), bucketList);
         list.setAdapter(adapter);
@@ -305,6 +337,15 @@ public class MyBucketListFragment extends Fragment {
                 }
             }
 
+            Database db = new Database(getContext());
+            ArrayList<SubItems> subItems = db.getAllSubItems(1);
+            for(int i = 0; i < subItems.size(); i++) {
+                subItemTextView = (TextView) convertView.findViewById(R.id.subItemTextView);
+                subItemTextView.setText(subItems.get(i).getItem_name());
+                Log.d("Hi", subItems.get(i).getItem_name());
+            }
+            db.closeDB();
+
             delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener() {
                 @Override
@@ -320,6 +361,8 @@ public class MyBucketListFragment extends Fragment {
                                     Bucketlist location = bucketList.get(pos);
                                     db.deleteBucketlist(location.getId());
                                     db.closeDB();
+                                    Toast.makeText(getActivity(), "'" + location.getName() + "' has been deleted",
+                                            Toast.LENGTH_LONG).show();
                                     bucketList.remove(pos);
                                     adapter.notifyDataSetChanged();
                                     break;
@@ -366,30 +409,6 @@ public class MyBucketListFragment extends Fragment {
             tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
             tweetIntent.setType("text/plain");
 
-            //PackageManager packManager = getPackageManager();
-           // List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent,  PackageManager.MATCH_DEFAULT_ONLY);
-
-//            boolean resolved = false;
-//            for(ResolveInfo resolveInfo: resolvedInfoList){
-//                if(resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")){
-//                    tweetIntent.setClassName(
-//                            resolveInfo.activityInfo.packageName,
-//                            resolveInfo.activityInfo.name );
-//                    resolved = true;
-//                    break;
-//                }
-//            }
-//            if(resolved){
-//                startActivity(tweetIntent);
-//            }else{
-//                Intent i = new Intent();
-//                i.putExtra(Intent.EXTRA_TEXT, "Hello Download our app");
-//                i.setAction(Intent.ACTION_VIEW);
-//                i.setData(Uri.parse("https://twitter.com/intent/tweet?text=" + (message));
-//                startActivity(i);
-//               // Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
-//            }
-//
             final String emailItem = item.getName();
 
             email = (ImageView) convertView.findViewById(R.id.email);
@@ -458,9 +477,22 @@ public class MyBucketListFragment extends Fragment {
                 }
             });
 
+
             dayCounter = (TextView) convertView.findViewById(R.id.dayCounter);
             name = (TextView) convertView.findViewById(R.id.name);
             name.setText(item.getName());
+
+            final String tweetName = item.getName();
+
+            twitter = (ImageView) convertView.findViewById(R.id.twitter);
+            twitter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TweetComposer.Builder builder = new TweetComposer.Builder(getActivity())
+                            .text("I just added " + tweetName + " to my Bucketlist! Download BeforeIDie to make your own Bucketlist");
+                    builder.show();
+                }
+            });
 
             long databaseTime = item.getTime();
 
@@ -471,6 +503,28 @@ public class MyBucketListFragment extends Fragment {
             int diffInDays = (int) (diffInMillis / (1000 * 60 * 60 * 24));
 
             dayCounter.setVisibility(View.VISIBLE);
+
+
+            pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String option = pref.getString("order", "1");
+
+            int orderSelected = Integer.parseInt(option);
+
+            if (orderSelected != 2) {
+                Database dbb = new Database(getContext());
+                bucketList = dbb.getAllAscendingBucketlist();
+                dbb.closeDB();
+            } else {
+                Database ab = new Database(getContext());
+                bucketList = ab.getAllDescendingBucketlist();
+                ab.closeDB();
+            }
+
+
+
+
+
+
 
             if(diffInDays <= 0) {
                 dayCounter.setText("Expired");

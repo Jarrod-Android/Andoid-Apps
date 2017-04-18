@@ -1,34 +1,97 @@
 package com.liamgoodwin.beforeidie;
 
+import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.text.Editable;
+import android.widget.ImageView;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
+
+import io.fabric.sdk.android.Fabric;
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
 public class MainActivity extends ActionBarActivity implements MaterialTabListener,
     ImageFragment.OnFragmentInteractionListener,
-    AddPhotoFragment.OnFragmentInteractionListener,
-    MyCompletedBucketListFragment.OnFragmentInteractionListener {
+    AddPhotoFragment.OnFragmentInteractionListener {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "cE8s0Za7sXYfczB2rlMg45Xmd";
+    private static final String TWITTER_SECRET = "jBhdrlXa1zrnJTULLC1DQzjAF2GA606spCGEJGS7hiyxkZ37Cq";
 
     MaterialTabHost tabHost;
     ViewPager viewPager;
     ViewPagerAdapter androidAdapter;
     Toolbar toolBar;
+    ImageView settingsButton;
+    private TwitterLoginButton loginButton;
+    TwitterAuthConfig authConfig;
+    Button accountLogin;
+    AdapterView adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
+
+        authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
+        Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
+
+        settingsButton = (ImageView) findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(i);
+            }
+        });
+
+        loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        loginButton.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                // The TwitterSession is also available through:
+                // Twitter.getInstance().core.getSessionManager().getActiveSession()
+                String username = result.data.getUserName();
+                TwitterSession userInfo = result.data;
+                String userName = userInfo.getUserName();
+                loginButton.setText("@" + userName);
+                //TwitterSession session = result.data;
+                // TODO: Remove toast and use the TwitterSession's userID
+                // with your app's user model
+                //String msg = "@" + session.getUserName() + " logged in! (#" + session.getUserId() + ")";
+                Toast.makeText(MainActivity.this, username, Toast.LENGTH_LONG).show();
+            }
+            @Override
+            public void failure(TwitterException exception) {
+                Log.d("TwitterKit", "Login with Twitter failure", exception);
+            }
+        });
+
 
         //android toolbar
         toolBar = (android.support.v7.widget.Toolbar) this.findViewById(R.id.toolBar);
@@ -42,6 +105,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         androidAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(androidAdapter);
         viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        viewPager.setCurrentItem(2);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int tabposition) {
@@ -53,12 +117,21 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         for (int i = 1; i <= androidAdapter.getCount(); i++) {
             tabHost.addTab(
                     tabHost.newTab()
-                            //.setIcon(getDrawable(R.drawable.camerabutton))
+//                            .setIcon(getDrawable(R.drawable.camerabutton))
                             .setText(androidAdapter.getPageTitle(i))
                             .setTabListener(this)
             );
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Make sure that the loginButton hears the result from any
+        // Activity that it triggered.
+        loginButton.onActivityResult(requestCode, resultCode, data);
+    }
+
 
     //tab on selected
     @Override
@@ -93,8 +166,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         public Fragment getItem(int num) {
 
-//            return new MainFragment();
-
             switch(num) {
                 case 0:
                     return new MyBucketListFragment();
@@ -103,8 +174,6 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                 case 2:
                     return new MainFragment();
                 case 3:
-                    return new SettingsFragment();
-                case 4:
                     return new AddPhotoFragment();
                 default:
                     return new MainFragment();
@@ -113,7 +182,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
         @Override
         public int getCount() {
-            return 4;
+            return 3;
         }
 
         @Override
@@ -126,10 +195,24 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                     return "Add";
                 case 3:
                     return "Home";
-                case 4:
-                    return "Settings";
                 default:
                     return "Home";
+            }
+        }
+
+        public Drawable getIcon (int pos) {
+
+            switch(pos) {
+                case 1:
+                    return getDrawable(R.drawable.deleteimage);
+                case 2:
+                    return getDrawable(R.drawable.editimage);
+                case 3:
+                    return getDrawable(R.drawable.twittericon);
+                case 4:
+                    return getDrawable(R.drawable.facebookicon);
+                default:
+                    return getDrawable(R.drawable.checkmark);
             }
         }
     }
@@ -172,4 +255,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
             }
         }
     }
+
+    @Override
+    public void onBackPressed() { }
 }

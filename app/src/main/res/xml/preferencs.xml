@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:defaultValue="1"
+        android:title="Days Remaining Order"
+        android:entries="@array/order"
+        android:entryValues="@array/order_value"
+        android:key="order"
+        android:summary="This allows you to select the order in which you want the days remaining to be display. Ascending or Descending." />
+</PreferenceScreen>

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:id="@+id/mainActivity">
+    android:id="@+id/mainActivity"
+    android:background="@color/listViewBackground">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
@@ -12,14 +13,32 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
         app:subtitleTextColor="@color/colorWhite"
-        app:titleTextColor="@color/colorWhite" />
+        app:titleTextColor="@color/colorWhite">
+
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/twitter_login_button"
+        android:layout_centerInParent="true"
+        android:layout_gravity="end"
+        android:layout_marginEnd="40dp"
+        android:layout_height="30dp"
+        android:layout_width="250dp" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_edit"
+        android:id="@+id/settingsButton"
+        android:layout_marginLeft="380dp"
+        android:layout_marginTop="15dp" />
 
     <it.neokree.materialtabs.MaterialTabHost
         android:id="@+id/tabHost"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_below="@+id/toolBar"
-        app:accentColor="@color/colorAccent"
+        app:accentColor="@color/colorWhite"
         app:primaryColor="#1e88e5"/>
 
     <android.support.v4.view.ViewPager

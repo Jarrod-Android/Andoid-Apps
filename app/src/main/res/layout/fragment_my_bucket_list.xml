@@ -16,14 +16,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/currentBucketlist"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="?attr/colorButtonNormal" />
 
         <Button
             android:text="Completed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/completedBucketlist"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="?attr/colorButtonNormal" />
 
     </LinearLayout>
 
@@ -31,8 +33,10 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/bucketlistListView">
+        android:id="@+id/bucketlistListView"
+        android:background="@color/listViewBackground">
 
     </ListView>
+
 
 </LinearLayout>

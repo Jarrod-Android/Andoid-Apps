@@ -44,6 +44,12 @@
                 android:textAlignment="textStart"
                 android:background="@android:color/darker_gray"
                 android:padding="10dp" />
+
+            <Button
+                android:text="Add To Your List"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/add" />
         </LinearLayout>
     </ScrollView>
 
