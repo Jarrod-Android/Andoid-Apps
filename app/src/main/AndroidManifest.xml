@@ -11,7 +11,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/beforeidie"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -27,7 +27,13 @@
             android:name="io.fabric.ApiKey"
             android:value="aacd08b4a0c74a6638bfdcea6c9bf228d66c7090" />
 
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".CreditsActivity">
+            <intent-filter>
+                <action android:name="com.liamgoodwin.beforeidie.CreditsActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

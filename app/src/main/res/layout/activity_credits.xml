@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_credits"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.liamgoodwin.beforeidie.CreditsActivity"
+    android:background="@color/colorAccent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="Credits"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/creditsText"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="Click the link to view in browser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/creditDescription"
+            android:textAlignment="center"
+            android:textSize="10sp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/remove-button-delete-denied-red-151678/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link1"
+            android:textSize="11dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="http://www.clipartkid.com/simple-bucket-clip-art-at-clker-com-vector-clip-art-online-royalty-xoP3uv-clipart/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link2"
+            android:textSize="11dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/volcanoes-magma-lava-mountains-691939/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link3"
+            android:layout_marginBottom="10dp"
+            android:textSize="11dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/grand-canyon-arizona-landscape-1995038/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link4"
+            android:textSize="11dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/new-york-skyline-new-york-city-city-668616/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link5"
+            android:layout_marginBottom="10dp"
+            android:textSize="11dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/aoraki-mount-cook-mountain-90388/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link6"
+            android:textSize="11dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/paris-france-eiffel-tower-night-1836415/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link7"
+            android:layout_marginBottom="10dp"
+            android:textSize="11dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/confirmation-symbol-icon-green-1152155/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link8"
+            android:textSize="11dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/camera-photography-photo-old-camera-2155318/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link9"
+            android:layout_marginBottom="10dp"
+            android:textSize="11dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/edit-icon-icons-matt-paste-symbol-1294441/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link10"
+            android:textSize="11dp"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:text="https://pixabay.com/en/envelope-postage-letter-mail-158279/"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/link11"
+            android:layout_marginBottom="10dp"
+            android:textSize="11dp" />
+    </LinearLayout>
+
+</RelativeLayout>
