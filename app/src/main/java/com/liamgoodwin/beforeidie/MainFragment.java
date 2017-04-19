@@ -29,7 +29,9 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Created by HP on 4/4/2016.
+ * @author Jarrod & Liam
+ * @version 1.0
+ * @date April 19th, 2017
  */
 
 public class MainFragment extends Fragment {
@@ -46,7 +48,9 @@ public class MainFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        
+
+
+        //used to stop the login fragment from launching on rotate. Saving the data
         if(savedInstanceState == null) {
             FragmentManager fm = getFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
@@ -56,6 +60,7 @@ public class MainFragment extends Fragment {
             transaction.commit();
         }
 
+        //pulling in the smallest time
         Database db = new Database(getContext());
         Bucketlist bucketListSmallestTime = db.getSmallestTime();
         db.closeDB();
@@ -63,6 +68,8 @@ public class MainFragment extends Fragment {
         daysName = (TextView) view.findViewById(R.id.daysName);
         daysTime = (TextView) view.findViewById(R.id.daysTime);
 
+
+        //doing the correct calculations to display the time for the item expiring the soonest.
         if (bucketListSmallestTime != null) {
             long smallestDays = bucketListSmallestTime.getTime();
             String homeBucketListItemName = bucketListSmallestTime.getName();
@@ -75,12 +82,14 @@ public class MainFragment extends Fragment {
 
             daysName.setText(homeBucketListItemName);
 
+
             if(homeDiffInDays == 1) {
                 daysTime.setText(homeDiffInDays + " day");
             } else {
                 daysTime.setText(homeDiffInDays + " days");
             }
 
+            //changing the colours
             if (homeDiffInDays <= 7) {
                 daysTime.setTextColor(Color.RED);
             } else if (homeDiffInDays <= 30) {
@@ -93,6 +102,7 @@ public class MainFragment extends Fragment {
 
         LocationText = (TextView) view.findViewById(R.id.locationText);
 
+        //pulling in a random location
         db = new Database(getContext());
         Recommendation rec = db.getRandomRecommendation();
         if(rec != null) {
@@ -105,10 +115,12 @@ public class MainFragment extends Fragment {
             final String description = recDescription;
             final Integer image = recImage;
 
+            //loading the new view
             LearnMore = (Button) view.findViewById(R.id.learnMore);
             LearnMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    //infating the new pop up view
                     showPopup(inflater, view, name, description, image);
                 }
             });

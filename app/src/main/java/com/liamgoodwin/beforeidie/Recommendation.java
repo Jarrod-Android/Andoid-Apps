@@ -1,5 +1,10 @@
 package com.liamgoodwin.beforeidie;
 
+/**
+ * @author Jarrod & Liam
+ * @version 1.0
+ * @date April 19th, 2017
+ */
 public class Recommendation {
 
     private int id;
@@ -7,12 +12,26 @@ public class Recommendation {
     private String description;
     private int image;
 
+
+    /**
+     *
+     * @param name used to pass the string of name
+     * @param description used to pass the string of description
+     * @param image used to pass the int of image
+     */
     public Recommendation(String name, String description, int image){
         this.name = name;
         this.description = description;
         this.image = image;
     }
 
+    /**
+     *
+     * @param id used to pass the int of id
+     * @param name used to pass the string of name
+     * @param description used to pass the string of description
+     * @param image used to pass the int of image
+     */
     public Recommendation(int id, String name, String description, int image){
         this.id = id;
         this.name = name;
@@ -20,10 +39,15 @@ public class Recommendation {
         this.image = image;
     }
 
+    /**
+     * Empty constructor
+     */
     public Recommendation(){
 
     }
 
+
+    // getters and setters
     public String getName() {
         return name;
     }

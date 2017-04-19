@@ -14,36 +14,27 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
-import com.twitter.sdk.android.core.TwitterCore;
-import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
-import static android.R.color.darker_gray;
-import static com.liamgoodwin.beforeidie.R.attr.colorButtonNormal;
-import io.fabric.sdk.android.Fabric;
+/**
+ * @author Jarrod & Liam
+ * @version 1.0
+ * @date April 19th, 2017
+ */
 
 public class MyBucketListFragment extends Fragment {
 
@@ -66,10 +57,7 @@ public class MyBucketListFragment extends Fragment {
     String companyEmail = "beforeidie@gmail.com";
     Button current;
     Button completed;
-    TextView subItemTextView;
-    ListPreference order;
     SharedPreferences pref;
-    TextView subItemText;
 
 
     @Override
@@ -82,11 +70,14 @@ public class MyBucketListFragment extends Fragment {
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
 
+
+        //calling in the preference setting to change order
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String option = pref.getString("order", "1");
 
         int orderSelected = Integer.parseInt(option);
 
+        //running the correct query based on settings
         if (orderSelected != 2) {
             Database dbb = new Database(getContext());
             bucketList = dbb.getAllAscendingBucketlist();
@@ -109,6 +100,7 @@ public class MyBucketListFragment extends Fragment {
                 current.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
                 completed.setBackgroundColor(getResources().getColor(R.color.buttonUnclicked));
 
+                //calling the bucketlist items
                 Database db = new Database(getContext());
                 bucketList = db.getAllBucketlist();
                 db.closeDB();
@@ -134,6 +126,8 @@ public class MyBucketListFragment extends Fragment {
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
 
+
+                        //adding all buttons and textviews to card views
                         galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
                         additem.setVisibility(View.GONE);
@@ -147,6 +141,7 @@ public class MyBucketListFragment extends Fragment {
                         email.setVisibility(View.GONE);
                         twitter.setImageResource(R.drawable.twittericon);
                         twitter.setVisibility(View.GONE);
+
 
                         if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
                             //Update the text of the description
@@ -175,6 +170,7 @@ public class MyBucketListFragment extends Fragment {
             }
         });
 
+        //used to load the completed items
         completed.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -182,6 +178,7 @@ public class MyBucketListFragment extends Fragment {
                 current.setBackgroundColor(getResources().getColor(R.color.buttonUnclicked));
                 completed.setBackgroundColor(getResources().getColor(R.color.buttonClicked));
 
+                //running the completed items query
                 Database db = new Database(getContext());
                 bucketList = db.getAllBucketlistCompleted();
                 db.closeDB();
@@ -207,6 +204,7 @@ public class MyBucketListFragment extends Fragment {
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
 
+                        //populating completed layout
                         galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
                         additem.setVisibility(View.GONE);
@@ -265,6 +263,7 @@ public class MyBucketListFragment extends Fragment {
                 email = (ImageView) view.findViewById(R.id.email);
                 twitter = (ImageView) view.findViewById(R.id.twitter);
 
+                //populating card view
                 galleryLayout.setVisibility(View.GONE);
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
@@ -307,8 +306,14 @@ public class MyBucketListFragment extends Fragment {
         return view;
     }
 
+    //custom adapter to make custom card views
     public class CustomAdapter extends ArrayAdapter<Bucketlist> {
 
+        /**
+         *
+         * @param context used to get context
+         * @param items used for the array list
+         */
         public CustomAdapter(Context context, ArrayList<Bucketlist> items) {
             super(context, 0, items);
         }
@@ -316,8 +321,8 @@ public class MyBucketListFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             final Bucketlist item = getItem(position);
             final int pos = position;
-            final View view;
 
+            //setting the view
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bucketlist_card_view, parent, false);
             }
@@ -340,15 +345,18 @@ public class MyBucketListFragment extends Fragment {
                 }
             }
 
+            //delete button action
             delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
+                    //creating a pop up to confirm the delete or not.
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which){
+                                //if delete is selected delete it from the database and view
                                 case DialogInterface.BUTTON_POSITIVE:
                                     //Yes button clicked
                                     Database db = new Database(getContext());
@@ -368,6 +376,7 @@ public class MyBucketListFragment extends Fragment {
                         }
                     };
 
+                    //poping up the alert box and givign values.
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setMessage("Are you sure you want to delete this" + "?");
                             builder.setPositiveButton("Yes", dialogClickListener);
@@ -383,6 +392,7 @@ public class MyBucketListFragment extends Fragment {
                     String bucketListItemName = item.getName();
                     int addPhotoBucketListID = item.getId();
 
+                    //sending over the bucketlist id and name
                     Bundle data = new Bundle();
                     data.putInt("addPhotoBucketlistID", addPhotoBucketListID);
                     data.putString("bucketListItemName", bucketListItemName);
@@ -390,6 +400,7 @@ public class MyBucketListFragment extends Fragment {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
 
+                    //starting to load the addphoto fragment
                     AddPhotoFragment newFrag = new AddPhotoFragment();
                     newFrag.setArguments(data);
 
@@ -399,6 +410,7 @@ public class MyBucketListFragment extends Fragment {
                 }
             });
 
+            //intent used to load twitter and make a tweet
             Intent tweetIntent = new Intent(Intent.ACTION_SEND);
             tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
             tweetIntent.setType("text/plain");
@@ -410,6 +422,7 @@ public class MyBucketListFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
+                    //intent used to load the email app and put some default infromation
                     Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", companyEmail, null));
                     intent.putExtra(Intent.EXTRA_SUBJECT, "My Bucketlist");
                     intent.putExtra(Intent.EXTRA_TEXT, "Hey, I just added " + emailItem + " to my Bucklist. Download BeforeIDie so you can do it too");
@@ -422,13 +435,15 @@ public class MyBucketListFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
+
+                    //getting the text to send over
                     int editBucketListID = item.getId();
                     String editBucketListItemName = item.getName();
                     String editBucketListItemDescription = item.getDescription();
 
                     Bundle editBundle = new Bundle();
 
-                    //editBundle.putParcelable("bucketlistItem", (Parcelable) item);
+                    //sending over the id, name, and description
                     editBundle.putInt("editBucketListID", editBucketListID);
                     editBundle.putString("editBucketListItemName", editBucketListItemName);
                     editBundle.putString("editBucketListItemDescription", editBucketListItemDescription);
@@ -436,6 +451,7 @@ public class MyBucketListFragment extends Fragment {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
 
+                    //starting the new fragment
                     EditFragment editFrag = new EditFragment();
                     editFrag.setArguments(editBundle);
 
@@ -450,6 +466,7 @@ public class MyBucketListFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 
+                    //pulling the different attributes about the item
                     int completedID = item.getId();
                     String completedName = item.getName();
                     String completedDescription = item.getDescription();
@@ -459,13 +476,16 @@ public class MyBucketListFragment extends Fragment {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
 
+                    //adding the values in a array
                     Bucketlist bucketlist = new Bucketlist(completedID, completedName,
                             completedDescription, completedmillis, completedField);
 
+                    //updating the bucketlist to change to completed
                     Database db = new Database(getContext());
                     db.updateBucketlist(bucketlist);
                     db.closeDB();
 
+                    //Toast to show it was added
                     Toast.makeText(getActivity(), "'" + completedName + "' was added to the Completed tab",
                             Toast.LENGTH_LONG).show();
                 }
@@ -478,32 +498,41 @@ public class MyBucketListFragment extends Fragment {
 
             final String tweetName = item.getName();
 
+
             twitter = (ImageView) convertView.findViewById(R.id.twitter);
             twitter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    //used to make a new tweet with defaut information
                     TweetComposer.Builder builder = new TweetComposer.Builder(getActivity())
                             .text("I just added " + tweetName + " to my Bucketlist! Download BeforeIDie to make your own Bucketlist");
                     builder.show();
                 }
             });
 
+            //getting the entered time
             long databaseTime = item.getTime();
 
+
+            //getting system time
             long time = System.currentTimeMillis();
 
             long diffInMillis = databaseTime - time;
 
+            //conversion to calculate days left
             int diffInDays = (int) (diffInMillis / (1000 * 60 * 60 * 24));
 
             dayCounter.setVisibility(View.VISIBLE);
 
 
+            //used to see what preference item is selected
             pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
             String option = pref.getString("order", "1");
 
             int orderSelected = Integer.parseInt(option);
 
+            //running the correct query based on settings
             if (orderSelected != 2) {
                 Database dbb = new Database(getContext());
                 bucketList = dbb.getAllAscendingBucketlist();
@@ -515,6 +544,7 @@ public class MyBucketListFragment extends Fragment {
             }
 
 
+            //making different text and colour outputs based on number of days left
             if(diffInDays <= 0) {
                 dayCounter.setText("Expired");
             } else if(diffInDays == 1) {

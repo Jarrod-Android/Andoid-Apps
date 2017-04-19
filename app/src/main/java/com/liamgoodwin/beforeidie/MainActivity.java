@@ -33,6 +33,12 @@ import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
 import it.neokree.materialtabs.MaterialTabListener;
 
+
+/**
+ * @author Jarrod & Liam
+ * @version 1.0
+ * @date April 19th, 2017
+ */
 public class MainActivity extends ActionBarActivity implements MaterialTabListener,
     ImageFragment.OnFragmentInteractionListener,
     AddPhotoFragment.OnFragmentInteractionListener {
@@ -54,13 +60,16 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //creating twitter author config
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
 
+        //using fabric to confirm
         authConfig =  new TwitterAuthConfig("consumerKey", "consumerSecret");
         Fabric.with(this, new TwitterCore(authConfig), new TweetComposer());
 
+        //adding in settings button and giving intent to launch settings activity
         settingsButton = (ImageView) findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +79,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
             }
         });
 
+        //loading twitter login function
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
@@ -79,6 +89,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
                 String username = result.data.getUserName();
                 TwitterSession userInfo = result.data;
                 String userName = userInfo.getUserName();
+                //changing the text to the current users username
                 loginButton.setText("@" + userName);
                 //TwitterSession session = result.data;
                 // TODO: Remove toast and use the TwitterSession's userID
@@ -157,13 +168,14 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
 
     }
 
-    // view pager adapter
+    // view pager adapter to switch between views/fragments
     private class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         public ViewPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
+        //loading the correct fragment based on current view
         public Fragment getItem(int num) {
 
             switch(num) {
@@ -183,6 +195,11 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
             return 3;
         }
 
+        /**
+         * Setting the tab names
+         * @param tabposition used to get tab postion
+         * @return the name of the tab item
+         */
         @Override
         public CharSequence getPageTitle(int tabposition) {
 
@@ -198,6 +215,11 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
             }
         }
 
+        /**
+         *
+         * @param pos used to get the current postion
+         * @return
+         */
         public Drawable getIcon (int pos) {
 
             switch(pos) {
@@ -215,6 +237,7 @@ public class MainActivity extends ActionBarActivity implements MaterialTabListen
         }
     }
 
+    //Zoom out page transformer to add animation when swiping
     public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
         private static final float MIN_SCALE = 0.85f;
         private static final float MIN_ALPHA = 0.5f;
