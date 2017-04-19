@@ -51,4 +51,10 @@ public class SubItems {
     public void setItem_name(String item_name) {
         this.item_name = item_name;
     }
+
+    public String toString() {
+       return "id " + this.item_id +
+        "name " + this.item_name +
+        "column id " + this.column_id;
+    }
 }

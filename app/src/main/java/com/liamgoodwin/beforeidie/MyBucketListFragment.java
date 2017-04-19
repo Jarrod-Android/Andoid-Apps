@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,6 +69,7 @@ public class MyBucketListFragment extends Fragment {
     TextView subItemTextView;
     ListPreference order;
     SharedPreferences pref;
+    TextView subItemText;
 
 
     @Override
@@ -277,6 +279,7 @@ public class MyBucketListFragment extends Fragment {
                 twitter.setImageResource(R.drawable.twittericon);
                 twitter.setVisibility(View.GONE);
 
+
                 if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
                     //Update the text of the description
                     BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
@@ -336,15 +339,6 @@ public class MyBucketListFragment extends Fragment {
                     galleryLayout.addView(imageView);
                 }
             }
-
-            Database db = new Database(getContext());
-            ArrayList<SubItems> subItems = db.getAllSubItems(1);
-            for(int i = 0; i < subItems.size(); i++) {
-                subItemTextView = (TextView) convertView.findViewById(R.id.subItemTextView);
-                subItemTextView.setText(subItems.get(i).getItem_name());
-                Log.d("Hi", subItems.get(i).getItem_name());
-            }
-            db.closeDB();
 
             delete = (ImageView) convertView.findViewById(R.id.delete);
             delete.setOnClickListener(new AdapterView.OnClickListener() {
@@ -519,11 +513,6 @@ public class MyBucketListFragment extends Fragment {
                 bucketList = ab.getAllDescendingBucketlist();
                 ab.closeDB();
             }
-
-
-
-
-
 
 
             if(diffInDays <= 0) {

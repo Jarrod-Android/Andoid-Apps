@@ -1,7 +1,7 @@
 package com.liamgoodwin.beforeidie;
 
 import android.content.Context;
-import android.icu.util.Calendar;
+import java.util.Calendar;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;

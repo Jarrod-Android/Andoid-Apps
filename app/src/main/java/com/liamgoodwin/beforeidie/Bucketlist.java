@@ -1,9 +1,5 @@
 package com.liamgoodwin.beforeidie;
 
-import android.widget.DatePicker;
-
-import java.math.BigInteger;
-
 /**
  * Created by JarrodMaeckeler on 2017-03-26.
  */
@@ -17,6 +13,14 @@ public class Bucketlist {
     private String bucketList;
     private int completed;
 
+    /**
+     * Bucketlist constructor for setting the name, description, time, and completed field
+     *
+     * @param  name  holds the name in a string
+     * @param  description holds the description in a string
+     * @param  time holds the time in a long
+     * @param completed holds the completed int of true or false
+     */
     public Bucketlist(String name, String description, long time, int completed){
         this.name = name;
         this.description = description;
@@ -24,15 +28,26 @@ public class Bucketlist {
         this.completed = completed;
     }
 
+    /**
+     * Bucketlist constructor for setting the name, description, time, and completed field
+     *
+     * @param  id  holds the id in an int
+     * @param  name  holds the name in a string
+     * @param  description holds the description in a string
+     * @param  time holds the time in a long
+     * @param completed holds the completed int of true or false
+     */
     public Bucketlist(int id, String name, String description, long time, int completed){
         this.id = id;
         this.name = name;
         this.description = description;
         this.time = time;
         this.completed = completed;
-
     }
 
+    /**
+     * Bucketlist base constructor
+     */
     public Bucketlist(){
 
     }

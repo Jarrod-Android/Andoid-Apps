@@ -1,6 +1,5 @@
 package com.liamgoodwin.beforeidie;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,22 +11,18 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
@@ -37,8 +32,6 @@ public class AddPhotoFragment extends Fragment {
     TextView title;
     ImageView cameraButton;
     LinearLayout galleryLayout;
-    TextView icon;
-    TextView bucketlistItem;
     FragmentManager fm;
     Button returnButton;
     int addPhoto;
@@ -46,6 +39,15 @@ public class AddPhotoFragment extends Fragment {
     private static final int CAMERA_INTENT = 1;
     private String imageLocation;
 
+    /**
+     * onCreateView inflates the view we tell it to with the following code
+     * in this instance it inflates the fragment_add_photo layout
+     *
+     * @param  inflater  inflates the Layout
+     * @param  container specifies the ViewGroup
+     * @param  savedInstanceState bundle to hold the core data of the View
+     * @return returns the view to inflate it
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,6 +97,13 @@ public class AddPhotoFragment extends Fragment {
         return view;
     }
 
+    /**
+     * onActivityResult gets a result back from an activity when it ends
+     *
+     * @param  requestCode  determines what is requested by the user
+     * @param  resultCode holds the result requested by the user
+     * @param  data Holds the intent data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -121,6 +130,12 @@ public class AddPhotoFragment extends Fragment {
         }
     }
 
+    /**
+     * createImage will set the Data, fileName, directory, and combine these
+     * into a usable image
+     *
+     * @return the picture
+     */
     File createImage() throws IOException{
         //Create a timestamp to help create a collision free name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHss").format(new Date());
@@ -135,6 +150,15 @@ public class AddPhotoFragment extends Fragment {
         return picture;
     }
 
+    /**
+     * onRequestPermissionsResult determines the permissions requested
+     * and the permissions that are granted access and returns them
+     *
+     * @param  requestCode  what is requested by the user
+     * @param  permissions  array of the permissions
+     * @param  grantResults  array of the permissions that are granted
+     * @return the permissions granted
+     */
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
