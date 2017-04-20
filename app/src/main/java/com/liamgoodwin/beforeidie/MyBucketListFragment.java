@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -280,7 +283,6 @@ public class MyBucketListFragment extends Fragment {
                 if (galleryLayout.getVisibility() == View.GONE || galleryLayout.getVisibility() == View.INVISIBLE) {
                     //Update the text of the description
                     BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
-
 
                     //update the text of the show more
                     details.setText("Click to show less");
