@@ -1,16 +1,12 @@
 package com.liamgoodwin.beforeidie;
 
-import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,15 +20,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by liamgoodwin on 2017-03-27.
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
  */
+
 public class AddToMyBucketListFragment extends Fragment {
 
     EditText name;
@@ -55,6 +52,18 @@ public class AddToMyBucketListFragment extends Fragment {
         // Required empty public constructor
     }
 
+     /**
+      * @author Jarrod and Liam
+      * @version 1.0
+      *
+     * onCreateView inflates the view we tell it to with the following code
+     * in this instance it inflates the fragment_add_to_my_bucket_list layout
+     *
+     * @param  inflater  inflates the Layout
+     * @param  container specifies the ViewGroup
+     * @param  savedInstanceState bundle to hold the core data of the View
+     * @return returns the view to inflate it
+     */
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -64,44 +73,10 @@ public class AddToMyBucketListFragment extends Fragment {
                 new String[]{"android.permission.WRITE_CALENDAR", "android.permission.READ_CALENDAR"},
                 1);
 
-        learnMore = (TextView) view.findViewById(R.id.learnMore);
-
-        learnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopup(inflater, view);
-            }
-        });
-        subItemEditText = (EditText) view.findViewById(R.id.subItemEditText);
         name = (EditText) view.findViewById(R.id.nameEditText);
         description = (EditText) view.findViewById(R.id.descriptionEditText);
         date = (DatePicker) view.findViewById(R.id.datePicker);
         bucketList = (LinearLayout) view.findViewById(R.id.bucketlist);
-        plusButton = (ImageView) view.findViewById(R.id.plusButton);
-        plusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                subEditLayout = new LinearLayout(getActivity().getApplicationContext());
-                subEditLayout.setOrientation(LinearLayout.HORIZONTAL);
-                sub = new TextView(getActivity().getApplicationContext());
-                subEdit = new EditText(getActivity().getApplicationContext());
-                subEdit.setPadding(30, 0, 0, 0);
-                subEdit.setEms(10);
-                subEdit.setTextColor(Color.BLACK);
-                holdEdit.add(subEdit);
-//                for (int i = 0; i < subItemExtra.size(); i++) {
-//                    subItemExtra.add(subEdit.getText().toString());
-//                }
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                sub.setText("Sub Item");
-                sub.setTextSize(14);
-                sub.setTextColor(Color.BLACK);
-                sub.setPadding(90, 40, 0, 0);
-                subEditLayout.addView(sub);
-                subEditLayout.addView(subEdit);
-                bucketList.addView(subEditLayout, layoutParams);
-            }
-        });
 
         Button submit = (Button) view.findViewById(R.id.submitButton);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -114,46 +89,10 @@ public class AddToMyBucketListFragment extends Fragment {
                               long millis = calendar.getTimeInMillis();
                 int completed = 0;
 
+                Database db = new Database(getContext());
                 Bucketlist bucketlist = new Bucketlist(name.getText().toString(),
                         description.getText().toString(), millis, completed);
-
-//                subItems.add(subItemEditText.getText().toString());
-//                //subItems.add(subEdit.getText().toString());
-//
-//                int listSize = subItems.size();
-//
-//                for (int i = 0; i<listSize; i++){
-//                    Log.i("Member name: ", subItems.get(i));
-//                }
-
-                subItems.add(subItemEditText.getText().toString());
-
-                String test = "";
-
-                for (EditText e : holdEdit) {
-                    test = e.getText().toString();
-                    subItems.add(test);
-                }
-
-                int id = 0;
-                //SubItems subItemObj = new SubItems(id);
-
-                int listSize = subItems.size();
-
-                //Database db = new Database(getContext());
-
-
-
-                int ii = 1;
-
-                Database db = new Database(getContext());
                 db.addBucketlist(bucketlist);
-                int blid = bucketlist.getId();
-                for (int i = 0; i < listSize; i ++) {
-                    Log.d("TESTING :", subItems.get(i));
-                    SubItems subItemObj = new SubItems(blid, subItems.get(i));
-                    db.addSubItems(subItemObj);
-                }
                 db.closeDB();
 
                 fm = getActivity().getSupportFragmentManager();
@@ -164,12 +103,21 @@ public class AddToMyBucketListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * onCreateView inflates the view we tell it to with the following code
+     * in this instance it inflates the fragment_add_photo layout
+     *
+     * @param  inflater  inflates the Layout
+     * @param  anchorView shows the overlaying view ontop of the current view
+     */
     public void showPopup(LayoutInflater inflater, View anchorView) {
 
         View popupView = inflater.inflate(R.layout.learn_more_layout, null);
 
         PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
 
         // If the PopupWindow should be focusable
         popupWindow.setFocusable(true);
@@ -189,6 +137,18 @@ public class AddToMyBucketListFragment extends Fragment {
         //popupwindow.dismiss();
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * onRequestPermissionsResult determines the requested permissions
+     * and determines what the result will be
+     *
+     * @param  requestCode  determines what is requested by the user
+     * @param  permissions holds the result requested by the user
+     * @param  grantResults Holds the granted Results
+     * @return returns the view to inflate it
+     */
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {

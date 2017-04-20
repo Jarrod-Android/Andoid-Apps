@@ -15,8 +15,15 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
+ */
+
 public class loginFragment extends Fragment {
 
+    //Declare vairables
     EditText username;
     EditText password;
     TextView errorMessage;
@@ -29,14 +36,17 @@ public class loginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //Declare and inflate the view
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
+        //Initialize the variables we declared above
         login = (Button) view.findViewById(R.id.login);
         register = (Button) view.findViewById(R.id.register);
         username = (EditText) view.findViewById(R.id.username);
         password = (EditText) view.findViewById(R.id.password);
         errorMessage = (TextView) view.findViewById(R.id.errorMessage);
 
+        //Set the username and password text to null
         username.setText(null);
         password.setText(null);
 
@@ -53,6 +63,7 @@ public class loginFragment extends Fragment {
                     errorMessage.setText("Please enter a username & password");
                 } else {
 
+                    //Open the Database and set the user to the value returned by findUser
                     Database db = new Database(getContext());
                     user = null;
                     user = db.findUser(username.getText().toString());
@@ -68,6 +79,7 @@ public class loginFragment extends Fragment {
 
                         String encryptedPassword = null;
 
+                        //Try and encrypt the password using the SHA1 method, if fails it will print the stack trace
                         try {
                             encryptedPassword = SHA1(password.getText().toString());
                         } catch (NoSuchAlgorithmException e) {
@@ -91,6 +103,7 @@ public class loginFragment extends Fragment {
             }
         });
 
+        //If register is clicked the Fragment will commit to the RegisterFragment and replace the login fragment
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +121,11 @@ public class loginFragment extends Fragment {
         return view;
     }
 
+    /**
+     * This method hashes a password
+     * @param data
+     * @return the converted string of what the hashed password is
+     */
     private static String convertToHex(byte[] data) {
         StringBuffer buf = new StringBuffer();
         int length = data.length;
@@ -126,6 +144,13 @@ public class loginFragment extends Fragment {
         return buf.toString();
     }
 
+    /**
+     * This puts it into a SHA String
+     * @param text
+     * @return calls the convertToHex and returns the SHA String
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     */
     public static String SHA1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md = MessageDigest.getInstance("SHA-1");
         byte[] sha1hash = new byte[40];

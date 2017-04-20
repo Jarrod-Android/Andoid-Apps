@@ -1,20 +1,35 @@
 package com.liamgoodwin.beforeidie;
 
 /**
- * Created by liamgoodwin on 2017-03-27.
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
  */
 
 public class Image {
     private int id;
     private String resource;
 
-    public Image(int id, String resource){
-        this.id = id;
-        this.resource = resource;
-    }
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     * @date April 19th, 2017
+     *
+     * Image constructor
+     *
+     */
     public Image(){
 
     }
+
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     * @date April 19th, 2017
+     *
+     * @param resource Passes this resource into the Constructor and
+     * sets it to this instance of the Image class
+     */
     public Image(String resource){
         this.resource = resource;
     }

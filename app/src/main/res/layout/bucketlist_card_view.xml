@@ -86,16 +86,12 @@
             android:layout_marginBottom="10dp" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView" />
-
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnCount="4"
-            android:id="@+id/galleryLayout"></GridLayout>
+            android:id="@+id/galleryLayout"
+            android:layout_marginBottom="10dp"></GridLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

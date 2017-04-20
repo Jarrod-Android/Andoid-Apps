@@ -89,46 +89,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/bucketlist">
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:id="@+id/subItemLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:text="Sub item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/subItemTextView"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
-                        android:textAlignment="center"
-                        android:padding="10dp" />
-
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/subItemEditText"
-                        android:layout_weight="1" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@android:drawable/ic_input_add"
-                        android:id="@+id/plusButton"
-                        android:layout_weight="1" />
-                </LinearLayout>
             </LinearLayout>
-
-            <TextView
-                android:text="Learn More"
-                android:layout_height="wrap_content"
-                android:id="@+id/learnMore"
-                android:layout_gravity="center"
-                android:layout_width="100dp"
-                android:textAlignment="center" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
