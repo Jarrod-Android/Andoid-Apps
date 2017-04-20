@@ -70,7 +70,6 @@ public class MyBucketListFragment extends Fragment {
         fm = getActivity().getSupportFragmentManager();
         list = (ListView) view.findViewById(R.id.bucketlistListView);
 
-
         //calling in the preference setting to change order
         pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String option = pref.getString("order", "1");
@@ -126,9 +125,7 @@ public class MyBucketListFragment extends Fragment {
                         email = (ImageView) view.findViewById(R.id.email);
                         twitter = (ImageView) view.findViewById(R.id.twitter);
 
-
                         //adding all buttons and textviews to card views
-                        galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
                         additem.setVisibility(View.GONE);
                         addPhoto.setImageResource(R.drawable.camerabutton);
@@ -142,8 +139,8 @@ public class MyBucketListFragment extends Fragment {
                         twitter.setImageResource(R.drawable.twittericon);
                         twitter.setVisibility(View.GONE);
 
+                        if (galleryLayout.getVisibility() == View.GONE || galleryLayout.getVisibility() == View.INVISIBLE) {
 
-                        if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
                             //Update the text of the description
                             BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
 
@@ -159,6 +156,8 @@ public class MyBucketListFragment extends Fragment {
                             email.setVisibility(View.VISIBLE);
                             twitter.setVisibility(View.VISIBLE);
                         } else {
+                            galleryLayout.setVisibility(View.GONE);
+
                             BucketlistDescriptionTextView.setText("");
                             //update the text of the show more
                             details.setText("Click to show more");
@@ -205,7 +204,6 @@ public class MyBucketListFragment extends Fragment {
                         twitter = (ImageView) view.findViewById(R.id.twitter);
 
                         //populating completed layout
-                        galleryLayout.setVisibility(View.GONE);
                         additem.setImageResource(R.drawable.checkmark);
                         additem.setVisibility(View.GONE);
                         addPhoto.setImageResource(R.drawable.camerabutton);
@@ -219,7 +217,7 @@ public class MyBucketListFragment extends Fragment {
                         twitter.setImageResource(R.drawable.twittericon);
                         twitter.setVisibility(View.GONE);
 
-                        if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
+                        if (galleryLayout.getVisibility() == View.GONE || galleryLayout.getVisibility() == View.INVISIBLE) {
                             //Update the text of the description
                             BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
 
@@ -234,6 +232,8 @@ public class MyBucketListFragment extends Fragment {
                             email.setVisibility(View.VISIBLE);
                             twitter.setVisibility(View.VISIBLE);
                         } else {
+                            galleryLayout.setVisibility(View.GONE);
+
                             BucketlistDescriptionTextView.setText("");
                             //update the text of the show more
                             details.setText("Click to show more");
@@ -264,7 +264,6 @@ public class MyBucketListFragment extends Fragment {
                 twitter = (ImageView) view.findViewById(R.id.twitter);
 
                 //populating card view
-                galleryLayout.setVisibility(View.GONE);
                 additem.setImageResource(R.drawable.checkmark);
                 additem.setVisibility(View.GONE);
                 addPhoto.setImageResource(R.drawable.camerabutton);
@@ -278,10 +277,10 @@ public class MyBucketListFragment extends Fragment {
                 twitter.setImageResource(R.drawable.twittericon);
                 twitter.setVisibility(View.GONE);
 
-
-                if (BucketlistDescriptionTextView.getText() != (bucketList.get(position)).getDescription()) {
+                if (galleryLayout.getVisibility() == View.GONE || galleryLayout.getVisibility() == View.INVISIBLE) {
                     //Update the text of the description
                     BucketlistDescriptionTextView.setText(((Bucketlist) list.getItemAtPosition(position)).getDescription());
+
 
                     //update the text of the show more
                     details.setText("Click to show less");
@@ -295,6 +294,8 @@ public class MyBucketListFragment extends Fragment {
                     email.setVisibility(View.VISIBLE);
                     twitter.setVisibility(View.VISIBLE);
                 } else {
+                    galleryLayout.setVisibility(View.GONE);
+
                     BucketlistDescriptionTextView.setText("");
                     //update the text of the show more
                     details.setText("Click to show more");

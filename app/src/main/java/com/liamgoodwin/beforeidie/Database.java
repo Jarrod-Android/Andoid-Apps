@@ -10,6 +10,12 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
+ */
+
 public class Database extends SQLiteOpenHelper {
 
     /**
@@ -167,6 +173,16 @@ public class Database extends SQLiteOpenHelper {
         return -1;
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     * @date April 19th, 2017
+     *
+     * This function adds an image to the database that we send it
+     *
+     * @param image to hold the current image to be added
+     * @return
+     */
     //We modified addPicture to return the rowNumber it was added into
     public int addImage(Image image) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -184,6 +200,15 @@ public class Database extends SQLiteOpenHelper {
         return -1;
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This adds the image location based on the image and location sent to it
+     *
+     * @param image holds the image number
+     * @param location holds the image location number
+     */
     //Added a method that will add an image location record
     public void addImageLocation(int image, int location) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -198,6 +223,16 @@ public class Database extends SQLiteOpenHelper {
     /**
      * READ objects from database
      */
+
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This function gets the time of the requested bucket List item
+     *
+     * @param id holds the id of the bucket list item we want the time of
+     * @return the string from the database that holds the time
+     */
     public String getTime(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_BUCKET_LIST,
@@ -210,6 +245,14 @@ public class Database extends SQLiteOpenHelper {
         return cursor.getString(3);
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This gets all of the names of the bucket list items and returns it
+     *
+     * @return the bucketlist of names
+     */
     public ArrayList<Bucketlist> getAllNames() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST;
@@ -226,6 +269,14 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This method gets the smallest time from the database to show it as the soonest to expire
+     *
+     * @return the bucketlist with the smallest time
+     */
     public Bucketlist getSmallestTime() {
         Bucketlist bucketList = null;
         String smallestDays = "SELECT " + COLUMN_TIME + ", " + COLUMN_NAME + " FROM " + TABLE_BUCKET_LIST + " ORDER BY " + COLUMN_TIME + " ASC LIMIT 1";
@@ -240,6 +291,14 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This method returns all of the uncompleted bucketlist items
+     *
+     * @return all uncompleted bucketList items
+     */
     public ArrayList<Bucketlist> getAllBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 0";
@@ -260,6 +319,15 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This method returns the bucketList items sorted in ASCENDING
+     * order based on the time goal
+     *
+     * @return the bucketList items in ascending order
+     */
     public ArrayList<Bucketlist> getAllAscendingBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " ORDER BY " + COLUMN_TIME + " ASC";
@@ -280,6 +348,15 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This method returns the bucketList items sorted in DESCENDING
+     * order based on the time goal
+     *
+     * @return the bucketList items in descending order
+     */
     public ArrayList<Bucketlist> getAllDescendingBucketlist() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " ORDER BY " + COLUMN_TIME + " DESC";
@@ -300,25 +377,16 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
-    public ArrayList<Picture> getAllPictures() {
-        ArrayList<Picture> pictureList = new ArrayList<Picture>();
-        String selectQuery = "SELECT  * FROM " + TABLE_IMAGE;
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Picture picture = new Picture();
-                picture.setId(Integer.parseInt(cursor.getString(0)));
-                picture.setResource(cursor.getString(1));
-                pictureList.add(picture);
-            } while (cursor.moveToNext());
-        }
-        return pictureList;
-    }
-
-
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * Gets all bucket list items that are completed and returns them
+     * when called
+     *
+     * @return all completed bucket list items
+     */
     public ArrayList<Bucketlist> getAllBucketlistCompleted() {
         ArrayList<Bucketlist> bucketList = new ArrayList<Bucketlist>();
         String selectQuery = "SELECT  * FROM " + TABLE_BUCKET_LIST + " WHERE " + COLUMN_COMPLETED + " = 1";
@@ -339,38 +407,14 @@ public class Database extends SQLiteOpenHelper {
         return bucketList;
     }
 
-    public Image getImage(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.query(TABLE_IMAGE, new String[]{COLUMN_ID, COLUMN_RESOURCE}, COLUMN_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        Image image = new Image(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1));
-
-        return image;
-    }
-
-    public ArrayList<Image> getAllImages() {
-        ArrayList<Image> pictureList = new ArrayList<Image>();
-        String selectQuery = "SELECT  * FROM " + TABLE_IMAGE;
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Image picture = new Image();
-                picture.setId(Integer.parseInt(cursor.getString(0)));
-                picture.setResource(cursor.getString(1));
-                pictureList.add(picture);
-            } while (cursor.moveToNext());
-        }
-        return pictureList;
-    }
-
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This method selects a random Recommendation from the recommendation table and returns it to the home page
+     *
+     * @return the random selected Recommendation
+     */
     public Recommendation getRandomRecommendation() {
         Random r = new Random();
         int row = r.nextInt(5);
@@ -391,22 +435,20 @@ public class Database extends SQLiteOpenHelper {
         return recommendationList;
     }
 
-    public void addRecommendation(Recommendation recommendation) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, recommendation.getName());
-        values.put(COLUMN_DESCRIPTION, recommendation.getDescription());
-        values.put(COLUMN_PICTURE, String.valueOf(recommendation.getImage()));
-        db.insert(TABLE_RECOMMENDATIONS, null, values);
-        db.close();
-    }
-
-    /*
+    /**
     *
     * USER FUNCTIONS
     *
-    * */
+    */
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * Adds the user to the Users table witht a password, username, and privacy setting
+     *
+     * @param user
+     */
     public void addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -417,26 +459,15 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<User> getAllUsers() {
-        ArrayList<User> usersList = new ArrayList<User>();
-        String selectQuery = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_PRIVATE + " = 0";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) {
-            do {
-                User user = new User();
-                user.setId(Integer.parseInt(cursor.getString(0)));
-                user.setUsername(cursor.getString(1));
-                user.setPassword(cursor.getString(2));
-                user.setPrivacy(cursor.getInt(3));
-                usersList.add(user);
-            } while (cursor.moveToNext());
-        }
-        return usersList;
-    }
-
-    //This is used to see if an account is registered under the provided username in the login section
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This is used to see if an account is registered under the provided username in the login section
+     *
+     * @param username
+     * @return
+     */
     public User findUser(String username) {
         User user = null;
         String findUserInDb = "SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " ='" + username + "'";
@@ -451,18 +482,14 @@ public class Database extends SQLiteOpenHelper {
         return user;
     }
 
-    public int updateUserPrivacy(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_PRIVATE, user.getPrivacy());
-        return db.update(TABLE_USERS, values, COLUMN_ID + " = ?", new String[]{String.valueOf(user.getId())});
-    }
-
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * The second getAllPictures is used to grab all images associated with an location
      *
-     * @param location
-     * @return
+     * @param location holds the int value of the location
+     * @return the array pictureList of images
      */
     public ArrayList<Image> getAllImages(int location) {
         ArrayList<Image> pictureList = new ArrayList<Image>();
@@ -489,6 +516,15 @@ public class Database extends SQLiteOpenHelper {
     /**
      * UPDATE objects in database
      */
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This updates the chosen bucket list item using the new values passed into this method
+     *
+     * @param bl this holds the bucketlist properties
+     * @return the update
+     */
     public int updateBucketlist(Bucketlist bl) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -499,15 +535,16 @@ public class Database extends SQLiteOpenHelper {
         return db.update(TABLE_BUCKET_LIST, values, COLUMN_ID + " = ?", new String[]{String.valueOf(bl.getId())});
     }
 
-    public int updatePicture(Image image) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_RESOURCE, image.getResource());
-        return db.update(TABLE_IMAGE, values, COLUMN_ID + " = ?", new String[]{String.valueOf(image.getId())});
-    }
-
     /**
      * DELETE objects from database
+     */
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This deleted the Bucket list item at the given location from the bucket list table
+     *
+     * @param location_id This holds the location int of the bucket list item to be deleted
      */
     public void deleteBucketlist(long location_id) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -515,14 +552,14 @@ public class Database extends SQLiteOpenHelper {
                 new String[]{String.valueOf(location_id)});
     }
 
-    public void deleteImage(long picture_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_IMAGE, COLUMN_ID + " = ?",
-                new String[]{String.valueOf(picture_id)});
-    }
-
     /**
      * Closing the database connection
+     */
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * This method closes out the database if it is not null, and it is in fact open
      */
     public void closeDB() {
         SQLiteDatabase db = this.getReadableDatabase();

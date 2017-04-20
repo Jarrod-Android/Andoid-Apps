@@ -51,14 +51,14 @@ public class MainFragment extends Fragment {
 
 
         //used to stop the login fragment from launching on rotate. Saving the data
-        if(savedInstanceState == null) {
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction transaction = fm.beginTransaction();
-
-            transaction.addToBackStack(null);
-            transaction.replace(R.id.mainActivity, new loginFragment());
-            transaction.commit();
-        }
+//        if(savedInstanceState == null) {
+//            FragmentManager fm = getFragmentManager();
+//            FragmentTransaction transaction = fm.beginTransaction();
+//
+//            transaction.addToBackStack(null);
+//            transaction.replace(R.id.mainActivity, new loginFragment());
+//            transaction.commit();
+//        }
 
         //pulling in the smallest time
         Database db = new Database(getContext());

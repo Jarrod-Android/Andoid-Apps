@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ImageFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ImageFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
  */
+
 public class ImageFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -91,8 +89,6 @@ public class ImageFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
-
 
     /**
      * This interface must be implemented by activities that contain this

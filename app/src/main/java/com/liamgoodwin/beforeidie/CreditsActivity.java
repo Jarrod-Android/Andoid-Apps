@@ -7,6 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
+ */
+
 public class CreditsActivity extends AppCompatActivity {
 
     TextView link1;
@@ -21,6 +27,14 @@ public class CreditsActivity extends AppCompatActivity {
     TextView link10;
     TextView link11;
 
+    /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
+     * onCreate sets everything up in the view when we load this fragment
+     *
+     * @param savedInstanceState the bundle that holds all of the current info
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

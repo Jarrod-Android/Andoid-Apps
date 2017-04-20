@@ -1,7 +1,9 @@
 package com.liamgoodwin.beforeidie;
 
 /**
- * Created by JarrodMaeckeler on 2017-03-26.
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
  */
 
 public class Bucketlist {
@@ -14,6 +16,9 @@ public class Bucketlist {
     private int completed;
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * Bucketlist constructor for setting the name, description, time, and completed field
      *
      * @param  name  holds the name in a string
@@ -29,6 +34,9 @@ public class Bucketlist {
     }
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * Bucketlist constructor for setting the name, description, time, and completed field
      *
      * @param  id  holds the id in an int
@@ -46,6 +54,9 @@ public class Bucketlist {
     }
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * Bucketlist base constructor
      */
     public Bucketlist(){
