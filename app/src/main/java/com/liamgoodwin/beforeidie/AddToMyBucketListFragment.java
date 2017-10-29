@@ -1,7 +1,6 @@
 package com.liamgoodwin.beforeidie;
 
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,8 +25,11 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by liamgoodwin on 2017-03-27.
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
  */
+
 public class AddToMyBucketListFragment extends Fragment {
 
     EditText name;
@@ -51,6 +53,9 @@ public class AddToMyBucketListFragment extends Fragment {
     }
 
      /**
+      * @author Jarrod and Liam
+      * @version 1.0
+      *
      * onCreateView inflates the view we tell it to with the following code
      * in this instance it inflates the fragment_add_to_my_bucket_list layout
      *
@@ -99,6 +104,9 @@ public class AddToMyBucketListFragment extends Fragment {
     }
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * onCreateView inflates the view we tell it to with the following code
      * in this instance it inflates the fragment_add_photo layout
      *
@@ -130,6 +138,9 @@ public class AddToMyBucketListFragment extends Fragment {
     }
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * onRequestPermissionsResult determines the requested permissions
      * and determines what the result will be
      *

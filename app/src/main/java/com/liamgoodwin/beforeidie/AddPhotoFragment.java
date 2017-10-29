@@ -27,8 +27,15 @@ import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * @author Jarrod and Liam
+ * @version 1.0
+ * @date April 19th, 2017
+ */
+
 public class AddPhotoFragment extends Fragment {
 
+    //Declarations
     TextView title;
     ImageView cameraButton;
     LinearLayout galleryLayout;
@@ -40,6 +47,9 @@ public class AddPhotoFragment extends Fragment {
     private String imageLocation;
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * onCreateView inflates the view we tell it to with the following code
      * in this instance it inflates the fragment_add_photo layout
      *
@@ -52,19 +62,25 @@ public class AddPhotoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //Declare and inflate the view
         View view = inflater.inflate(R.layout.fragment_add_photo, container, false);
 
+        //Request the permissions
         ActivityCompat.requestPermissions(getActivity(),
                 new String[]{"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.CAMERA"},
                 1);
 
+        //Make a bundle and set the arguments
         Bundle extras = getArguments();
         String bucketListItemName = extras.getString("bucketListItemName");
         addPhoto = extras.getInt("addPhotoBucketlistID");
 
+        //Set the value of the views
         galleryLayout = (LinearLayout) view.findViewById(R.id.galleryLayout);
         title = (TextView) view.findViewById(R.id.addPhotoTitle);
         title.setText(bucketListItemName);
+
+        //Return button onClickListener, sets the view to the previous fragment
         returnButton = (Button) view.findViewById(R.id.returnButton);
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +90,7 @@ public class AddPhotoFragment extends Fragment {
             }
         });
 
+        //Sets the camera button
         cameraButton = (ImageView) view.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +101,8 @@ public class AddPhotoFragment extends Fragment {
                 }catch(IOException e){
                     e.printStackTrace();
                 }
+
+                //Set an intent and the image properties
                 Intent i = new Intent();
                 i.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
                 i.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(picture));
@@ -94,10 +113,14 @@ public class AddPhotoFragment extends Fragment {
             }
         });
 
+        //Return the view
         return view;
     }
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * onActivityResult gets a result back from an activity when it ends
      *
      * @param  requestCode  determines what is requested by the user
@@ -112,9 +135,8 @@ public class AddPhotoFragment extends Fragment {
             ImageView imageView = new ImageView(getContext());
             imageView.setImageBitmap(image);
             galleryLayout.addView(imageView);
-            /**
-             * Add the photo to the database
-             */
+
+            //Open the database, and add the photo
             Database db = new Database(getContext());
             int picID = db.addImage(new Image(imageLocation));
             if(picID != -1){
@@ -131,26 +153,37 @@ public class AddPhotoFragment extends Fragment {
     }
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * createImage will set the Data, fileName, directory, and combine these
      * into a usable image
      *
      * @return the picture
      */
     File createImage() throws IOException{
+
         //Create a timestamp to help create a collision free name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHss").format(new Date());
+
         //Create the name of the image
         String fileName = "before_i_die_" + timeStamp;
+
         //Grab the directory we want to save the image
         File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
         //Create the image in that directory
         File picture = File.createTempFile(fileName, ".jpg", directory);
+
         //Save the location of the image
         imageLocation = picture.getAbsolutePath();
         return picture;
     }
 
     /**
+     * @author Jarrod and Liam
+     * @version 1.0
+     *
      * onRequestPermissionsResult determines the permissions requested
      * and the permissions that are granted access and returns them
      *

@@ -18,6 +18,12 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * @author Jarrod & Liam
+ * @version 1.0
+ * @date April 19th, 2017
+ */
+
 public class RegisterFragment extends android.support.v4.app.Fragment {
 
     TextView errorMessage;
@@ -35,6 +41,8 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
 
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
+
+        //loading in the different elements in the form.
         errorMessage = (TextView) view.findViewById(R.id.errorMessage);
         username = (EditText) view.findViewById(R.id.username);
         password = (EditText) view.findViewById(R.id.password);
@@ -48,20 +56,30 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
+                //if there is no username
                 if((username.getText().toString().equals(null)) || (username.getText().toString().equals(""))) {
                     errorMessage.setText("Please enter a Username");
-                } else if((password.getText().toString().equals(null)) || (password.getText().toString().equals(""))) {
+                }
+                //if there is no password
+                else if((password.getText().toString().equals(null)) || (password.getText().toString().equals(""))) {
                     errorMessage.setText("Please enter a Password");
-                } else if((password2.getText().toString().equals(null)) || (password2.getText().toString().equals(""))) {
+                }
+                // if the second password isn't entered
+                else if((password2.getText().toString().equals(null)) || (password2.getText().toString().equals(""))) {
                     errorMessage.setText("Please enter a 2nd Password");
-                } else if (!password.getText().toString().equals(password2.getText().toString())) {
+                }
+                // if the passwords do not match
+                else if (!password.getText().toString().equals(password2.getText().toString())) {
                     errorMessage.setText("Passwords do not match");
-                } else if ((!username.getText().toString().equals(null) || !username.getText().equals("")) && (!password.getText().toString().equals(null) || !password.getText().toString().equals("")) && (password.getText().toString().equals(password2.getText().toString()))) {
+                }
+                //if the account does create successfully
+                else if ((!username.getText().toString().equals(null) || !username.getText().equals("")) && (!password.getText().toString().equals(null) || !password.getText().toString().equals("")) && (password.getText().toString().equals(password2.getText().toString()))) {
                     final String regUsername = username.getText().toString();
                     final int regPrivacy;
 
                     String encryptedPassword = null;
 
+                    // used to encrypt password
                     try {
                         encryptedPassword = SHA1(password.getText().toString());
                     } catch (NoSuchAlgorithmException e) {
@@ -70,24 +88,30 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
                         e.printStackTrace();
                     }
 
+
+                    // change the privacy if it is checked
                     if (privacy.isChecked()) {
                         regPrivacy = 1;
                     } else {
                         regPrivacy = 0;
                     }
 
+                    //adding the new User to the datavase
                     User user = new User(regUsername, encryptedPassword, regPrivacy);
 
+
                     Database db = new Database(getContext());
-                    db.addUser(user);
+                    db.addUser(user); //running the addUser method.
                     db.closeDB();
 
+                    //Toast to show the user has been registered.
                     Toast.makeText(getActivity(), "The username '" + regUsername + "' has been registered",
                             Toast.LENGTH_LONG).show();
                 }
             }
         });
 
+        // button handler to return back to the login screen
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +125,11 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
+    /**
+     * This method hashes a password
+     * @param data
+     * @return the converted string of what the hashed password is
+     */
     private static String convertToHex(byte[] data) {
         StringBuffer buf = new StringBuffer();
         int length = data.length;
@@ -119,6 +148,13 @@ public class RegisterFragment extends android.support.v4.app.Fragment {
         return buf.toString();
     }
 
+    /**
+     * This puts it into a SHA String
+     * @param text
+     * @return calls the convertToHex and returns the SHA String
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     */
     public static String SHA1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md = MessageDigest.getInstance("SHA-1");
         byte[] sha1hash = new byte[40];

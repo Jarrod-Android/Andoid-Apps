@@ -88,7 +88,7 @@
                     android:text="Date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dateTextViewEdit"
+                    android:id="@+id/dateTextView"
                     android:textSize="18sp"
                     android:padding="10dp" />
 
@@ -96,10 +96,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/datePickerEdit"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/dateTextViewEdit"
-                    android:layout_alignParentEnd="true"
-                    android:paddingRight="10dp" />
+                    android:paddingRight="10dp"
+                    android:paddingTop="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
             </RelativeLayout>
 
             <Button
